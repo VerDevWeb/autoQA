@@ -1,38 +1,12 @@
 import { StateGraph, START, END, Annotation } from "@langchain/langgraph";
-import { ChatOpenAI } from "@langchain/openai";
-import { ChatAnthropic } from "@langchain/anthropic";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatOllama } from "@langchain/ollama";
-import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import { HumanMessage } from "@langchain/core/messages";
 import { chromium } from "playwright";
 import type { Browser, Page } from "playwright";
 import { z } from "zod";
 import * as dotenv from "dotenv";
+import { getLLM } from "./modelController.js";
 
 dotenv.config();
-
-// --- 1. CONFIGURAZIONE PROVIDER LLM ---
-function getLLM(provider: 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmstudio'): BaseChatModel {
-    switch (provider) {
-        case 'openai':
-            return new ChatOpenAI({ model: "gpt-4o", temperature: 0 });
-        case 'anthropic':
-            return new ChatAnthropic({ model: "claude-3-5-sonnet-20240620", temperature: 0 });
-        case 'google':
-            return new ChatGoogleGenerativeAI({ model: "gemma-4-31b-it", temperature: 0 });
-        case 'ollama':
-            return new ChatOllama({ baseUrl: "http://localhost:11434", model: "gemma4:31b-cloud", temperature: 0 });
-        case 'lmstudio':
-            return new ChatOpenAI({
-                model: "local-model",
-                temperature: 0,
-                configuration: { baseURL: "http://localhost:1234/v1" }
-            });
-        default:
-            throw new Error(`Provider non supportato: ${provider}`);
-    }
-}
 
 // --- 2. DEFINIZIONE DEI TOOL TRAMITE ZOD ---
 const webActionSchema = z.object({
@@ -138,11 +112,11 @@ async function decideNode(state: AgentState): Promise<Partial<AgentState>> {
         : '';
 
     const prompt = `Sei un agente di automazione web autonomo.
-Il tuo obiettivo finale è: ${state.objective}
-Ti trovi attualmente all'URL: ${state.currentUrl}
-${historyBlock}
-Ecco l'AST ad alta fedeltà degli elementi interattivi presenti nella pagina:
-${state.domAst}
+        Il tuo obiettivo finale è: ${state.objective}
+        Ti trovi attualmente all'URL: ${state.currentUrl}
+        ${historyBlock}
+        Ecco l'AST ad alta fedeltà degli elementi interattivi presenti nella pagina:
+        ${state.domAst}
 
 Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
 
