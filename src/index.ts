@@ -244,6 +244,18 @@ function getReportedInputTokens(response: any): number | null {
     return typeof candidate === "number" ? candidate : null;
 }
 
+function logSessionTokenSummary(): void {
+    console.log("\n=== SESSION TOKEN SUMMARY ===");
+    console.log(`[LLM] Iterazioni totali: ${llmIterationCounter}`);
+    console.log(`[LLM] Input stimati totali: ${totalEstimatedInputTokens} token`);
+    if (totalReportedInputTokens > 0) {
+        console.log(`[LLM] Input reali totali (provider): ${totalReportedInputTokens} token`);
+    } else {
+        console.log("[LLM] Input reali totali (provider): n/d (provider non ha restituito usage metadata)");
+    }
+    console.log("=== FINE SESSION TOKEN SUMMARY ===\n");
+}
+
 // --- 6. NODI DEL GRAFO ---
 let browser: Browser;
 let page: Page;
@@ -406,27 +418,31 @@ const app = workflow.compile();
 
 // --- 8. APERTURA BROWSER ED ESECUZIONE ---
 async function run() {
-    browser = await chromium.launch({ headless: false });
-    const context = await browser.newContext();
-    page = await context.newPage();
+    try {
+        browser = await chromium.launch({ headless: false });
+        const context = await browser.newContext();
+        page = await context.newPage();
 
-    await page.goto("https://www.wikipedia.org/");
+        await page.goto("https://www.wikipedia.org/");
 
-    const initialState = {
-        objective: "Seleziona la lingua 'Italiano' dal menu a tendina delle lingue principali, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio.",
-        currentUrl: "",
-        domAst: "",
-        lastToolCall: null,
-        actionHistory: [],
-        noToolCallStreak: 0,
-        isFinished: false
-    };
+        const initialState = {
+            objective: "Seleziona la lingua 'Italiano' dal menu a tendina delle lingue principali, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio.",
+            currentUrl: "",
+            domAst: "",
+            lastToolCall: null,
+            actionHistory: [],
+            noToolCallStreak: 0,
+            isFinished: false
+        };
 
-    console.log("Avvio del flusso con Native Tool Calling...");
-    await app.invoke(initialState, { recursionLimit: 20 });
+        console.log("Avvio del flusso con Native Tool Calling...");
+        await app.invoke(initialState, { recursionLimit: 20 });
 
-    console.log("Flusso terminato con successo.");
-    // await browser.close();
+        console.log("Flusso terminato con successo.");
+    } finally {
+        logSessionTokenSummary();
+        // await browser?.close();
+    }
 }
 
 run().catch(console.error);
