@@ -72,6 +72,32 @@ async function extractSimplifiedDOM(page: Page): Promise<string> {
     });
 }
 
+function isContextDestroyedError(error: unknown): boolean {
+    const message = (error as Error)?.message ?? String(error);
+    return message.includes("Execution context was destroyed")
+        || message.includes("Cannot find context with specified id")
+        || message.includes("Most likely the page has been closed");
+}
+
+async function extractSimplifiedDOMWithRetry(page: Page, maxAttempts = 4): Promise<string> {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            await page.waitForLoadState("domcontentloaded", { timeout: 4000 }).catch(() => undefined);
+            return await extractSimplifiedDOM(page);
+        } catch (error) {
+            if (!isContextDestroyedError(error) || attempt === maxAttempts) {
+                throw error;
+            }
+
+            // Se una navigazione è in corso, aspetta un attimo e riprova.
+            await page.waitForLoadState("domcontentloaded", { timeout: 4000 }).catch(() => undefined);
+            await new Promise(resolve => setTimeout(resolve, 250));
+        }
+    }
+
+    throw new Error("Impossibile estrarre il DOM dopo più tentativi.");
+}
+
 // --- 5. INIZIALIZZAZIONE SICURA DEL MODELLO E DEI TOOL ---
 const baseLlm = getLLM('ollama'); // Scegli qui il provider preferito
 
@@ -97,7 +123,7 @@ async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
         new Promise(resolve => setTimeout(resolve, 3000))
     ]);
     const currentUrl = page.url();
-    const domAst = await extractSimplifiedDOM(page);
+    const domAst = await extractSimplifiedDOMWithRetry(page);
 
     console.log(`\n--- AST (${currentUrl}) ---\n${domAst}\n--- FINE AST ---\n`);
 
