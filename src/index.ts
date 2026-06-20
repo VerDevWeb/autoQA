@@ -24,6 +24,8 @@ const AgentStateDef = Annotation.Root({
     domAst: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     lastToolCall: Annotation<any>({ reducer: (x, y) => y ?? x, default: () => null }),
     actionHistory: Annotation<string[]>({ reducer: (x, y) => y ?? x, default: () => [] }),
+    completedDomains: Annotation<string[]>({ reducer: (x, y) => y ?? x, default: () => [] }),
+    domainStatus: Annotation<Record<string, DomainStatus>>({ reducer: (x, y) => y ?? x, default: () => ({}) }),
     noToolCallStreak: Annotation<number>({ reducer: (x, y) => y ?? x, default: () => 0 }),
     isFinished: Annotation<boolean>({ reducer: (x, y) => y ?? x, default: () => false }),
 });
@@ -35,6 +37,14 @@ type AstElement = {
     tagName: string;
     text: string;
     attributes: Record<string, string>;
+};
+
+type DomainStatus = {
+    filled: boolean;
+    submitted: boolean;
+    clicked: boolean;
+    clickedResult: boolean;
+    cookieHandled: boolean;
 };
 
 // --- 4. ESTRAZIONE AST AD ALTA FEDELTÀ (Playwright) ---
@@ -143,6 +153,125 @@ function buildCompactAstForPrompt(domAst: string): string {
     }).join("\n");
 }
 
+function normalizeDomain(domain: string): string {
+    return domain.toLowerCase().replace(/^www\./, "").trim();
+}
+
+function getDomainFromUrl(urlValue: string): string {
+    try {
+        return normalizeDomain(new URL(urlValue).hostname);
+    } catch {
+        return "";
+    }
+}
+
+function domainsMatch(left: string, right: string): boolean {
+    const l = normalizeDomain(left);
+    const r = normalizeDomain(right);
+    return l === r || l.endsWith(`.${r}`) || r.endsWith(`.${l}`);
+}
+
+function extractObjectiveDomains(objective: string): string[] {
+    const matches = objective.toLowerCase().match(/\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g) ?? [];
+    const orderedUnique: string[] = [];
+    for (const match of matches) {
+        const normalized = normalizeDomain(match);
+        if (!orderedUnique.some((d) => domainsMatch(d, normalized))) {
+            orderedUnique.push(normalized);
+        }
+    }
+    return orderedUnique;
+}
+
+function findNextTargetDomain(objectiveDomains: string[], completedDomains: string[]): string | null {
+    for (const objectiveDomain of objectiveDomains) {
+        const isAlreadyCompleted = completedDomains.some((completed) => domainsMatch(completed, objectiveDomain));
+        if (!isAlreadyCompleted) {
+            return objectiveDomain;
+        }
+    }
+    return null;
+}
+
+function isDomainComplete(domain: string, status: DomainStatus | undefined, objective: string): boolean {
+    if (!status) return false;
+    const objectiveLc = objective.toLowerCase();
+    const isYoutube = domain.includes("youtube.");
+    const wantsClickResult = objectiveLc.includes("clicca") && objectiveLc.includes("risultat");
+
+    if (isYoutube && wantsClickResult) {
+        return status.submitted && status.clickedResult;
+    }
+
+    if (domain.includes("wikipedia.")) {
+        return status.submitted;
+    }
+
+    return status.submitted || status.clicked;
+}
+
+function isConsentLikeElement(target: AstElement | undefined): boolean {
+    if (!target) return false;
+    const text = (target.text || "").toLowerCase();
+    const aria = (target.attributes?.["aria-label"] || "").toLowerCase();
+    const combined = `${text} ${aria}`;
+    return combined.includes("cookie")
+        || combined.includes("consenso")
+        || combined.includes("accetta")
+        || combined.includes("accept all")
+        || combined.includes("consent");
+}
+
+function isYoutubeResultLikeElement(target: AstElement | undefined): boolean {
+    if (!target) return false;
+    const href = (target.attributes?.href || "").toLowerCase();
+    const id = (target.attributes?.id || "").toLowerCase();
+    const className = (target.attributes?.class || "").toLowerCase();
+    const tag = (target.tagName || "").toLowerCase();
+
+    if (href.includes("/watch") || href.includes("watch?v=")) return true;
+    if (id.includes("video-title")) return true;
+    if (className.includes("ytd-video-renderer") || className.includes("video-title")) return true;
+    if (tag === "a" && target.text.trim().length > 0) return true;
+
+    return false;
+}
+
+function upsertDomainStatus(
+    current: Record<string, DomainStatus>,
+    domain: string,
+    updater: (prev: DomainStatus) => DomainStatus
+): Record<string, DomainStatus> {
+    if (!domain) return current;
+    const base: DomainStatus = current[domain] ?? {
+        filled: false,
+        submitted: false,
+        clicked: false,
+        clickedResult: false,
+        cookieHandled: false
+    };
+    return {
+        ...current,
+        [domain]: updater(base)
+    };
+}
+
+function tryMarkCompletedDomain(
+    objective: string,
+    domain: string,
+    domainStatus: Record<string, DomainStatus>,
+    completedDomains: string[]
+): string[] {
+    if (!domain) return completedDomains;
+    if (!isDomainComplete(domain, domainStatus[domain], objective)) {
+        return completedDomains;
+    }
+    if (completedDomains.some((d) => domainsMatch(d, domain))) {
+        return completedDomains;
+    }
+    return [...completedDomains, domain];
+}
+
 async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
     const primary = page.locator(`[data-agent-id="${agentId}"]`);
     if (await primary.count() > 0) {
@@ -223,6 +352,8 @@ const llmWithTools = baseLlm.bindTools([{
     schema: webActionSchema
 }]);
 
+const OBJECTIVE = "Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato";
+
 let llmIterationCounter = 0;
 let totalEstimatedInputTokens = 0;
 let totalReportedInputTokens = 0;
@@ -277,9 +408,21 @@ async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
 async function decideNode(state: AgentState): Promise<Partial<AgentState>> {
     console.log("-> [Decide] L'LLM sta scegliendo il tool da invocare...");
 
+    const objectiveDomains = extractObjectiveDomains(state.objective);
+    const nextTargetDomain = findNextTargetDomain(objectiveDomains, state.completedDomains);
+
+    if (objectiveDomains.length > 0 && nextTargetDomain === null) {
+        console.log("[Decide] Tutti i domini dell'obiettivo risultano completati.");
+        return { isFinished: true, lastToolCall: null };
+    }
+
     const historyBlock = state.actionHistory.length > 0
         ? `\nAzioni già eseguite (NON ripetere queste):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
         : '';
+
+    const sequenceBlock = objectiveDomains.length > 0
+        ? `\nDomini obiettivo in ordine: ${objectiveDomains.join(" -> ")}\nDomini completati: ${state.completedDomains.length > 0 ? state.completedDomains.join(", ") : "nessuno"}\nProssimo dominio target: ${nextTargetDomain ?? "nessuno"}\n`
+        : "";
 
     const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
 
@@ -287,19 +430,32 @@ async function decideNode(state: AgentState): Promise<Partial<AgentState>> {
         Il tuo obiettivo finale è: ${state.objective}
         Ti trovi attualmente all'URL: ${state.currentUrl}
         ${historyBlock}
+        ${sequenceBlock}
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
 Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
+    
+    const reinforcedPrompt = `${prompt}
+
+Regole operative:
+- Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
+- Non ripetere azioni gia' presenti nello storico.`;
+    
+    const sequenceRule = nextTargetDomain
+        ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
+        : "";
+
+    const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
 
     llmIterationCounter += 1;
-    const estimatedInputTokens = estimateInputTokens(prompt);
+    const estimatedInputTokens = estimateInputTokens(finalPrompt);
     totalEstimatedInputTokens += estimatedInputTokens;
     console.log(
         `[LLM] Iterazione ${llmIterationCounter} | Input stimati: ${estimatedInputTokens} token | Totale stimati: ${totalEstimatedInputTokens}`
     );
 
-    const response = await llmWithTools.invoke([new HumanMessage(prompt)]);
+    const response = await llmWithTools.invoke([new HumanMessage(finalPrompt)]);
     const reportedInputTokens = getReportedInputTokens(response);
     if (reportedInputTokens !== null) {
         totalReportedInputTokens += reportedInputTokens;
@@ -320,22 +476,26 @@ Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSI
     const nextNoToolCallStreak = state.noToolCallStreak + 1;
     console.warn(`L'LLM non ha invocato tool (tentativo ${nextNoToolCallStreak}/3).`);
     if (nextNoToolCallStreak >= 3) {
-        return { isFinished: true, noToolCallStreak: nextNoToolCallStreak };
+        return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak };
     }
 
     return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak };
 }
 
 async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
+    if (state.isFinished) {
+        return { isFinished: true, lastToolCall: null };
+    }
+
     const decision = state.lastToolCall;
     if (!decision) {
-        return { isFinished: true };
+        return { isFinished: true, lastToolCall: null };
     }
 
     console.log(`-> [Execute] Azione: ${decision.action} su ID: ${decision.agentId ?? 'N/A'} (Motivazione: ${decision.reasoning})`);
 
     if (decision.action === 'done') {
-        return { isFinished: true };
+        return { isFinished: true, lastToolCall: null };
     }
 
     if (decision.action === 'goto') {
@@ -343,6 +503,30 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
         if (!targetUrl) {
             console.error("Azione 'goto' senza URL.");
             return { isFinished: false, lastToolCall: null };
+        }
+
+        const objectiveDomains = extractObjectiveDomains(state.objective);
+        const nextTargetDomain = findNextTargetDomain(objectiveDomains, state.completedDomains);
+        const targetDomain = getDomainFromUrl(targetUrl);
+
+        if (nextTargetDomain && targetDomain && !domainsMatch(targetDomain, nextTargetDomain)) {
+            const blocked = `goto bloccato verso ${targetDomain} (atteso: ${nextTargetDomain})`;
+            console.warn(`[GuardRail] ${blocked}`);
+            return {
+                isFinished: false,
+                lastToolCall: null,
+                actionHistory: [...state.actionHistory, blocked]
+            };
+        }
+
+        if (targetDomain && state.completedDomains.some((d) => domainsMatch(d, targetDomain)) && nextTargetDomain) {
+            const blocked = `goto bloccato verso dominio già completato: ${targetDomain}`;
+            console.warn(`[GuardRail] ${blocked}`);
+            return {
+                isFinished: false,
+                lastToolCall: null,
+                actionHistory: [...state.actionHistory, blocked]
+            };
         }
 
         try {
@@ -354,14 +538,32 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
         return { isFinished: false, lastToolCall: null };
     }
 
+    let updatedDomainStatus = state.domainStatus;
+    let updatedCompletedDomains = state.completedDomains;
+
     try {
         switch (decision.action) {
             case 'click':
                 if (!decision.agentId) throw new Error("Azione 'click' richiede agentId.");
                 {
+                    const clickTarget = parseDomAst(state.domAst).find((el) => el.agentId === decision.agentId);
                     const locator = await resolveLocatorWithFallback(state, decision.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.click();
+
+                    const domain = getDomainFromUrl(page.url());
+                    const consentClick = isConsentLikeElement(clickTarget);
+                    const resultLikeClick = domain.includes("youtube.")
+                        ? isYoutubeResultLikeElement(clickTarget) && !consentClick
+                        : !consentClick;
+
+                    updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                        ...prev,
+                        clicked: true,
+                        clickedResult: prev.clickedResult || resultLikeClick,
+                        cookieHandled: prev.cookieHandled || consentClick
+                    }));
+                    updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
                 }
                 break;
             case 'fill':
@@ -370,6 +572,12 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
                     const locator = await resolveLocatorWithFallback(state, decision.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.fill(decision.value || "");
+
+                    const domain = getDomainFromUrl(page.url());
+                    updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                        ...prev,
+                        filled: true
+                    }));
                 }
                 break;
             case 'select':
@@ -392,6 +600,15 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
                     }
                 }
                 await page.keyboard.press('Enter');
+
+                {
+                    const domain = getDomainFromUrl(page.url());
+                    updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                        ...prev,
+                        submitted: true
+                    }));
+                    updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
+                }
                 break;
             default:
                 console.log("Azione sconosciuta o non gestita.");
@@ -401,7 +618,13 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
     }
 
     const historyEntry = `${decision.action}${decision.agentId ? ` su ${decision.agentId}` : ''}${decision.value ? ` con valore "${decision.value}"` : ''}${decision.url ? ` verso ${decision.url}` : ''}`;
-    return { isFinished: false, lastToolCall: null, actionHistory: [...state.actionHistory, historyEntry] };
+    return {
+        isFinished: false,
+        lastToolCall: null,
+        actionHistory: [...state.actionHistory, historyEntry],
+        domainStatus: updatedDomainStatus,
+        completedDomains: updatedCompletedDomains
+    };
 }
 
 // --- 7. COSTRUZIONE E COMPILAZIONE DEL GRAFO ---
@@ -423,20 +646,24 @@ async function run() {
         const context = await browser.newContext();
         page = await context.newPage();
 
-        await page.goto("https://www.wikipedia.org/");
+        // Nessun goto hardcoded: la navigazione iniziale viene decisa via tool action='goto'.
+        await page.goto("about:blank");
 
         const initialState = {
-            objective: "Seleziona la lingua 'Italiano' dal menu a tendina delle lingue principali, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio.",
+            objective: OBJECTIVE,
             currentUrl: "",
             domAst: "",
             lastToolCall: null,
             actionHistory: [],
+            completedDomains: [],
+            domainStatus: {},
             noToolCallStreak: 0,
             isFinished: false
         };
 
         console.log("Avvio del flusso con Native Tool Calling...");
-        await app.invoke(initialState, { recursionLimit: 20 });
+        console.log(`[Objective] ${initialState.objective}`);
+        await app.invoke(initialState, { recursionLimit: 100 });
 
         console.log("Flusso terminato con successo.");
     } finally {
