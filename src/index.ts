@@ -11,6 +11,7 @@ import { logSessionTokenSummary } from "./tokens.js";
 dotenv.config();
 
 // --- CONSTANTI ---
+<<<<<<< HEAD
 const OBJECTIVE = "Vai su Google, cerca Verdevweb e clicca sul primo risultato, analizza il sito e dimmi cos'è verdev in 250 parole";
 
 // Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio, poi cerca un altro argomento a tua scelta. 
@@ -21,6 +22,13 @@ const OBJECTIVE = "Vai su Google, cerca Verdevweb e clicca sul primo risultato, 
 const baseLlm = getLLM('ollama');
 
 // Controlla se il provider selezionato supporta a livello nativo il tool calling, eventualmente si dovrebbe poter fare un workaround
+=======
+const OBJECTIVE = "Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato";
+
+// --- SETUP LLM ---
+const baseLlm = getLLM('ollama');
+
+>>>>>>> 9afb263 (code refactor => divided index.ts into single files, each file's function or content is explained in the README.ts)
 if (typeof baseLlm.bindTools !== "function") {
     throw new Error(`Il provider selezionato non supporta nativamente il tool calling.`);
 }
