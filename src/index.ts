@@ -110,6 +110,39 @@ function escapeRegex(value: string): string {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function sanitizeCompactText(value: string): string {
+    return value.replace(/[\r\n|]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function buildCompactAstForPrompt(domAst: string): string {
+    const elements = parseDomAst(domAst);
+    if (elements.length === 0) {
+        return "";
+    }
+
+    // Formato ultra-compatto: una riga per elemento, niente graffe/chiavi ripetute JSON.
+    return elements.map((el) => {
+        const txt = sanitizeCompactText(el.text || "").slice(0, 180);
+        const attr = el.attributes || {};
+
+        const extras: string[] = [];
+        const type = sanitizeCompactText(attr.type || "");
+        const role = sanitizeCompactText(attr.role || "");
+        const placeholder = sanitizeCompactText(attr.placeholder || "").slice(0, 80);
+        const ariaLabel = sanitizeCompactText(attr["aria-label"] || "").slice(0, 80);
+        const name = sanitizeCompactText(attr.name || "").slice(0, 60);
+
+        if (type) extras.push(`t=${type}`);
+        if (role) extras.push(`r=${role}`);
+        if (placeholder) extras.push(`ph=${placeholder}`);
+        if (ariaLabel) extras.push(`aria=${ariaLabel}`);
+        if (name) extras.push(`n=${name}`);
+
+        const extrasBlock = extras.length > 0 ? `|${extras.join("|")}` : "";
+        return `${el.agentId}|${el.tagName}|${txt}${extrasBlock}`;
+    }).join("\n");
+}
+
 async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
     const primary = page.locator(`[data-agent-id="${agentId}"]`);
     if (await primary.count() > 0) {
@@ -236,12 +269,14 @@ async function decideNode(state: AgentState): Promise<Partial<AgentState>> {
         ? `\nAzioni già eseguite (NON ripetere queste):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
         : '';
 
+    const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
+
     const prompt = `Sei un agente di automazione web autonomo.
         Il tuo obiettivo finale è: ${state.objective}
         Ti trovi attualmente all'URL: ${state.currentUrl}
         ${historyBlock}
-        Ecco l'AST ad alta fedeltà degli elementi interattivi presenti nella pagina:
-        ${state.domAst}
+        Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
+        ${compactAstForPrompt}
 
 Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
 
