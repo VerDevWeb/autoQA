@@ -257,7 +257,7 @@ async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
     const currentUrl = page.url();
     const domAst = await extractSimplifiedDOMWithRetry(page);
 
-    console.log(`\n--- AST (${currentUrl}) ---\n${domAst}\n--- FINE AST ---\n`);
+    // console.log(`\n--- AST (${currentUrl}) ---\n${domAst}\n--- FINE AST ---\n`);
 
     return { currentUrl, domAst };
 }
