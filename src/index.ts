@@ -50,6 +50,7 @@ const AgentStateDef = Annotation.Root({
     domAst: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     lastToolCall: Annotation<any>({ reducer: (x, y) => y ?? x, default: () => null }),
     actionHistory: Annotation<string[]>({ reducer: (x, y) => y ?? x, default: () => [] }),
+    noToolCallStreak: Annotation<number>({ reducer: (x, y) => y ?? x, default: () => 0 }),
     isFinished: Annotation<boolean>({ reducer: (x, y) => y ?? x, default: () => false }),
 });
 
@@ -152,12 +153,17 @@ Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSI
         const toolCall = toolCalls[0];
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
-            return { lastToolCall: toolCall.args };
+            return { lastToolCall: toolCall.args, noToolCallStreak: 0 };
         }
     }
 
-    console.warn("L'LLM non ha invocato il tool nativo o ha terminato in autonomia.");
-    return { isFinished: true };
+    const nextNoToolCallStreak = state.noToolCallStreak + 1;
+    console.warn(`L'LLM non ha invocato tool (tentativo ${nextNoToolCallStreak}/3).`);
+    if (nextNoToolCallStreak >= 3) {
+        return { isFinished: true, noToolCallStreak: nextNoToolCallStreak };
+    }
+
+    return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak };
 }
 
 async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
@@ -189,30 +195,37 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
     }
 
     try {
-        let locator = null;
-        if (decision.agentId) {
-            locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
-            await locator.waitFor({ state: "attached", timeout: 5000 });
-        }
-
         switch (decision.action) {
             case 'click':
-                if (!locator) throw new Error("Azione 'click' richiede agentId.");
-                await locator.click();
+                if (!decision.agentId) throw new Error("Azione 'click' richiede agentId.");
+                {
+                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.click();
+                }
                 break;
             case 'fill':
-                if (!locator) throw new Error("Azione 'fill' richiede agentId.");
-                await locator.fill(decision.value || "");
+                if (!decision.agentId) throw new Error("Azione 'fill' richiede agentId.");
+                {
+                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.fill(decision.value || "");
+                }
                 break;
             case 'select':
-                if (!locator) throw new Error("Azione 'select' richiede agentId.");
-                await locator.selectOption(decision.value || "");
+                if (!decision.agentId) throw new Error("Azione 'select' richiede agentId.");
+                {
+                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.selectOption(decision.value || "");
+                }
                 break;
             case 'enter':
-                // Se c'è un agentId, tenta di focalizzare l'elemento prima di premere Enter.
-                // In caso di timeout (DOM cambiato dopo fill/autocomplete), premi Enter sul focus corrente.
-                if (locator) {
+                // Non bloccare Enter su waitFor: su DOM dinamico (autocomplete) l'ID può cambiare.
+                // Se possibile focalizza rapidamente l'elemento, poi invia Enter alla tastiera.
+                if (decision.agentId) {
                     try {
+                        const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
                         await locator.focus({ timeout: 2000 });
                     } catch {
                         // elemento non più trovabile, il focus è già sul campo giusto
@@ -257,6 +270,7 @@ async function run() {
         domAst: "",
         lastToolCall: null,
         actionHistory: [],
+        noToolCallStreak: 0,
         isFinished: false
     };
 
