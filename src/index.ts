@@ -1,7 +1,7 @@
 import { StateGraph, START, END, Annotation } from "@langchain/langgraph";
 import { HumanMessage } from "@langchain/core/messages";
 import { chromium } from "playwright";
-import type { Browser, Page } from "playwright";
+import type { Browser, Page, Locator } from "playwright";
 import { z } from "zod";
 import * as dotenv from "dotenv";
 import { getLLM } from "./modelController.js";
@@ -30,6 +30,13 @@ const AgentStateDef = Annotation.Root({
 
 type AgentState = typeof AgentStateDef.State;
 
+type AstElement = {
+    agentId: string;
+    tagName: string;
+    text: string;
+    attributes: Record<string, string>;
+};
+
 // --- 4. ESTRAZIONE AST AD ALTA FEDELTÀ (Playwright) ---
 async function extractSimplifiedDOM(page: Page): Promise<string> {
     return await page.evaluate(() => {
@@ -37,6 +44,11 @@ async function extractSimplifiedDOM(page: Page): Promise<string> {
         const elements: any[] = [];
         const selector = 'a, button, input, select, textarea, [role="button"], [onclick], [cursor="pointer"]';
         const interactables = document.querySelectorAll(selector);
+
+        const bodyText = document.body?.innerText || '';
+        const bodyWords = bodyText.trim() ? bodyText.trim().split(/\s+/).length : 0;
+        const compactMode = bodyWords > 1200;
+        const maxWordsPerElement = 20;
 
         interactables.forEach((el) => {
             const rect = el.getBoundingClientRect();
@@ -60,6 +72,18 @@ async function extractSimplifiedDOM(page: Page): Promise<string> {
                 visualText = (el as HTMLInputElement).value || el.getAttribute('placeholder') || '';
             }
 
+            if (compactMode) {
+                const clean = visualText.replace(/\s+/g, ' ').trim();
+                if (clean) {
+                    const words = clean.split(' ');
+                    visualText = words.length <= maxWordsPerElement
+                        ? clean
+                        : `${words.slice(0, maxWordsPerElement).join(' ')} ...`;
+                } else {
+                    visualText = '';
+                }
+            }
+
             elements.push({
                 agentId: id,
                 tagName: el.tagName.toLowerCase(),
@@ -70,6 +94,60 @@ async function extractSimplifiedDOM(page: Page): Promise<string> {
 
         return JSON.stringify(elements, null, 2);
     });
+}
+
+function parseDomAst(domAst: string): AstElement[] {
+    try {
+        const parsed = JSON.parse(domAst);
+        if (!Array.isArray(parsed)) return [];
+        return parsed as AstElement[];
+    } catch {
+        return [];
+    }
+}
+
+function escapeRegex(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
+    const primary = page.locator(`[data-agent-id="${agentId}"]`);
+    if (await primary.count() > 0) {
+        return primary.first();
+    }
+
+    const astElements = parseDomAst(state.domAst);
+    const target = astElements.find((el) => el.agentId === agentId);
+    if (!target) {
+        throw new Error(`Elemento ${agentId} non trovato nell'AST corrente.`);
+    }
+
+    const normalizedText = (target.text || '').replace(/\s+/g, ' ').trim();
+    if (normalizedText.length >= 3) {
+        const textRegex = new RegExp(escapeRegex(normalizedText), 'i');
+        const byContains = page.locator(target.tagName).filter({ hasText: textRegex });
+        if (await byContains.count() > 0) {
+            return byContains.first();
+        }
+    }
+
+    const placeholder = target.attributes?.placeholder;
+    if (placeholder) {
+        const byPlaceholder = page.getByPlaceholder(placeholder, { exact: false });
+        if (await byPlaceholder.count() > 0) {
+            return byPlaceholder.first();
+        }
+    }
+
+    const ariaLabel = target.attributes?.["aria-label"];
+    if (ariaLabel) {
+        const byLabel = page.getByLabel(ariaLabel, { exact: false });
+        if (await byLabel.count() > 0) {
+            return byLabel.first();
+        }
+    }
+
+    throw new Error(`Impossibile risolvere il locator per ${agentId} (ID non più valido e fallback testuale fallito).`);
 }
 
 function isContextDestroyedError(error: unknown): boolean {
@@ -199,7 +277,7 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
             case 'click':
                 if (!decision.agentId) throw new Error("Azione 'click' richiede agentId.");
                 {
-                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.click();
                 }
@@ -207,7 +285,7 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
             case 'fill':
                 if (!decision.agentId) throw new Error("Azione 'fill' richiede agentId.");
                 {
-                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.fill(decision.value || "");
                 }
@@ -215,7 +293,7 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
             case 'select':
                 if (!decision.agentId) throw new Error("Azione 'select' richiede agentId.");
                 {
-                    const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.selectOption(decision.value || "");
                 }
@@ -225,7 +303,7 @@ async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
                 // Se possibile focalizza rapidamente l'elemento, poi invia Enter alla tastiera.
                 if (decision.agentId) {
                     try {
-                        const locator = page.locator(`[data-agent-id="${decision.agentId}"]`);
+                        const locator = await resolveLocatorWithFallback(state, decision.agentId);
                         await locator.focus({ timeout: 2000 });
                     } catch {
                         // elemento non più trovabile, il focus è già sul campo giusto
