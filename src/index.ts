@@ -190,6 +190,27 @@ const llmWithTools = baseLlm.bindTools([{
     schema: webActionSchema
 }]);
 
+let llmIterationCounter = 0;
+let totalEstimatedInputTokens = 0;
+let totalReportedInputTokens = 0;
+
+function estimateInputTokens(text: string): number {
+    // Stima veloce: circa 1 token ogni 4 caratteri per testi latini.
+    return Math.ceil(text.length / 4);
+}
+
+function getReportedInputTokens(response: any): number | null {
+    const usage = response?.usage_metadata ?? response?.response_metadata?.tokenUsage ?? response?.response_metadata?.usage;
+    if (!usage) return null;
+
+    const candidate = usage.input_tokens
+        ?? usage.prompt_tokens
+        ?? usage.inputTokenCount
+        ?? usage.promptTokenCount;
+
+    return typeof candidate === "number" ? candidate : null;
+}
+
 // --- 6. NODI DEL GRAFO ---
 let browser: Browser;
 let page: Page;
@@ -224,7 +245,21 @@ async function decideNode(state: AgentState): Promise<Partial<AgentState>> {
 
 Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
 
+    llmIterationCounter += 1;
+    const estimatedInputTokens = estimateInputTokens(prompt);
+    totalEstimatedInputTokens += estimatedInputTokens;
+    console.log(
+        `[LLM] Iterazione ${llmIterationCounter} | Input stimati: ${estimatedInputTokens} token | Totale stimati: ${totalEstimatedInputTokens}`
+    );
+
     const response = await llmWithTools.invoke([new HumanMessage(prompt)]);
+    const reportedInputTokens = getReportedInputTokens(response);
+    if (reportedInputTokens !== null) {
+        totalReportedInputTokens += reportedInputTokens;
+        console.log(
+            `[LLM] Iterazione ${llmIterationCounter} | Input reali (provider): ${reportedInputTokens} token | Totale reali: ${totalReportedInputTokens}`
+        );
+    }
 
     const toolCalls = response.tool_calls;
     if (toolCalls && toolCalls.length > 0) {
