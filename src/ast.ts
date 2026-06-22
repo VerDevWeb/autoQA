@@ -84,26 +84,14 @@ export function buildCompactAstForPrompt(domAst: string): string {
         return "";
     }
 
-    return elements.map((el) => {
-        const txt = sanitizeCompactText(el.text || "").slice(0, 180);
-        const attr = el.attributes || {};
-
-        const extras: string[] = [];
-        const type = sanitizeCompactText(attr.type || "");
-        const role = sanitizeCompactText(attr.role || "");
-        const placeholder = sanitizeCompactText(attr.placeholder || "").slice(0, 80);
-        const ariaLabel = sanitizeCompactText(attr["aria-label"] || "").slice(0, 80);
-        const name = sanitizeCompactText(attr.name || "").slice(0, 60);
-
-        if (type) extras.push(`t=${type}`);
-        if (role) extras.push(`r=${role}`);
-        if (placeholder) extras.push(`ph=${placeholder}`);
-        if (ariaLabel) extras.push(`aria=${ariaLabel}`);
-        if (name) extras.push(`n=${name}`);
-
-        const extrasBlock = extras.length > 0 ? `|${extras.join("|")}` : "";
-        return `${el.agentId}|${el.tagName}|${txt}${extrasBlock}`;
-    }).join("\n");
+    return elements
+        .filter((el) => el.text?.trim())
+        .map((el) => {
+            const txt = sanitizeCompactText(el.text || "").slice(0, 180);
+            const role = el.attributes?.role;
+            const roleBlock = role ? `|role=${sanitizeCompactText(role)}` : "";
+            return `${el.agentId}|${el.tagName}|${txt}${roleBlock}`;
+        }).join("\n");
 }
 
 function isContextDestroyedError(error: unknown): boolean {
