@@ -27,15 +27,19 @@ export function getLLM(provider: LLM_TYPES): BaseChatModel {
             return new ChatOllama({
                 baseUrl: "http://localhost:11434",
                 model: "gemma4:31b-cloud",
-                temperature: 0 
+                temperature: 0,
+                think: false,
             });
-            // TESTED OLLAMA MODELS:
-            // gemma4:31b-cloud
-            // gemma4:e2b
-            // qwen3:1.7b
+            // OLLAMA MODELS TESTED:
+            // gemma4:31b-cloud => funziona benissimo, è una scheggia, ma è in cloud
+            // gemma4:e2b => funziona e non va neanche troppo lento, spesso ha terminato il flusso prima che il task fosse davvero terminato, considera che però ho usato il pc appena dopo il riavvio, che aveva 5/16GB di RAM occupati
+            // qwen3:1.7b => tipo gemma4:e2b, forse leggermente leggermente più lento, spesso ha terminato il flusso prima che il task fosse davvero terminato, memoria RAM 9,7/16GB, avviato dopo aver usato Gemma4:e2b, il quale era stato avviato appena dopo aver riavviato il pc.
+            // qwen2.5-coder:3b => molto buono, tipo gemma4:e2b e qwen3:1.7b, più o meno stessa velocità, forse un pochino più veloce ma non ne sono sicuro, anche esso termina il flusso prima di aver effettivamente eseguito tutto il task assegnato.
+            // gemma4:e2b-it-qat => piccolino, qualcosa fa
         case 'lmstudio':
+            // LM Studio exposes an OpenAI compatible API, so we use ChatOpenAI method
             return new ChatOpenAI({
-                model: "local-model",
+                model: "qwen/qwen3-1.7b",
                 temperature: 0,
                 configuration: { baseURL: "http://localhost:1234/v1" }
             });

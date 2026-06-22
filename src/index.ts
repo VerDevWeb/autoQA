@@ -11,11 +11,14 @@ import { logSessionTokenSummary } from "./tokens.js";
 dotenv.config();
 
 // --- CONSTANTI ---
-const OBJECTIVE = "Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato";
+const OBJECTIVE = "Vai su it.wikipedia.org, clicca su testo grande e tema scuro dal menu laterale, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio.";
+
+// Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato
 
 // --- SETUP LLM ---
 const baseLlm = getLLM('ollama');
 
+// Controlla se il provider selezionato supporta a livello nativo il tool calling, eventualmente si dovrebbe poter fare un workaround
 if (typeof baseLlm.bindTools !== "function") {
     throw new Error(`Il provider selezionato non supporta nativamente il tool calling.`);
 }
