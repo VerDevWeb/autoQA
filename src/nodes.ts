@@ -21,11 +21,26 @@ import {
     llmIterationCounter,
 } from "./tokens.js";
 
+
+
+
+
+
+
 let currentPage: Page;
 
 export function setPageForNodes(page: Page): void {
     currentPage = page;
 }
+
+
+/*  HOW DO THIS AGENT NODES WORK UNDER THE HOOD?
+
+    AGENT'S EYES            -   observeNode   - this node reads the page content and extract it for the decideNode
+    AGENT'S BRAIN           -   decideNode    - this node handles the reasoning part where the LLM choses what tool it needs to invoke in order to complete the current task
+    AGENT'S ARMS AND HANDS  -   executeNode   - this node calls the actual tools
+*/
+
 
 export async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
     console.log("-> [Observe] Analisi del DOM corrente...");
