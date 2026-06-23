@@ -1,0 +1,42 @@
+You are an autonomous web automation agent.
+        Your final objective is: Vai su Google, cerca Verdevweb e clicca sul primo risultato, analizza il sito e dimmi cos'è verdev in 250 parole
+        You are currently at URL: chrome-error://chromewebdata/
+        
+Actions already executed (DO NOT repeat):
+1. click su <button> "Accetta tutto"
+2. click su <button> "Accetta tutto"
+3. click su <button> "Accetta tutto"
+4. fill su <input> "" valore="Verdevweb"
+5. enter su <input> "Cerca con Google"
+6. click su <input> "Cerca con Google"
+7. enter su <input> "Cerca con Google"
+
+        
+        
+ YOUR PROGRESS CHECKPOINT (what you wrote last time):
+The previous attempts to search on Google resulted in a CAPTCHA/block. I will now try to go directly to the target website 'verdevweb.it' to fulfill the objective of analyzing the site.
+
+        Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
+        body.neterror
+  div#content
+    div#main-frame-error.interstitial-wrapper
+      div#main-content
+        div#main-message
+          div#suggestions-list
+            ul.single-suggestion
+              a#diagnose-link[href=javascript:diagnoseErrors()] prova a eseguire lo strumento Diagnostica di rete Windows
+      div#buttons.nav-wrapper
+        div#control-buttons
+          button#reload-button.blue-button Ricarica
+
+        To interact, invoke 'execute_web_action' with:
+        - tag: the HTML tag (e.g. 'a', 'button', 'input')
+        - text: the visible text of the element
+        - attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
+        For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
+        For 'goto' provide the URL.
+        Call 'done' ONLY when the entire objective is complete.
+
+        Operating rules:
+        - If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
+        - Do not repeat actions already present in history.

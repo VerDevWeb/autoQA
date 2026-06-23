@@ -1,0 +1,402 @@
+You are an autonomous web automation agent.
+Your final objective is: Vai su it.wikipedia.org, cerca 'Ferrari', premi Invio, poi clicca sul link 'Formula 1' nella pagina, poi torna alla homepage di Wikipedia e cerca un altro argomento a tua scelta.
+You are currently at URL: https://it.wikipedia.org/wiki/Pagina_principale
+
+Actions already executed (DO NOT repeat):
+1. fill su <input> "Cerca in Wikipedia" valore="Ferrari"
+2. enter su <input> "Cerca in Wikipedia"
+3. enter su <input> "Cerca in Wikipedia"
+4. fill su <input> "" valore="Ferrari"
+5. enter su <input> "Cerca in Wikipedia"
+6. enter su <input> "Cerca in Wikipedia"
+7. enter su <input> "Cerca in Wikipedia"
+8. enter su <input> "Cerca in Wikipedia"
+
+
+Objective domains in order: it.wikipedia.org
+Completed domains: it.wikipedia.org
+Next target domain: none
+
+
+📋 YOUR PROGRESS CHECKPOINT (what you wrote last time):
+Searching for 'Ferrari' on Wikipedia.
+
+Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
+body.skin--responsive
+  a.mw-jump-link[href=#bodyContent] Vai al contenuto
+  header.vector-header
+    div#p-search.vector-search-box-vue[role=search]
+      form#searchform.cdx-typeahead-search__form
+        input.cdx-text-input__input[role=combobox][type=search][placeholder=Cerca in Wikipedia][name=search][aria-label=Cerca in Wikipedia] Ferrari
+        button.cdx-button Ricerca
+    nav.vector-user-links[aria-label=Strumenti personali]
+      div#p-vector-user-menu-overflow.vector-menu
+        ul.vector-menu-content-list
+          li#pt-sitesupport-2.mw-list-item
+            a Fai una donazione
+          li#pt-createaccount-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:CreaUtenza&returnto=Pagina+principale] Registrati
+          li#pt-login-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:Entra&returnto=Pagina+principale] Entra
+  div#siteNotice
+    div#centralNotice.cn-wle_2026_it
+      div#cn-toggle-box
+      a.extiw[href=http://www.wikilovesearth.it/] Wiki Loves Earth Italia è il concorso fotografico dedicato alle aree naturali protette italiane.
+      a.extiw[href=http://www.wikilovesearth.it/] Dal 15 giugno fai una foto, promuovi il territorio, aiuta Wikipedia e vinci!
+    a[role=button] nascondi
+    div#localNotice
+      a.external Wikimedia Italia
+  main#content.mw-body
+    div#left-navigation
+      nav[aria-label=Namespace]
+        div#p-associated-pages.vector-menu
+          ul.vector-menu-content-list
+            li#ca-nstab-main.selected
+              a[href=/wiki/Pagina_principale] Pagina principale
+            li#ca-talk.vector-tab-noicon
+              a[href=/wiki/Discussione:Pagina_principale] Discussione
+    div#right-navigation.vector-collapsible
+      nav[aria-label=Visite]
+        div#p-views.vector-menu
+          ul.vector-menu-content-list
+            li#ca-view.selected
+              a[href=/wiki/Pagina_principale] Leggi
+            li#ca-viewsource.mw-list-item
+              a[href=/w/index.php?title=Pagina_principale&action=edit] Visualizza sorgente
+            li#ca-history.mw-list-item
+              a[href=/w/index.php?title=Pagina_principale&action=history] Cronologia
+    nav.vector-appearance-landmark[aria-label=Aspetto]
+      div#vector-appearance-pinned-container.vector-pinned-container
+        div#vector-appearance.vector-appearance
+          button.vector-pinnable-header-toggle-button nascondi
+    div#bodyContent.vector-body
+      div#mw-content-text.mw-body-content
+        section#mwAQ
+          div#mwBQ.main-page-header
+            a[href=//it.wikipedia.org/wiki/Aiuto:Benvenuto] Benvenuti
+            a[href=//it.wikipedia.org/wiki/Wikipedia] Wikipedia
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Wikipedia_è_libera] libera
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Aiuta_Wikipedia] collaborativa
+            a[href=//it.wikipedia.org/wiki/Speciale:TutteLePagine] Sfoglia l'indice
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Sommario] Consulta il sommario
+            a[href=//it.wikipedia.org/wiki/Portale:Portali] Naviga tra i portali tematici
+            a[href=//it.wikipedia.org/wiki/Speciale:Statistiche] 1 975 124
+            a[href=//it.wikipedia.org/wiki/Aiuto:Voce] voci
+            a[href=//it.wikipedia.org/wiki/Lingua_italiana] italiano
+            a.external[href=https://it.m.wikipedia.org?mobileaction=toggle_view_mobile] Versione per dispositivi mobili
+          div#mwBg.main-page-body
+            div#mwBw
+              span#ooui-php-1.noexcerpt
+                a.oo-ui-buttonElement-button[role=button][aria-label=Riproduci audio] ascolta
+              a[href=/wiki/File:Novate_Milanese_pronuncia_italiano.ogg] ⓘ
+              a[href=//it.wikipedia.org/wiki/Alfabeto_fonetico_internazionale] AFI
+              a[href=//it.wikipedia.org/wiki/Aiuto:IPA] [nuˈaː]
+              a[href=//it.wikipedia.org/wiki/Dialetto_milanese] dialetto milanese
+              a[href=//it.wikipedia.org/wiki/Comune_(ordinamento_italiano)] comune italiano
+              a[href=//it.wikipedia.org/wiki/Città_metropolitana_di_Milano] città metropolitana di Milano
+              a[href=//it.wikipedia.org/wiki/Lombardia] Lombardia
+              a[href=//it.wikipedia.org/wiki/Contado] contado
+              a[href=//it.wikipedia.org/wiki/Feudo] feudo
+              a[href=//it.wikipedia.org/wiki/Roserio] Roserio
+              a[href=//it.wikipedia.org/wiki/Repubblica_Cisalpina] Repubblica Cisalpina
+              a[href=//it.wikipedia.org/wiki/Area_metropolitana_di_Milano] area metropolitana milanese
+              a[href=//it.wikipedia.org/wiki/Titolo_di_città] titolo di città
+              a[href=//it.wikipedia.org/wiki/Presidente_della_Repubblica_Italiana] Presidente della Repubblica
+              a[href=//it.wikipedia.org/wiki/Carlo_Azeglio_Ciampi] Carlo Azeglio Ciampi
+              a[href=//it.wikipedia.org/wiki/Novate_Milanese] Leggi la voce
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Vetrina] Tutte le voci in vetrina
+              a[href=//it.wikipedia.org/wiki/Padova] Padova
+              a[href=//it.wikipedia.org/wiki/17_aprile] 17 aprile
+              a[href=//it.wikipedia.org/wiki/1954] 1954
+              a[href=//it.wikipedia.org/wiki/Automobilismo] pilota automobilistico
+              a[href=//it.wikipedia.org/wiki/Italia] italiano
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Kart] kart
+              a[href=//it.wikipedia.org/wiki/Formula_3] Formula 3
+              a[href=//it.wikipedia.org/wiki/Formula_1] Formula 1
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1977] 1977
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1993] 1993
+              a[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premi
+              a[href=//it.wikipedia.org/wiki/Shadow_Racing_Cars] Shadow
+              a[href=//it.wikipedia.org/wiki/Arrows_Grand_Prix_International] Arrows
+              a[href=//it.wikipedia.org/wiki/Brabham] Brabham
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Alfa_Romeo_(Formula_1)] Alfa Romeo
+              a[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1989] 1989
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1990] 1990
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1991] 1991
+              a[href=//it.wikipedia.org/wiki/Benetton_Formula] Benetton
+              a[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi] Campionato del mondo sportprototipi
+              a[href=//it.wikipedia.org/wiki/Lancia_(automobilismo)] Lancia
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_mondiale_Endurance_1982] 1982
+              a[href=//it.wikipedia.org/wiki/Continental_Circus] Circus
+              a[href=//it.wikipedia.org/wiki/James_Hunt] James Hunt
+              a[href=//it.wikipedia.org/wiki/Michele_Alboreto] Michele Alboreto
+              a[href=//it.wikipedia.org/wiki/Eddie_Cheever] Eddie Cheever
+              a[href=//it.wikipedia.org/wiki/Elio_De_Angelis] Elio De Angelis
+              a[href=//it.wikipedia.org/wiki/Andrea_De_Cesaris] Andrea De Cesaris
+              a[href=//it.wikipedia.org/wiki/Thierry_Boutsen] Thierry Boutsen
+              a[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+              a[href=//it.wikipedia.org/wiki/Riccardo_Patrese] Leggi la voce
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Voci_di_qualità] Tutte le voci di qualità
+              a[href=//it.wikipedia.org/wiki/Cumulonembo] cumulonembo
+              a[href=//it.wikipedia.org/wiki/Incendio_boschivo] incendi boschivi
+              a[href=//it.wikipedia.org/wiki/Eruzione_vulcanica] eruzioni vulcaniche
+              a[href=//it.wikipedia.org/wiki/Cumulonimbus_flammagenitus] Leggi la voce
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Lo_sapevi_che/Valutazione] Proponi un'altra voce
+              div#mwEA
+                h2#Ricorrenze_del_23_giugno.finestrahome-titolo
+                  a[href=//it.wikipedia.org/wiki/23_giugno] 23 giugno
+                section#mwEg
+                  h3#Nati...
+                    a[href=//it.wikipedia.org/wiki/Categoria:Nati_il_23_giugno] Nati
+                  ul
+                    a[href=//it.wikipedia.org/wiki/Giambattista_Vico] Giambattista Vico
+                    a[href=//it.wikipedia.org/wiki/1668] 1668
+                    a[href=//it.wikipedia.org/wiki/Alan_Turing] Alan Turing
+                    a[href=//it.wikipedia.org/wiki/1912] 1912
+                    a[href=//it.wikipedia.org/wiki/Arnaldo_Pomodoro] Arnaldo Pomodoro
+                    a[href=//it.wikipedia.org/wiki/1926] 1926
+                section#mwEw
+                  h3#...e_morti
+                    a[href=//it.wikipedia.org/wiki/Categoria:Morti_il_23_giugno] morti
+                  ul
+                    a[href=//it.wikipedia.org/wiki/Vespasiano] Tito Flavio Vespasiano
+                    a[href=//it.wikipedia.org/wiki/79] 79
+                    a[href=//it.wikipedia.org/wiki/Urraca_Sánchez_di_Navarra] Urraca Sánchez di Navarra
+                    a[href=//it.wikipedia.org/wiki/957] 957
+                    a[href=//it.wikipedia.org/wiki/Norma_Pratelli_Parenti] Norma Pratelli Parenti
+                    a[href=//it.wikipedia.org/wiki/1944] 1944
+                section#mwFA
+                  ul
+                    a[href=//it.wikipedia.org/wiki/79] 79
+                    a[href=//it.wikipedia.org/wiki/Tito_(imperatore)] Tito
+                    a[href=//it.wikipedia.org/wiki/Vespasiano] Vespasiano
+                    a[href=//it.wikipedia.org/wiki/Impero_romano] Impero romano
+                    a[href=//it.wikipedia.org/wiki/1713] 1713
+                    a[href=//it.wikipedia.org/wiki/Acadia_(regione)] Acadia
+                    a[href=//it.wikipedia.org/wiki/Regno_Unito] Regno Unito
+                    a[href=//it.wikipedia.org/wiki/Nuova_Scozia] Nuova Scozia
+                    a[href=//it.wikipedia.org/wiki/1858] 1858
+                    a[href=//it.wikipedia.org/wiki/Caso_Edgardo_Mortara] Edgardo Mortara
+                    a[href=//it.wikipedia.org/wiki/Stato_Pontificio] Stato Pontificio
+                    a[href=//it.wikipedia.org/wiki/Chiesa_cattolica] Cattolicesimo
+                    a[href=//it.wikipedia.org/wiki/1894] 1894
+                    a[href=//it.wikipedia.org/wiki/Sorbona] Sorbona
+                    a[href=//it.wikipedia.org/wiki/Parigi] Parigi
+                    a[href=//it.wikipedia.org/wiki/Pierre_de_Coubertin] Pierre de Coubertin
+                    a[href=//it.wikipedia.org/wiki/Comitato_Olimpico_Internazionale] Comitato Olimpico Internazionale
+                    a[href=//it.wikipedia.org/wiki/1977] 1977
+                    a[href=//it.wikipedia.org/wiki/Douai] Douai
+                    a[href=//it.wikipedia.org/wiki/Ghigliottina] ghigliottina
+                    a[href=//it.wikipedia.org/wiki/Francia] Francia
+                  a[href=//it.wikipedia.org/wiki/Chiesa_cattolica] Chiesa cattolica
+                  a[href=//it.wikipedia.org/wiki/Memoria_(liturgia)] memoria
+                  a[href=//it.wikipedia.org/wiki/Giuseppe_Cafasso] Giuseppe Cafasso
+                  a[href=//it.wikipedia.org/wiki/Eteldreda_di_Ely] Eteldreda di Ely
+                  a[href=//it.wikipedia.org/wiki/Lanfranco_Beccari] Lanfranco Beccari
+              div#mwFQ.nomobile
+                a.extiw[href=https://en.wikipedia.org/wiki/] English (inglese)
+                a.extiw[href=https://ceb.wikipedia.org/wiki/] Binisaya (cebuano)
+                a.extiw[href=https://de.wikipedia.org/wiki/] Deutsch (tedesco)
+                a.extiw[href=https://fr.wikipedia.org/wiki/] Français (francese)
+                a.extiw[href=https://sv.wikipedia.org/wiki/] Svenska (svedese)
+                a.extiw[href=https://nl.wikipedia.org/wiki/] Nederlands (olandese)
+                a.extiw[href=https://es.wikipedia.org/wiki/] Español (spagnolo)
+                a.extiw[href=https://ru.wikipedia.org/wiki/] Русский (russo)
+                a.extiw[href=https://pl.wikipedia.org/wiki/] Polski (polacco)
+                a.extiw[href=https://eo.wikipedia.org/wiki/] Esperanto (esperanto)
+                a.extiw[href=https://et.wikipedia.org/wiki/] Eesti (estone)
+                a.extiw[href=https://el.wikipedia.org/wiki/] Ελληνικά (greco)
+                a.extiw[href=https://cy.wikipedia.org/wiki/] Cymraeg (gallese)
+                a.extiw[href=https://io.wikipedia.org/wiki/] Ido (ido)
+                a.extiw[href=https://wa.wikipedia.org/wiki/] Walon (vallone)
+                a.extiw[href=https://roa-tara.wikipedia.org/wiki/] Tarandíne (tarantino)
+                a.extiw[href=https://zh-min-nan.wikipedia.org/wiki/] Bân-lâm-gú (min nan)
+                a.extiw[href=https://tk.wikipedia.org/wiki/] تركمن / Туркмен (turkmeno)
+                a.extiw[href=https://pag.wikipedia.org/wiki/] Pangasinan (pangasinan)
+                a.extiw[href=https://lij.wikipedia.org/wiki/] Líguru (ligure)
+                a.extiw[href=https://lad.wikipedia.org/wiki/] Dzhudezmo (giudesmo o giudeo-spagnolo)
+                a.extiw[href=https://ps.wikipedia.org/wiki/] پښتو (pashto)
+                a.extiw[href=https://ty.wikipedia.org/wiki/] Reo Tahiti (tahitiano)
+                a.extiw[href=https://so.wikipedia.org/wiki/] Af-Soomaali (somalo)
+                a.extiw[href=https://av.wikipedia.org/wiki/] МагIарул мацI (avaro)
+                a.extiw[href=https://bm.wikipedia.org/wiki/] Bamanankan (bambara)
+                a.extiw[href=https://ts.wikipedia.org/wiki/] Xitsonga (tsonga)
+                a.extiw[href=https://bug.wikipedia.org/wiki/] ᨅᨗᨌᨑ ᨕᨘᨁᨗ (buginese)
+                a.extiw[href=https://foundation.wikimedia.org/wiki/Pagina%20Principale] Wikimedia Foundation
+                a[href=//it.wikipedia.org/wiki/Organizzazione_non_a_scopo_di_lucro] organizzazione senza fini di lucro
+                a[href=//it.wikipedia.org/wiki/Wiki] wiki
+                a[href=//it.wikipedia.org/wiki/Contenuto_libero] contenuto libero
+                a.extiw[href=https://meta.wikimedia.org/wiki/Pagina_principale] multilingue
+                figure#mwGA.noresize
+                a.extiw[href=https://commons.wikimedia.org/wiki/Pagina%20principale] Commons
+                figure#mwHA.noresize
+                a.extiw[href=https://it.wikiquote.org/wiki/Pagina%20principale] Wikiquote
+                figure#mwIA.noresize
+                a.extiw[href=https://it.wiktionary.org/wiki/Pagina%20principale] Wikizionario
+                figure#mwJA.noresize
+                a.extiw[href=https://species.wikimedia.org/wiki/Pagina%20principale] Wikispecies
+                figure#mwKA.noresize
+                a.extiw[href=https://meta.wikimedia.org/wiki/Main%20Page] Meta-Wiki
+                figure#mwLA.noresize
+                a.extiw[href=https://it.wikibooks.org/wiki/Pagina%20principale] Wikibooks
+                figure#mwMA.noresize
+                a.extiw[href=https://it.wikisource.org/wiki/Pagina%20principale] Wikisource
+                figure#mwNA.noresize
+                a.extiw[href=https://it.wikiversity.org/wiki/Pagina%20principale] Wikiversità
+                figure#mwOA.noresize
+                a.extiw[href=https://www.wikidata.org/wiki/Wikidata:Main%20Page] Wikidata
+                figure#mwPA.noresize
+                a.extiw[href=https://it.wikivoyage.org/wiki/Pagina%20principale] Wikivoyage
+                figure#mwQA.noresize
+                a.extiw[href=https://www.wikifunctions.org/wiki/Wikifunctions:Main%20Page] Wikifunctions
+            div#mwRA
+              div#mwRQ.main-page-intro
+                a[href=//it.wikipedia.org/wiki/Enciclopedia] enciclopedia
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Wikipedia_è_libera] libera
+                a.extiw[href=https://meta.wikimedia.org/wiki/List%20of%20Wikipedias/it] in oltre 340 lingue
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Wikipediani] Chiunque
+                a[href=//it.wikipedia.org/wiki/Aiuto:Voce] voci
+                a[href=//it.wikipedia.org/wiki/Aiuto:Come_scrivere_una_voce] crearne di nuove
+                a[href=//it.wikipedia.org/wiki/Almanacco] almanacchi
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Copyright] protetti
+                a[href=//it.wikipedia.org/wiki/Licenza_libera] licenza libera
+                a[href=//it.wikipedia.org/wiki/Licenze_Creative_Commons] Creative Commons CC BY-SA
+                a[href=//it.wikipedia.org/wiki/Contenuto_libero] qualsiasi scopo
+                a[href=//it.wikipedia.org/wiki/Copyleft] adottare la medesima licenza
+                ul
+                  a[href=//it.wikipedia.org/wiki/Wikipedia:Cinque_pilastri] regole fondamentali
+                  a[href=//it.wikipedia.org/wiki/Wikipedia:Raccomandazioni_e_linee_guida] linee guida
+                  a[href=//it.wikipedia.org/wiki/Wikipedia:Wikiquette] wikiquette
+                  a[href=//it.wikipedia.org/wiki/Aiuto:Come_registrarsi] registrazione
+                  a[href=//it.wikipedia.org/wiki/Aiuto:Aiuto] istruzioni
+                  a[href=//it.wikipedia.org/wiki/Aiuto:FAQ] domande frequenti (FAQ)
+                  a[href=//it.wikipedia.org/wiki/Aiuto:Dove_fare_una_domanda] dove fare una domanda
+                  a[href=//it.wikipedia.org/wiki/Progetto:Coordinamento/Accoglienza/Nuovi_arrivati] tutor
+                  a[href=//it.wikipedia.org/wiki/Wikipedia:Pagina_delle_prove] la pagina di prova
+                  a[href=//it.wikipedia.org/wiki/Aiuto:Tour_guidato] Tour guidato
+                  a[href=//it.wikipedia.org/wiki/Aiuto:Come_scrivere_una_voce] come scrivere una voce
+                  a.external Aiutaci a migliorarla e a mantenerla libera con una donazione
+                  a[href=//it.wikipedia.org/wiki/Wikipedia:Pareri_su_Wikipedia] il tuo parere
+                a[href=//it.wikipedia.org/wiki/Portale:Comunità] comunità
+                a[href=//it.wikipedia.org/wiki/Wikipedia_in_italiano] Wikipedia in lingua italiana
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Amministratori] funzioni di servizio
+                a[href=//it.wikipedia.org/wiki/Portale:Progetti] progetti tematici
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Bar_tematici] luoghi di discussione
+                a[href=//it.wikipedia.org/wiki/Progetto:Coordinamento] coordinano
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Novità] in evidenza
+              a[href=//it.wikipedia.org/wiki/Gabbiere] Gabbiere
+              a[href=//it.wikipedia.org/wiki/Whanganui_Chronicle] Whanganui Chronicle
+              a[href=//it.wikipedia.org/wiki/Bottega_d'Erasmo] Bottega d'Erasmo
+              a[href=//it.wikipedia.org/wiki/Pesi_piuma_(sollevamento_pesi)] Pesi piuma (sollevamento pesi)
+              a[href=//it.wikipedia.org/wiki/Chiesa_di_Sant'Osvaldo_(Cerro_Veronese)] Chiesa di Sant'Osvaldo (Cerro Veronese)
+              a[href=//it.wikipedia.org/wiki/Star_Media] Star Media
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Novità] in evidenza
+              a[href=//it.wikipedia.org/wiki/Opposizione_Unificata] Opposizione Unificata
+              a[href=//it.wikipedia.org/wiki/Eleutherodactylus_coqui] Eleutherodactylus coqui
+              a[href=//it.wikipedia.org/wiki/Cardueae] Cardueae
+              a[href=//it.wikipedia.org/wiki/Wiimmfi] Wiimmfi
+              a[href=//it.wikipedia.org/wiki/Tommy_Giles_Rogers_Jr.] Tommy Giles Rogers Jr.
+              a[href=//it.wikipedia.org/wiki/Associazione_Sportiva_Casale_1943-1944] Associazione Sportiva Casale 1943-1944
+              a[href=//it.wikipedia.org/wiki/Wikipedia:Wikipediano] il Wikipediano
+              div#mwSw.nomobile
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Festival_della_qualità/Proposte] proposte
+              div#mwTg
+                a[href=//it.wikipedia.org/wiki/Wikipedia:Traduzione_della_settimana] Traduzione della settimana
+                a[href=//it.wikipedia.org/wiki/Wikimedia_Meta-Wiki] Meta-Wiki
+                ul
+                  a.extiw[href=https://www.wikidata.org/wiki/Q6064448] Renovating Action Party
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Partito_di_Azione_per_la_Ristrutturazione] Partito di Azione per la Ristrutturazione
+                a.extiw Citazione del giorno
+                a[href=//it.wikipedia.org/wiki/Wikiquote] Wikiquote
+                a.extiw[href=https://it.wikiquote.org/wiki/Robert%20Baden-Powell] Robert Baden-Powell
+                a.extiw[href=https://commons.wikimedia.org/wiki/Commons:Immagine%20del%20giorno] Immagine del giorno
+                a[href=//it.wikipedia.org/wiki/Wikimedia_Commons] Commons
+                a[href=//it.wikipedia.org/wiki/Silhouette#Fotografia] ritratte in silhouette
+                a[href=//it.wikipedia.org/wiki/Crepuscolo] crepuscolo
+                a[href=//it.wikipedia.org/wiki/Nordafrica] Nordafrica
+                a[href=//it.wikipedia.org/wiki/Gazella_dorcas] gazzelle dorcadi
+                a[href=//it.wikipedia.org/wiki/Bracconaggio] caccia di frodo
+                a[href=//it.wikipedia.org/wiki/Caccia] caccia
+                a[href=//it.wikipedia.org/wiki/Estinzione] estinzione
+                a[href=//it.wikipedia.org/wiki/Gazella_saudiya] gazzella saudita
+                a[href=//it.wikipedia.org/wiki/Penisola_arabica] penisola arabica
+                a[href=//it.wikipedia.org/wiki/Prateria] praterie
+                a[href=//it.wikipedia.org/wiki/Steppa] steppe
+                a[href=//it.wikipedia.org/wiki/Uadi] uadi
+                a[href=//it.wikipedia.org/wiki/Deserto] deserti
+                a[href=//it.wikipedia.org/wiki/Medio_Oriente] Medio Oriente
+                a.extiw[href=https://it.wikisource.org/wiki/Wikisource:Rilettura%20del%20mese] Rilettura del mese
+                a[href=//it.wikipedia.org/wiki/Wikisource] Wikisource
+                a.extiw L'argine
+                a[href=//it.wikipedia.org/wiki/Grazia_Deledda] Grazia Deledda
+                a.extiw[href=https://it.wikivoyage.org/wiki/Wikivoyage:Destinazione%20del%20mese] Destinazione del mese
+                a[href=//it.wikipedia.org/wiki/Wikivoyage] Wikivoyage
+                a.extiw[href=https://it.wikivoyage.org/wiki/Machu%20Picchu] Machu Picchu
+                a[href=//it.wikipedia.org/wiki/Archeologia] archeologico
+                a[href=//it.wikipedia.org/wiki/Inca] Inca
+                a[href=//it.wikipedia.org/wiki/Perù] Perù
+                a[href=//it.wikipedia.org/wiki/Immaginario_collettivo] immaginario collettivo
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Città_perduta] città perduta
+                a[href=//it.wikipedia.org/wiki/Patrimonio_dell'umanità] patrimoni dell'umanità
+                a[href=//it.wikipedia.org/wiki/UNESCO] UNESCO
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Sette_meraviglie_del_mondo_moderno] sette meraviglie del mondo moderno
+                a[href=//it.wikipedia.org/wiki/Scavi_archeologici_di_Pompei] Pompei
+                a[href=//it.wikipedia.org/wiki/Ostia_(città_antica)] Ostia Antica
+          div#mwUA.main-page-footer
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Avvertenze_generali] Wikipedia non dà garanzie sulla validità dei contenuti
+            a[href=//it.wikipedia.org/wiki/Wikimedia_Foundation] Wikimedia Foundation
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Sala_stampa] Sala stampa
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Contatti] Contatti
+            a[href=//it.wikipedia.org/wiki/Aiuto:FAQ] FAQ
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Copyright] Copyright
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Wikipedia_sul_tuo_sito] Wikipedia sul tuo sito
+            a[href=//it.wikipedia.org/wiki/Aiuto:Come_citare_Wikipedia] Citare Wikipedia
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Ambasciata] Not Italian? it-0? Click here!
+      div#catlinks.catlinks
+        div#mw-normal-catlinks.mw-normal-catlinks
+          a[href=/wiki/Categoria:Categorie] Categoria
+          ul
+            a[href=/wiki/Categoria:Pagina_principale] Pagina principale
+          a[href=#] [altre]
+  footer#footer.mw-footer
+    ul#footer-info
+      li#footer-info-renderedwith
+        a.extiw[href=https://www.mediawiki.org/wiki/Special:MyLanguage/Parsoid] Parsoid
+      li#footer-info-copyright
+        a.external[href=https://creativecommons.org/licenses/by-sa/4.0/deed.it] licenza Creative Commons Attribuzione-Condividi allo stesso modo
+        a.external[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use/it] condizioni d'uso
+    ul#footer-places
+      li#footer-places-privacy
+        a Informativa sulla privacy
+      li#footer-places-about
+        a[href=/wiki/Wikipedia:Sala_stampa/Wikipedia] Informazioni su Wikipedia
+      li#footer-places-disclaimers
+        a[href=/wiki/Wikipedia:Avvertenze_generali] Avvertenze
+      li#footer-places-legal-safety-contacts
+        a Contatti legali e di sicurezza
+      li#footer-places-wm-codeofconduct
+        a Codice di condotta
+      li#footer-places-developers
+        a[href=https://developer.wikimedia.org] Sviluppatori
+      li#footer-places-statslink
+        a[href=https://stats.wikimedia.org/#/it.wikipedia.org] Statistiche
+      li#footer-places-cookiestatement
+        a[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Cookie_statement] Dichiarazione sui cookie
+      li#footer-places-mobileview
+        a.noprint Versione mobile
+    ul#footer-icons.noprint
+      li#footer-copyrightico
+      li#footer-poweredbyico
+
+To interact, invoke 'execute_web_action' with:
+- tag: the HTML tag (e.g. 'a', 'button', 'input')
+- text: the visible text of the element
+- attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
+For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
+For 'goto' provide the URL.
+Call 'done' ONLY when the entire objective is complete.
+
+Operating rules:
+- If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
+- Do not repeat actions already present in history.

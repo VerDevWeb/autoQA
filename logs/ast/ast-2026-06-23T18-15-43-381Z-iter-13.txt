@@ -1,0 +1,1999 @@
+You are an autonomous web automation agent.
+Your final objective is: Vai su it.wikipedia.org, cerca 'Ferrari', premi Invio, poi clicca sul link 'Formula 1' nella pagina, poi torna alla homepage di Wikipedia e cerca un altro argomento a tua scelta.
+You are currently at URL: https://it.wikipedia.org/wiki/Ferrari
+
+Actions already executed (DO NOT repeat):
+1. fill su <input> "Cerca in Wikipedia" valore="Ferrari"
+2. enter su <input> "Cerca in Wikipedia"
+3. enter su <input> "Cerca in Wikipedia"
+4. fill su <input> "" valore="Ferrari"
+5. enter su <input> "Cerca in Wikipedia"
+6. enter su <input> "Cerca in Wikipedia"
+7. enter su <input> "Cerca in Wikipedia"
+8. enter su <input> "Cerca in Wikipedia"
+9. enter su <input> "Cerca in Wikipedia"
+10. click su <button> "Ricerca"
+11. click su <button> "Ricerca"
+
+
+Objective domains in order: it.wikipedia.org
+Completed domains: it.wikipedia.org
+Next target domain: none
+
+
+📋 YOUR PROGRESS CHECKPOINT (what you wrote last time):
+I have already typed 'Ferrari' in the search box, and I am now clicking the search button to go to the Ferrari page.
+
+Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
+body.skin--responsive
+  a.mw-jump-link[href=#bodyContent] Vai al contenuto
+  header.vector-header
+    div#p-search.vector-search-box-vue[role=search]
+      form#searchform.cdx-search-input
+        div#simpleSearch.cdx-search-input__input-wrapper
+          input#searchInput.cdx-text-input__input[type=search][placeholder=Cerca in Wikipedia][name=search][aria-label=Cerca in Wikipedia] Cerca in Wikipedia
+        button.cdx-button Ricerca
+    nav.vector-user-links[aria-label=Strumenti personali]
+      div#p-vector-user-menu-overflow.vector-menu
+        ul.vector-menu-content-list
+          li#pt-sitesupport-2.mw-list-item
+            a Fai una donazione
+          li#pt-createaccount-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:CreaUtenza&returnto=Ferrari] Registrati
+          li#pt-login-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:Entra&returnto=Ferrari] Entra
+  nav#mw-panel-toc.mw-table-of-contents-container[aria-label=Indice]
+    div#vector-toc-pinned-container.vector-pinned-container
+      div#vector-toc.vector-toc
+        button.vector-pinnable-header-toggle-button nascondi
+        ul#mw-panel-toc-list.vector-toc-contents
+          li#toc-mw-content-text.vector-toc-list-item
+            a.vector-toc-link[href=#] Inizio
+          li#toc-Storia.vector-toc-list-item
+            a.vector-toc-link[href=#Storia] Storia
+            button.cdx-button Attiva/disattiva la sottosezione Storia
+            ul#toc-Storia-sublist.vector-toc-list
+              li#toc-La_Scuderia_Ferrari.vector-toc-list-item
+                a.vector-toc-link[href=#La_Scuderia_Ferrari] La Scuderia Ferrari
+              li#toc-Fondazione_della_Auto_Avio_Costruzioni.vector-toc-list-item
+                a.vector-toc-link[href=#Fondazione_della_Auto_Avio_Costruzioni] Fondazione della Auto Avio Costruzioni
+              li#toc-Il_marchio_automobilistico_Ferrari.vector-toc-list-item
+                a.vector-toc-link[href=#Il_marchio_automobilistico_Ferrari] Il marchio automobilistico Ferrari
+              li#toc-Dalla_collaborazione,_alla_partecipazione,_al_controllo_FIAT.vector-toc-list-item
+                a.vector-toc-link[href=#Dalla_collaborazione,_alla_partecipazione,_al_controllo_FIAT] Dalla collaborazione, alla partecipazione, al controllo FIAT
+              li#toc-Dagli_anni_ottanta_al_ventunesimo_secolo.vector-toc-list-item
+                a.vector-toc-link[href=#Dagli_anni_ottanta_al_ventunesimo_secolo] Dagli anni ottanta al ventunesimo secolo
+              li#toc-Gli_anni_2010.vector-toc-list-item
+                a.vector-toc-link[href=#Gli_anni_2010] Gli anni 2010
+          li#toc-Attività_agonistica.vector-toc-list-item
+            a.vector-toc-link[href=#Attività_agonistica] Attività agonistica
+          li#toc-Logo_e_marchio.vector-toc-list-item
+            a.vector-toc-link[href=#Logo_e_marchio] Logo e marchio
+            button.cdx-button Attiva/disattiva la sottosezione Logo e marchio
+            ul#toc-Logo_e_marchio-sublist.vector-toc-list
+              li#toc-Evoluzione_del_logo.vector-toc-list-item
+                a.vector-toc-link[href=#Evoluzione_del_logo] Evoluzione del logo
+          li#toc-Modelli.vector-toc-list-item
+            a.vector-toc-link[href=#Modelli] Modelli
+            button.cdx-button Attiva/disattiva la sottosezione Modelli
+            ul#toc-Modelli-sublist.vector-toc-list
+              li#toc-Modelli_stradali.vector-toc-list-item
+                a.vector-toc-link[href=#Modelli_stradali] Modelli stradali
+              li#toc-Vetture_Formula_1,_Formula_2_e_altre_monoposto.vector-toc-list-item
+                a.vector-toc-link[href=#Vetture_Formula_1,_Formula_2_e_altre_monoposto] Vetture Formula 1, Formula 2 e altre monoposto
+              li#toc-Vetture_Sport_Prototipo.vector-toc-list-item
+                a.vector-toc-link[href=#Vetture_Sport_Prototipo] Vetture Sport Prototipo
+              li#toc-Altre_vetture.vector-toc-list-item
+                a.vector-toc-link[href=#Altre_vetture] Altre vetture
+                ul#toc-Altre_vetture-sublist.vector-toc-list
+                  li#toc-Prototipi.vector-toc-list-item
+                    a.vector-toc-link[href=#Prototipi] Prototipi
+                  li#toc-Esemplari_unici.vector-toc-list-item
+                    a.vector-toc-link[href=#Esemplari_unici] Esemplari unici
+                  li#toc-Safety_Car.vector-toc-list-item
+                    a.vector-toc-link[href=#Safety_Car] Safety Car
+          li#toc-Presidenti.vector-toc-list-item
+            a.vector-toc-link[href=#Presidenti] Presidenti
+          li#toc-Amministratori_delegati.vector-toc-list-item
+            a.vector-toc-link[href=#Amministratori_delegati] Amministratori delegati
+          li#toc-Dati_finanziari.vector-toc-list-item
+            a.vector-toc-link[href=#Dati_finanziari] Dati finanziari
+          li#toc-Vendite.vector-toc-list-item
+            a.vector-toc-link[href=#Vendite] Vendite
+          li#toc-Note.vector-toc-list-item
+            a.vector-toc-link[href=#Note] Note
+          li#toc-Bibliografia.vector-toc-list-item
+            a.vector-toc-link[href=#Bibliografia] Bibliografia
+          li#toc-Voci_correlate.vector-toc-list-item
+            a.vector-toc-link[href=#Voci_correlate] Voci correlate
+          li#toc-Altri_progetti.vector-toc-list-item
+            a.vector-toc-link[href=#Altri_progetti] Altri progetti
+          li#toc-Collegamenti_esterni.vector-toc-list-item
+            a.vector-toc-link[href=#Collegamenti_esterni] Collegamenti esterni
+  main#content.mw-body
+    div#left-navigation
+      nav[aria-label=Namespace]
+        div#p-associated-pages.vector-menu
+          ul.vector-menu-content-list
+            li#ca-nstab-main.selected
+              a[href=/wiki/Ferrari] Voce
+            li#ca-talk.vector-tab-noicon
+              a[href=/wiki/Discussione:Ferrari] Discussione
+    div#right-navigation.vector-collapsible
+      nav[aria-label=Visite]
+        div#p-views.vector-menu
+          ul.vector-menu-content-list
+            li#ca-view.selected
+              a[href=/wiki/Ferrari] Leggi
+            li#ca-ve-edit.mw-list-item
+              a[href=/w/index.php?title=Ferrari&veaction=edit] Modifica
+            li#ca-edit.collapsible
+              a[href=/w/index.php?title=Ferrari&action=edit] Modifica wikitesto
+            li#ca-history.mw-list-item
+              a[href=/w/index.php?title=Ferrari&action=history] Cronologia
+    nav.vector-appearance-landmark[aria-label=Aspetto]
+      div#vector-appearance-pinned-container.vector-pinned-container
+        div#vector-appearance.vector-appearance
+          button.vector-pinnable-header-toggle-button nascondi
+    div#bodyContent.vector-body
+      div#mw-content-text.mw-body-content
+        section#mwAQ
+          div#mwAw.hatnote
+            a[href=//it.wikipedia.org/wiki/Aiuto:Disambiguazione] Disambiguazione
+            a.mw-disambig[href=//it.wikipedia.org/wiki/Ferrari_(disambigua)] Ferrari (disambigua)
+          div#mwBQ.hatnote
+            a[href=//it.wikipedia.org/wiki/Aiuto:Disambiguazione] Disambiguazione
+            a.mw-disambig[href=//it.wikipedia.org/wiki/Cavallino_rampante_(disambigua)] Cavallino rampante (disambigua)
+          table.infobox
+            a[href=//it.wikipedia.org/wiki/Maranello] Maranello
+            a[href=//it.wikipedia.org/wiki/Stato] Stato
+            a[href=//it.wikipedia.org/wiki/Italia] Italia
+            a[href=//it.wikipedia.org/wiki/Società_(diritto)] Forma societaria
+            a[href=//it.wikipedia.org/wiki/Società_per_azioni] Società per azioni
+            a[href=//it.wikipedia.org/wiki/1947] 1947
+            a[href=//it.wikipedia.org/wiki/Maranello] Maranello
+            a[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            ul
+              a[href=//it.wikipedia.org/wiki/Modena] Modena
+              a[href=//it.wikipedia.org/wiki/Sede_legale] sede legale
+              a[href=//it.wikipedia.org/wiki/Maranello] Maranello
+            a[href=//it.wikipedia.org/wiki/Gruppo_societario] Gruppo
+            a[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+            a[href=//it.wikipedia.org/wiki/Società_controllata] Controllate
+            a[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+            ul
+              a[href=//it.wikipedia.org/wiki/John_Elkann] John Elkann
+              a[href=//it.wikipedia.org/wiki/Presidente] presidente
+              a[href=//it.wikipedia.org/wiki/Benedetto_Vigna] Benedetto Vigna
+              a[href=//it.wikipedia.org/wiki/Amministratore_delegato] amministratore delegato
+              a[href=//it.wikipedia.org/wiki/Piero_Ferrari] Piero Ferrari
+              a[href=//it.wikipedia.org/wiki/Vicepresidente] vicepresidente
+            a[href=//it.wikipedia.org/wiki/Settore_economico] Settore
+            a[href=//it.wikipedia.org/wiki/Industria_automobilistica] Automobilistico
+            a[href=//it.wikipedia.org/wiki/Autovettura] Autovetture
+            a[href=//it.wikipedia.org/wiki/Fatturato] Fatturato
+            a[href=//it.wikipedia.org/wiki/Miliardo] miliardi
+            a[href=//it.wikipedia.org/wiki/Euro] €
+            sup#cite_ref-AR_1-0.mw-ref
+              a#mwBw[href=#cite_note-AR-1] [1]
+            a[href=//it.wikipedia.org/wiki/Profitto] Utile netto
+            a.mw-redirect[href=//it.wikipedia.org/wiki/Miliardi] miliardi
+            sup#cite_ref-AR_1-1.mw-ref
+              a#mwCw[href=#cite_note-AR-1] [1]
+            a[href=//it.wikipedia.org/wiki/Premio_Compasso_d'oro] Premio Compasso d'oro
+            a[href=//it.wikipedia.org/wiki/2014] 2014
+            a[href=//it.wikipedia.org/wiki/Premio_Compasso_d'oro] Premio Compasso d'oro
+            a[href=//it.wikipedia.org/wiki/2016] 2016
+            a[href=//it.wikipedia.org/wiki/Premio_Compasso_d'oro] Premio Compasso d'oro
+            a[href=//it.wikipedia.org/wiki/2020] 2020
+            a[href=//it.wikipedia.org/wiki/Premio_Compasso_d'oro] Premio Compasso d'oro
+            a[href=//it.wikipedia.org/wiki/2024] 2024
+            a[href=//it.wikipedia.org/wiki/Sito_web] Sito web
+            a.external[href=https://www.ferrari.com/] www.ferrari.com/
+            a.extiw[href=https://www.wikidata.org/wiki/Q27586] Modifica dati su Wikidata
+            a[href=//it.wikipedia.org/wiki/Template:Azienda/man] Manuale
+          p#mwDw
+            a#mwEQ[href=//it.wikipedia.org/wiki/Casa_automobilistica] casa automobilistica
+            a#mwEg[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            a#mwEw[href=//it.wikipedia.org/wiki/Maranello] Maranello
+            a#mwFA[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+          p#mwFQ
+            a#mwFg[href=//it.wikipedia.org/wiki/Autovettura] automobili
+            a#mwFw[href=//it.wikipedia.org/wiki/Automobilismo] automobilismo sportivo
+            a#mwGA[href=//it.wikipedia.org/wiki/Formula_1] campionato del mondo di Formula Uno
+            a#mwGQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_piloti_di_Formula_1] titoli piloti
+            a#mwGg[href=//it.wikipedia.org/wiki/Campionato_mondiale_costruttori_di_Formula_1] costruttori
+            a#mwGw[href=//it.wikipedia.org/wiki/Prototipo_(automobile)] Sport Prototipo
+            a#mwHA[href=//it.wikipedia.org/wiki/Gran_Turismo_(automobile)] Gran Turismo
+            a#mwHQ[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi] campionato del mondo Sport-prototipi
+            a#mwHg.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_Mondo_Sport_Prototipi#Storia] titoli costruttori
+            a#mwHw.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_Mondo_Endurance_FIA] campionato del mondo Endurance FIA
+            a#mwIA.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_Mondo_Endurance_FIA#Albo_d'oro] titoli costruttori GT
+            a#mwIQ.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_Mondo_Endurance_FIA#Albo_d'oro] titoli piloti GT
+            a#mwIg[href=//it.wikipedia.org/wiki/Endurance_(automobilismo)] endurance
+            a#mwIw[href=//it.wikipedia.org/wiki/24_Ore_di_Le_Mans] 24 Ore di Le Mans
+            a#mwJA[href=//it.wikipedia.org/wiki/24_Ore_di_Daytona] 24 Ore di Daytona
+            a#mwJQ[href=//it.wikipedia.org/wiki/12_Ore_di_Sebring] 12 Ore di Sebring
+            a#mwJg[href=//it.wikipedia.org/wiki/Targa_Florio] Targa Florio
+            a#mwJw[href=//it.wikipedia.org/wiki/Mille_Miglia] Mille Miglia
+            a#mwKA[href=//it.wikipedia.org/wiki/Carrera_Panamericana] Carrera Panamericana
+          p#mwKQ
+            a#mwKg[href=//it.wikipedia.org/wiki/Sport_motoristici] sportive
+            a#mwLA[href=//it.wikipedia.org/wiki/Modena] Modena
+            a#mwLQ[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+            a#mwLg[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari Corse Clienti
+            a#mwLw[href=//it.wikipedia.org/wiki/Ferrari_Challenge_Trofeo_Pirelli] Ferrari Challenge
+            a#mwMA[href=//it.wikipedia.org/wiki/Programma_FXX] XX Programmes
+          p#mwMQ
+            a#mwMg[href=//it.wikipedia.org/wiki/Prima_guerra_mondiale] prima guerra mondiale
+            a#mwMw[href=//it.wikipedia.org/wiki/Francesco_Baracca] Francesco Baracca
+            a#mwNA[href=//it.wikipedia.org/wiki/Marchio] marchio
+          p#mwNg
+            sup#cite_ref-brand_2-0.mw-ref
+              a#mwNw[href=#cite_note-brand-2] [2]
+            sup#cite_ref-3.mw-ref
+              a#mwOw[href=#cite_note-3] [3]
+            a#mwPw[href=//it.wikipedia.org/wiki/Dollaro_statunitense] dollari
+            sup#cite_ref-4.mw-ref
+              a#mwQA[href=#cite_note-4] [4]
+            a#mwRA[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+            a#mwRQ[href=//it.wikipedia.org/wiki/Benedetto_Vigna] Benedetto Vigna
+            a#mwRg[href=//it.wikipedia.org/wiki/Louis_Carey_Camilleri] Louis Camilleri
+            a#mwRw[href=//it.wikipedia.org/wiki/John_Elkann] John Elkann
+            a#mwSA.mw-redirect[href=//it.wikipedia.org/wiki/Piero_Lardi_Ferrari] Piero Ferrari
+            a#mwSQ[href=//it.wikipedia.org/wiki/Sergio_Marchionne] Sergio Marchionne
+        section#mwSw
+          section#mwTA
+            figure#mwTQ.mw-default-size
+              figcaption#mwUA
+                a#mwUQ[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            p#mwUg
+              a#mwUw[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+              a#mwVA[href=//it.wikipedia.org/wiki/Squadra_motoristica] reparto corse
+              a#mwVQ[href=//it.wikipedia.org/wiki/Modena] Modena
+              a#mwVg[href=//it.wikipedia.org/wiki/Alfa_Romeo] Alfa Romeo
+              a#mwVw[href=//it.wikipedia.org/wiki/Reparto_Corse_Alfa_Romeo#La_Scuderia_Ferrari_(1933-1937)] reparto corse semiufficiale
+          section#mwWA
+            p#mwWQ
+              a#mwWg[href=//it.wikipedia.org/wiki/Auto_Avio_Costruzioni] Auto Avio Costruzioni
+              a#mwWw[href=//it.wikipedia.org/wiki/Clausola_(diritto)] clausole
+            p#mwXA
+              a#mwXQ[href=//it.wikipedia.org/wiki/Auto_Avio_Costruzioni_815] 815
+            p#mwXg
+              a#mwXw[href=//it.wikipedia.org/wiki/Alleati_della_seconda_guerra_mondiale] Alleati
+          section#mwYA
+            p#mwYg
+              a#mwYw[href=//it.wikipedia.org/wiki/Ferrari_125_S] 125 S
+              a#mwZA[href=//it.wikipedia.org/wiki/Franco_Cortese] Franco Cortese
+              sup#cite_ref-5.mw-ref
+                a#mwZQ[href=#cite_note-5] [5]
+          section#mwaQ
+            figure#mwag.mw-default-size
+              figcaption#mwbQ
+                a#mwbg[href=//it.wikipedia.org/wiki/Ferrari_250_Testa_Rossa] Ferrari 250 Testa Rossa
+                a#mwbw[href=//it.wikipedia.org/wiki/Stabilimento_Ferrari_di_Maranello] stabilimento di Maranello
+            p#mwcA
+              a#mwcQ.mw-redirect[href=//it.wikipedia.org/wiki/Storia_del_Gruppo_Fiat] Gruppo Fiat
+              a#mwcg[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+              a#mwcw[href=//it.wikipedia.org/wiki/Formula_1] Formula 1
+              a#mwdA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1954] 1954
+              a#mwdQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1955] 1955
+              a#mwdg[href=//it.wikipedia.org/wiki/Mille_Miglia] Mille Miglia
+              a#mwdw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1956] 1956
+              a#mweA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1958] 1958
+              a#mweQ[href=//it.wikipedia.org/wiki/Anni_1950] anni cinquanta
+              sup#cite_ref-6.mw-ref
+                a#mweg[href=#cite_note-6] [6]
+            p#mwfg
+              a#mwfw[href=//it.wikipedia.org/wiki/Disastro_di_Le_Mans_del_1955] disastro di Le Mans del 1955
+              a#mwgA[href=//it.wikipedia.org/wiki/Tragedia_di_Guidizzolo] tragedia di Guidizzolo
+              i#mwgQ
+                a#mwgg[href=//it.wikipedia.org/wiki/Gentleman-driver] gentleman-driver
+              a#mwgw[href=//it.wikipedia.org/wiki/Aymo_Maggi] Aymo Maggi
+              a#mwhA[href=//it.wikipedia.org/wiki/Giannino_Marzotto] Giannino Marzotto
+            figure#mwhQ.mw-default-size
+              figcaption#mwiA
+                a#mwiQ[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] Ferrari 488 GTB
+            p#mwig
+              a#mwiw[href=//it.wikipedia.org/wiki/Henry_Ford_II] Henry Ford II
+              a#mwjA[href=//it.wikipedia.org/wiki/Lee_Iacocca] Lee Iacocca
+              i#mwjQ
+                a#mwjg.mw-redirect[href=//it.wikipedia.org/wiki/Conditio_sine_qua_non] conditio sine qua non
+              a#mwjw.mw-redirect[href=//it.wikipedia.org/wiki/Squadra_corse] reparto corse
+              a#mwkA[href=//it.wikipedia.org/wiki/Ford] Ford
+              a#mwkQ[href=//it.wikipedia.org/wiki/Guerra_Ferrari-Ford] aspra contesa tra la Ferrari e il colosso industriale statunitense
+            p#mwkw
+              a#mwlA[href=//it.wikipedia.org/wiki/Dino_(automobile)] Dino
+            p#mwlQ
+              sup#cite_ref-7.mw-ref
+                a#mwlg[href=#cite_note-7] [7]
+            div#mwmw.itwiki-template-citazione
+              sup#cite_ref-8.mw-ref
+                a#mwnA[href=#cite_note-8] [8]
+          section#mwoA
+            figure#mwoQ.mw-default-size
+              figcaption#mwpA
+                a#mwpQ.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_458_Italia_GT2] Ferrari 458 Italia GT3
+            p#mwpg
+              a#mwpw[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+              a#mwqA.mw-redirect[href=//it.wikipedia.org/wiki/Piero_Lardi_Ferrari] Piero Lardi Ferrari
+              a#mwqQ[href=//it.wikipedia.org/wiki/Merchandising] merchandising
+            p#mwqg
+              a#mwqw[href=//it.wikipedia.org/wiki/Luca_Cordero_di_Montezemolo] Luca Cordero di Montezemolo
+              a#mwrA[href=//it.wikipedia.org/wiki/Amedeo_Felisa] Amedeo Felisa
+            p#mwrQ
+              a#mwrg[href=//it.wikipedia.org/wiki/Emirati_Arabi_Uniti] Emirati Arabi Uniti
+              a#mwrw[href=//it.wikipedia.org/wiki/Mubadala_Development_Company] Mubadala
+              a#mwsA[href=//it.wikipedia.org/wiki/Abu_Dhabi] Abu Dhabi
+              a#mwsQ[href=//it.wikipedia.org/wiki/Ferrari_World] Ferrari World
+              sup#cite_ref-9.mw-ref
+                a#mwsg[href=#cite_note-9] [9]
+          section#mwtg
+            p#mwtw
+              a#mwuA[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+              a#mwuQ[href=//it.wikipedia.org/wiki/Borsa_di_New_York] Borsa di New York
+              a#mwug[href=//it.wikipedia.org/wiki/Fiat_Chrysler_Automobiles] Fiat Chrysler Automobiles
+              a#mwuw.mw-redirect[href=//it.wikipedia.org/wiki/Fiat_(azienda)] Fiat S.p.A.
+              a#mwvA[href=//it.wikipedia.org/wiki/FCA_US] Chrysler Group
+              a#mwvQ[href=//it.wikipedia.org/wiki/Borsa_Italiana] Borsa Italiana
+              a#mwvg[href=//it.wikipedia.org/wiki/Exor] Exor
+        section#mwvw
+          div#mwwQ.hatnote
+            a[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+          figure#mwwg.mw-default-size
+          p#mwxg
+            a#mwxw[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+            a#mwyA[href=//it.wikipedia.org/wiki/Modena] Modena
+            a#mwyQ[href=//it.wikipedia.org/wiki/Alfa_Romeo] Alfa Romeo
+            a#mwyg[href=//it.wikipedia.org/wiki/Auto_Union] Auto Union
+            a#mwyw[href=//it.wikipedia.org/wiki/Bugatti] Bugatti
+            a#mwzA[href=//it.wikipedia.org/wiki/Mercedes-Benz] Mercedes-Benz
+            a#mwzQ.mw-redirect gran premi
+            a#mwzg[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi#Il_contesto_storico] Sportprototipo
+          p#mwzw
+            a#mw0A[href=//it.wikipedia.org/wiki/Reparto_Corse_Alfa_Romeo] Alfa Corse
+            a#mw0Q[href=//it.wikipedia.org/wiki/Auto_Avio_Costruzioni] Auto Avio Costruzioni
+          p#mw0g
+            a#mw1A[href=//it.wikipedia.org/wiki/Ferrari_125_S] 125 S
+            a#mw1Q[href=//it.wikipedia.org/wiki/Franco_Cortese] Franco Cortese
+            a#mw1g[href=//it.wikipedia.org/wiki/Ferrari_125_C] 125 C
+            a#mw1w[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia#Prima_della_Formula_1] gran premio d'Italia
+            a#mw2A[href=//it.wikipedia.org/wiki/Torino] Torino
+            a#mw2Q[href=//it.wikipedia.org/wiki/Raymond_Sommer] Raymond Sommer
+            a#mw2g[href=//it.wikipedia.org/wiki/Jean-Pierre_Wimille] Jean-Pierre Wimille
+            a#mw2w[href=//it.wikipedia.org/wiki/Gigi_Villoresi] Gigi Villoresi
+            a#mw3A[href=//it.wikipedia.org/wiki/Maserati] Maserati
+            sup#cite_ref-10.mw-ref
+              a#mw3Q[href=#cite_note-10] [10]
+          figure#mw4Q.mw-default-size
+            figcaption#mw5A
+              a#mw5Q[href=//it.wikipedia.org/wiki/Ferrari_125_S] Ferrari 125 S
+              a#mw5g[href=//it.wikipedia.org/wiki/Tazio_Nuvolari] Nuvolari
+              a#mw5w[href=//it.wikipedia.org/wiki/Circuito_di_Montenero] circuito di Montenero
+              a#mw6A[href=//it.wikipedia.org/wiki/Livorno] Livorno
+          p#mw6Q
+            a#mw6g[href=//it.wikipedia.org/wiki/Seconda_guerra_mondiale] seconda guerra mondiale
+            a#mw6w[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] campionato mondiale di Formula 1
+            a#mw7A[href=//it.wikipedia.org/wiki/Campionato_mondiale_costruttori_di_Formula_1] campionati mondiali costruttori di Formula 1
+            a#mw7Q[href=//it.wikipedia.org/wiki/Campionato_mondiale_piloti_di_Formula_1] campionati mondiali piloti
+            sup#cite_ref-panorama-auto_11-0.mw-ref
+              a#mw7g[href=#cite_note-panorama-auto-11] [11]
+          p#mw8g
+            a#mw8w[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] Campionato mondiale di Formula 1
+            a#mw9A[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1950] 1950
+            a#mw9Q[href=//it.wikipedia.org/wiki/Gran_Premio_di_Monaco_1950] Gran Premio di Monaco
+            a#mw9g[href=//it.wikipedia.org/wiki/Alberto_Ascari] Alberto Ascari
+            sup#cite_ref-panorama-auto_11-1.mw-ref
+              a#mw9w[href=#cite_note-panorama-auto-11] [11]
+            a#mw-w[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_1950] Gran Premio d'Italia
+            sup#cite_ref-panorama-auto_11-2.mw-ref
+              a#mw_A[href=#cite_note-panorama-auto-11] [11]
+            a#mwAQA[href=//it.wikipedia.org/wiki/Pole_position] pole position
+            a#mwAQE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1951] anno seguente
+            a#mwAQI[href=//it.wikipedia.org/wiki/Gran_Premio_di_Gran_Bretagna_1951] Gran Premio di Gran Bretagna
+            a#mwAQM[href=//it.wikipedia.org/wiki/José_Froilán_González] José Froilán González
+            sup#cite_ref-panorama-auto_11-3.mw-ref
+              a#mwAQQ[href=#cite_note-panorama-auto-11] [11]
+          p#mwAQg
+            a#mwAQk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1952] stagione 1952
+            a#mwAQo[href=//it.wikipedia.org/wiki/Ferrari_500_F2] Ferrari 500 F2
+            sup#cite_ref-panorama-auto_11-4.mw-ref
+              a#mwAQs[href=#cite_note-panorama-auto-11] [11]
+            a#mwAQ8[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1953] 1953
+            a#mwARA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1954] 1954
+            a#mwARE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1955] 1955
+            a#mwARI[href=//it.wikipedia.org/wiki/Mercedes_AMG_F1] Mercedes
+            sup#cite_ref-panorama-auto_11-5.mw-ref
+              a#mwARM[href=#cite_note-panorama-auto-11] [11]
+            a#mwARc[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1956] 1956
+            a#mwARg[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Juan Manuel Fangio
+            a#mwARk[href=//it.wikipedia.org/wiki/Lancia_D50] Lancia D50
+            a#mwARo[href=//it.wikipedia.org/wiki/Lancia_(azienda)] omonima casa automobilistica italiana
+            sup#cite_ref-panorama-auto_11-6.mw-ref
+              a#mwARs[href=#cite_note-panorama-auto-11] [11]
+            a#mwAR8[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1958] 1958
+            a#mwASA[href=//it.wikipedia.org/wiki/Mike_Hawthorn] Mike Hawthorn
+            a#mwASE[href=//it.wikipedia.org/wiki/Vanwall] Vanwall
+          figure#mwASI.mw-default-size
+            figcaption#mwASU
+              a#mwASY[href=//it.wikipedia.org/wiki/Ferrari_500_F2] Ferrari 500 F2
+              a#mwASc[href=//it.wikipedia.org/wiki/Campionato_mondiale_piloti_di_Formula_1] campionato
+              a#mwASg.mw-redirect[href=//it.wikipedia.org/wiki/Formula_Uno] Formula Uno
+              a#mwASk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1952] 1952
+          p#mwASo
+            a#mwASs[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1961] 1961
+            a#mwASw[href=//it.wikipedia.org/wiki/Phil_Hill] Phil Hill
+            sup#cite_ref-panorama-auto_11-7.mw-ref
+              a#mwAS0[href=#cite_note-panorama-auto-11] [11]
+            a#mwATE[href=//it.wikipedia.org/wiki/Wolfgang_von_Trips] Wolfgang von Trips
+            a#mwATI.mw-redirect[href=//it.wikipedia.org/wiki/Autodromo_di_Monza] autodromo di Monza
+            sup#cite_ref-12.mw-ref
+              a#mwATM[href=#cite_note-12] [12]
+            a#mwATc[href=//it.wikipedia.org/wiki/Televisione] televisione
+            a#mwATg[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1964] 1964
+            a#mwATk[href=//it.wikipedia.org/wiki/John_Surtees] John Surtees
+            a#mwATo[href=//it.wikipedia.org/wiki/Motomondiale] Motomondiale
+            a#mwATs[href=//it.wikipedia.org/wiki/Formula_1] Formula 1
+            sup#cite_ref-panorama-auto_11-8.mw-ref
+              a#mwATw[href=#cite_note-panorama-auto-11] [11]
+          p#mwAUA
+            a#mwAUE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1975] 1975
+            a#mwAUI[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+            sup#cite_ref-panorama-auto_11-9.mw-ref
+              a#mwAUM[href=#cite_note-panorama-auto-11] [11]
+            a#mwAUc[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1976] 1976
+            a#mwAUg[href=//it.wikipedia.org/wiki/Nürburgring] Nürburgring
+            sup#cite_ref-panorama-auto_11-10.mw-ref
+              a#mwAUk[href=#cite_note-panorama-auto-11] [11]
+            sup#cite_ref-panorama-auto_11-11.mw-ref
+              a#mwAU0[href=#cite_note-panorama-auto-11] [11]
+            a#mwAVE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1977] 1977
+            sup#cite_ref-panorama-auto_11-12.mw-ref
+              a#mwAVI[href=#cite_note-panorama-auto-11] [11]
+            a#mwAVY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1979] 1979
+            a#mwAVc[href=//it.wikipedia.org/wiki/Jody_Scheckter] Jody Scheckter
+            sup#cite_ref-panorama-auto_11-13.mw-ref
+              a#mwAVg[href=#cite_note-panorama-auto-11] [11]
+          figure#mwAVw.mw-default-size
+            figcaption#mwAV8
+              a#mwAWA[href=//it.wikipedia.org/wiki/Roma] Roma
+          p#mwAWE
+            a#mwAWI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1982] 1982
+            a#mwAWM[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles Villeneuve
+            a#mwAWQ[href=//it.wikipedia.org/wiki/Circuito_di_Zolder] circuito di Zolder
+            sup#cite_ref-panorama-auto_11-14.mw-ref
+              a#mwAWU[href=#cite_note-panorama-auto-11] [11]
+            a#mwAWk[href=//it.wikipedia.org/wiki/Didier_Pironi] Didier Pironi
+            sup#cite_ref-panorama-auto_11-15.mw-ref
+              a#mwAWo[href=#cite_note-panorama-auto-11] [11]
+            a#mwAW4[href=//it.wikipedia.org/wiki/Patrick_Tambay] Patrick Tambay
+            a#mwAW8[href=//it.wikipedia.org/wiki/Mario_Andretti] Mario Andretti
+            sup#cite_ref-panorama-auto_11-16.mw-ref
+              a#mwAXA[href=#cite_note-panorama-auto-11] [11]
+            a#mwAXQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1983] 1983
+            sup#cite_ref-panorama-auto_11-17.mw-ref
+              a#mwAXU[href=#cite_note-panorama-auto-11] [11]
+          p#mwAXk
+            a#mwAXo[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1999] 1999
+            a#mwAXs[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+            a#mwAXw[href=//it.wikipedia.org/wiki/Eddie_Irvine] Eddie Irvine
+            sup#cite_ref-panorama-auto_11-18.mw-ref
+              a#mwAX0[href=#cite_note-panorama-auto-11] [11]
+            a#mwAYE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2000] 2000
+            a#mwAYI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2004] 2004
+            sup#cite_ref-panorama-auto_11-19.mw-ref
+              a#mwAYM[href=#cite_note-panorama-auto-11] [11]
+            sup#cite_ref-panorama-auto_11-20.mw-ref
+              a#mwAYc[href=#cite_note-panorama-auto-11] [11]
+            a#mwAYs[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2007] 2007
+            a#mwAYw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2008] 2008
+            a#mwAY0[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+            sup#cite_ref-panorama-auto_11-21.mw-ref
+              a#mwAY4[href=#cite_note-panorama-auto-11] [11]
+          p#mwAZI
+            a#mwAZM.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1953] 1953
+            a#mwAZQ[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1973] 1973
+            a#mwAZU[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi] campionato del mondo sportprototipi
+            a#mwAZY[href=//it.wikipedia.org/wiki/Sport_(automobile)] vetture Sport
+            a#mwAZc[href=//it.wikipedia.org/wiki/Prototipo_(automobile)] Prototipo
+            a#mwAZg[href=//it.wikipedia.org/wiki/Prototipo_(automobile)] Sport Prototipo
+            a#mwAZk[href=//it.wikipedia.org/wiki/Gran_Turismo_(automobile)] Gran Turismo
+            a#mwAZo.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1954] 1954
+            a#mwAZs.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1956] 1956
+            a#mwAZw.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1957] 1957
+            a#mwAZ0.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1958] 1958
+            a#mwAZ4.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1960] 1960
+            a#mwAZ8.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1961] 1961
+            a#mwAaA.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1962] 1962
+            a#mwAaE.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1963] 1963
+            a#mwAaI.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1964] 1964
+            a#mwAaM.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1967] 1967
+            a#mwAaQ[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1972] 1972
+            a#mwAaU[href=//it.wikipedia.org/wiki/Campionato_mondiale] titolo mondiale
+            a#mwAaY[href=//it.wikipedia.org/wiki/Campionato_del_mondo_sportprototipi_1981] 1981
+            a#mwAac[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            a#mwAag.mw-redirect[href=//it.wikipedia.org/wiki/Campionato_del_mondo_endurance] Campionato del mondo endurance
+            a#mwAak[href=//it.wikipedia.org/wiki/Campionato_del_mondo_endurance_FIA] WEC
+            a#mwAao[href=//it.wikipedia.org/wiki/Ferrari_499P] 499P
+            a#mwAas[href=//it.wikipedia.org/wiki/24_Ore_di_Le_Mans] 24 ore di Le Mans
+            a#mwAaw[href=//it.wikipedia.org/wiki/24_Ore_di_Le_Mans_2023] 2023
+            a#mwAa0[href=//it.wikipedia.org/wiki/24_Ore_di_Le_Mans_2024] 2024
+            a#mwAa4[href=//it.wikipedia.org/wiki/24_Ore_di_Le_Mans_2025] 2025
+            sup#cite_ref-13.mw-ref
+              a#mwAa8[href=#cite_note-13] [13]
+        section#mwAbM
+          figure#mwAbQ.mw-default-size
+            figcaption#mwAbc
+              a#mwAbg[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+          figure#mwAbk.mw-default-size
+            figcaption#mwAbw
+              a#mwAb0[href=//it.wikipedia.org/wiki/Francesco_Baracca] Francesco Baracca
+          p#mwAb4
+            a#mwAb8[href=//it.wikipedia.org/wiki/Marchio] marchio
+          p#mwAcA
+            a#mwAcE[href=//it.wikipedia.org/wiki/Quadrifoglio_Alfa_Romeo] Quadrifoglio Alfa Romeo
+            a#mwAcI[href=//it.wikipedia.org/wiki/Mario_Tadini] Mario Tadini
+            a#mwAcM[href=//it.wikipedia.org/wiki/Piero_Taruffi] Piero Taruffi
+            a#mwAcQ[href=//it.wikipedia.org/wiki/Motociclismo#Motociclismo_sportivo] gare motociclistiche
+            a#mwAcU[href=//it.wikipedia.org/wiki/Grande_depressione] Grande depressione
+            a#mwAcY.mw-redirect[href=//it.wikipedia.org/wiki/Case_automobilistiche] case automobilistiche
+          p#mwAcc
+            a#mwAcg[href=//it.wikipedia.org/wiki/Maggiore] maggiore
+            a#mwAck[href=//it.wikipedia.org/wiki/Francesco_Baracca] Francesco Baracca
+            a#mwAco[href=//it.wikipedia.org/wiki/91ª_Squadriglia_aeroplani_da_caccia] 91ª Squadriglia aeroplani da caccia
+            a#mwAcs[href=//it.wikipedia.org/wiki/Reggimento_"Piemonte_Cavalleria"_(2º)] 2º Reggimento "Piemonte Reale Cavalleria"
+            sup#cite_ref-14.mw-ref
+              a#mwAcw[href=#cite_note-14] [14]
+          figure#mwAdA.mw-default-size
+            figcaption#mwAdM
+              a#mwAdQ[href=//it.wikipedia.org/wiki/Ducati] Ducati
+              a#mwAdU[href=//it.wikipedia.org/wiki/Mike_Hailwood] Mike Hailwood
+          p#mwAdY
+            a#mwAdc[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            sup#cite_ref-Massaro_15-0.mw-ref
+              a#mwAdg[href=#cite_note-Massaro-15] [15]
+          div#mwAd0.itwiki-template-citazione
+            a[href=//it.wikipedia.org/wiki/Circuito_del_Savio] circuito del Savio
+            a[href=//it.wikipedia.org/wiki/Ravenna] Ravenna
+            a[href=//it.wikipedia.org/wiki/Nero] nero
+            a[href=//it.wikipedia.org/wiki/Giallo] giallo
+            a[href=//it.wikipedia.org/wiki/Modena] Modena
+          p#mwAd4
+            a#mwAd8.mw-redirect[href=//it.wikipedia.org/wiki/Alfa_Romeo_8C_2300] Alfa Romeo 8C 2300 Mille Miglia Zagato Spider passo corto
+            a#mwAeA[href=//it.wikipedia.org/wiki/24_Ore_di_Spa] 24 Ore di Spa
+            a#mwAeE[href=//it.wikipedia.org/wiki/Antonio_Brivio] Brivio
+            a#mwAeI[href=//it.wikipedia.org/wiki/Eugenio_Siena] Siena
+            a#mwAeM[href=//it.wikipedia.org/wiki/Piero_Taruffi] Taruffi
+            a#mwAeQ[href=//it.wikipedia.org/wiki/Guido_D'Ippolito] D'Ippolito
+          p#mwAeU
+            a#mwAeY.new[href=//it.wikipedia.org/wiki/Eligio_Gerosa?action=edit&redlink=1] Eligio Gerosa
+            a#mwAec[href=//it.wikipedia.org/wiki/Fabio_Taglioni] Fabio Taglioni
+            a#mwAeg[href=//it.wikipedia.org/wiki/Motocicletta] motociclette
+            a#mwAek[href=//it.wikipedia.org/wiki/Ducati] Ducati
+          p#mwAeo
+            a#mwAes[href=//it.wikipedia.org/wiki/Seconda_guerra_mondiale] seconda guerra mondiale
+            a#mwAew[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1950] nuovo campionato mondiale di Formula 1
+          p#mwAe0
+            sup#cite_ref-brand_2-1.mw-ref
+              a#mwAe4[href=#cite_note-brand-2] [2]
+            a#mwAfI[href=//it.wikipedia.org/wiki/Marchio_registrato] marchio registrato
+          section#mwAfM
+            ul#mwAfQ.gallery
+              li#mwAfU.gallerybox
+                div#mwAfY.thumb
+                  span#mwAfc
+                div#mwAfo.gallerytext
+                  a#mwAfs[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] compagine sportiva
+              li#mwAfw.gallerybox
+                div#mwAf0.thumb
+                  span#mwAf4
+              li#mwAgI.gallerybox
+                div#mwAgM.thumb
+                  span#mwAgQ
+                div#mwAgc.gallerytext
+                  a#mwAgg[href=//it.wikipedia.org/wiki/Pegaso_(mitologia)] pegaso
+              li#mwAgk.gallerybox
+                div#mwAgo.thumb
+                  span#mwAgs
+              li#mwAg8.gallerybox
+                div#mwAhA.thumb
+                  span#mwAhE
+              li#mwAhU.gallerybox
+                div#mwAhY.thumb
+                  span#mwAhc
+              li#mwAhs.gallerybox
+                div#mwAhw.thumb
+                  span#mwAh0
+              li#mwAiE.gallerybox
+                div#mwAiI.thumb
+                  span#mwAiM
+            p#mwAic
+              sup#cite_ref-16.mw-ref
+                a#mwAik[href=#cite_note-16] [16]
+        section#mwAi0
+          figure#mwAi4.mw-default-size
+            figcaption#mwAjE
+              a#mwAjI[href=//it.wikipedia.org/wiki/Milano] Milano
+          figure#mwAjM.mw-default-size
+            figcaption#mwAjY
+              a#mwAjc[href=//it.wikipedia.org/wiki/Ferrari_Enzo] Ferrari Enzo
+          figure#mwAjg.mw-default-size
+            figcaption#mwAjs
+              a#mwAjw[href=//it.wikipedia.org/wiki/Ferrari_F12berlinetta] Ferrari F12berlinetta
+          figure#mwAj0.mw-default-size
+            figcaption#mwAkA
+              a#mwAkE[href=//it.wikipedia.org/wiki/Ferrari_Monza_SP] Ferrari Monza SP1
+          p#mwAkI
+            sup#cite_ref-esclusivit_17-0.mw-ref
+              a#mwAkM[href=#cite_note-esclusivit-17] [17]
+            a#mwAkc[href=//it.wikipedia.org/wiki/Progettista] progettisti
+            a#mwAkg[href=//it.wikipedia.org/wiki/Carrozzeria] carrozzerie
+            a#mwAkk[href=//it.wikipedia.org/wiki/Bertone] Bertone
+            a#mwAko[href=//it.wikipedia.org/wiki/Ghia] Ghia
+            a#mwAks[href=//it.wikipedia.org/wiki/Giovanni_Michelotti_(designer)] Michelotti
+            a#mwAkw[href=//it.wikipedia.org/wiki/Pininfarina] Pininfarina
+            a#mwAk0[href=//it.wikipedia.org/wiki/Carrozzeria_Scaglietti] Scaglietti
+            a#mwAk4[href=//it.wikipedia.org/wiki/Carrozzeria_Touring] Touring
+            a#mwAk8.mw-redirect[href=//it.wikipedia.org/wiki/Vignale_(carrozziere)] Vignale
+            a#mwAlA[href=//it.wikipedia.org/wiki/Motore_V8] V8
+            a#mwAlE[href=//it.wikipedia.org/wiki/Motore_V12] V12
+          p#mwAlI
+            a#mwAlM[href=//it.wikipedia.org/wiki/Rosso] rosso
+            a#mwAlQ[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+            a#mwAlU[href=//it.wikipedia.org/wiki/Blu] blu
+            a#mwAlY[href=//it.wikipedia.org/wiki/Bianco] bianche
+            a#mwAlc[href=//it.wikipedia.org/wiki/Verde] verdi
+          p#mwAlg
+            a#mwAlk.mw-redirect[href=//it.wikipedia.org/wiki/Rosso_Alfa] rosso Alfa
+            a#mwAlo[href=//it.wikipedia.org/wiki/Rosso_corsa] rosso corsa
+            a#mwAls[href=//it.wikipedia.org/wiki/Sponsor] sponsor
+          section#mwAlw
+            table#mwAl0.wikitable
+              tbody#mwAl4
+                tr#mwAmI
+                  td#mwAmQ
+                    a#mwAmU[href=//it.wikipedia.org/wiki/Ferrari_166_Inter] 166 Inter
+                tr#mwAmY
+                  td#mwAmg
+                    a#mwAmk[href=//it.wikipedia.org/wiki/Ferrari_195_Inter] 195 Inter
+                tr#mwAmo
+                  td#mwAmw
+                    a#mwAm0[href=//it.wikipedia.org/wiki/Ferrari_212_Inter] 212 Inter
+                tr#mwAm4
+                  td#mwAnA
+                    a#mwAnE[href=//it.wikipedia.org/wiki/Ferrari_342_America] 342 America
+                tr#mwAnI
+                  td#mwAnQ
+                    a#mwAnU[href=//it.wikipedia.org/wiki/Ferrari_375_MM] 375 MM Coupé
+                tr#mwAnY
+                  td#mwAng
+                    a#mwAnk[href=//it.wikipedia.org/wiki/Ferrari_250_Europa] 250 Europa
+                tr#mwAno
+                  td#mwAnw
+                    a#mwAn0[href=//it.wikipedia.org/wiki/Ferrari_375_America] 375 America
+                tr#mwAn4
+                  td#mwAoA
+                    a#mwAoE[href=//it.wikipedia.org/wiki/Ferrari_250_Europa] 250 Europa GT
+                tr#mwAoI
+                  td#mwAoQ
+                    a#mwAoU[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Coupé] 250 GT Coupé
+                tr#mwAoc
+                  td#mwAok
+                    a#mwAoo[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Berlinetta_Tour_de_France] 250 GT Berlinetta TDF
+                tr#mwAos
+                  td#mwAo0
+                    a#mwAo4[href=//it.wikipedia.org/wiki/Ferrari_410_Superamerica] 410 Superamerica
+                tr#mwAo8
+                  td#mwApE
+                    a#mwApI[href=//it.wikipedia.org/wiki/Ferrari_410_Superamerica] 410 Superfast
+                tr#mwApM
+                  td#mwApU
+                    a#mwApY[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Cabriolet] 250 GT Cabriolet
+                tr#mwApg
+                  td#mwApo
+                    a#mwAps[href=//it.wikipedia.org/wiki/Ferrari_250_GT_California] 250 GT California
+                tr#mwAp0
+                  td#mwAp8
+                    a#mwAqA[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Cabriolet] 250 GT Cabriolet
+                tr#mwAqI
+                  td#mwAqQ
+                    a#mwAqU[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Coupé] 250 GT Coupé
+                tr#mwAqc
+                  td#mwAqk
+                    a#mwAqo[href=//it.wikipedia.org/wiki/Ferrari_250_GT_California] 250 GT California
+                tr#mwAqw
+                  td#mwAq4
+                    a#mwAq8[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Berlinetta_passo_corto] 250 GT Berlinetta SWB
+                tr#mwArA
+                  td#mwArI
+                    a#mwArM[href=//it.wikipedia.org/wiki/Ferrari_250_GT_2+2] 250 GT 2+2
+                tr#mwArQ
+                  td#mwArY
+                    a#mwArc[href=//it.wikipedia.org/wiki/Ferrari_400_Superamerica] 400 Superamerica
+                tr#mwArg
+                  td#mwAro
+                    a#mwArs[href=//it.wikipedia.org/wiki/Ferrari_250_GTO] 250 GTO
+                tr#mwArw
+                  td#mwAr4
+                    a#mwAr8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_250_GTL] 250 GTL
+                tr#mwAsA
+                  td#mwAsI
+                    a#mwAsM[href=//it.wikipedia.org/wiki/Ferrari_330_TR] 330 TR
+                tr#mwAsQ
+                  td#mwAsY
+                    a#mwAsc[href=//it.wikipedia.org/wiki/Ferrari_275_GTB] 275 GTB
+                tr#mwAsg
+                  td#mwAso
+                    a#mwAss[href=//it.wikipedia.org/wiki/Ferrari_275_GTB] 275 GTS
+                tr#mwAsw
+                  td#mwAs4
+                    a#mwAs8[href=//it.wikipedia.org/wiki/Ferrari_330_GT_2+2] 330 GT 2+2
+                tr#mwAtA
+                  td#mwAtI
+                    a#mwAtM[href=//it.wikipedia.org/wiki/Ferrari_500_Superfast] 500 Superfast
+                tr#mwAtQ
+                  td#mwAtY
+                    a#mwAtc[href=//it.wikipedia.org/wiki/Ferrari_250_GTO] 250 GTO
+                tr#mwAtg
+                  td#mwAto
+                    a#mwAts[href=//it.wikipedia.org/wiki/Ferrari_275_GTB] 275 GTB/4
+                tr#mwAtw
+                  td#mwAt4
+                    a#mwAt8[href=//it.wikipedia.org/wiki/Ferrari_275_GTB] 275 GTS/4
+                tr#mwAuA
+                  td#mwAuI
+                    a#mwAuM[href=//it.wikipedia.org/wiki/Ferrari_330_GTC] 330 GTC
+                tr#mwAuQ
+                  td#mwAuY
+                    a#mwAuc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_330_GTS] 330 GTS
+                tr#mwAug
+                  td#mwAuo
+                    a#mwAus[href=//it.wikipedia.org/wiki/Ferrari_365_P_Pininfarina] 365 P Speciale
+                tr#mwAuw
+                  td#mwAu4
+                    a#mwAu8[href=//it.wikipedia.org/wiki/Ferrari_365_California] 365 California
+                tr#mwAvA
+                  td#mwAvI
+                    a#mwAvM[href=//it.wikipedia.org/wiki/Ferrari_365_GT_2+2] 365 GT 2+2
+                tr#mwAvQ
+                  td#mwAvY
+                    a#mwAvc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_206_GT] Dino 206 GT
+                tr#mwAvg
+                  td#mwAvo
+                    a#mwAvs[href=//it.wikipedia.org/wiki/Ferrari_365_GTC] 365 GTC
+                tr#mwAvw
+                  td#mwAv4
+                    a#mwAv8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GTS] 365 GTS
+                tr#mwAwA
+                  td#mwAwI
+                    a#mwAwM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GTB/4] 365 GTB/4
+                tr#mwAwQ
+                  td#mwAwY
+                    a#mwAwc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GTS/4] 365 GTS/4
+                tr#mwAwg
+                  td#mwAwo
+                    a#mwAws.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_246_GT] Dino 246 GT
+                tr#mwAww
+                  td#mwAw4
+                    a#mwAw8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_246_GTS] Dino 246 GTS
+                tr#mwAxA
+                  td#mwAxI
+                    a#mwAxM[href=//it.wikipedia.org/wiki/Ferrari_365_GTC4] 365 GTC4
+                tr#mwAxQ
+                  td#mwAxY
+                    a#mwAxc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GT4_BB] 365 GT4 BB
+                tr#mwAxg
+                  td#mwAxo
+                    a#mwAxs.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_246_GTS] 246 GTS
+                tr#mwAxw
+                  td#mwAx4
+                    a#mwAx8[href=//it.wikipedia.org/wiki/Ferrari_365_GT4_2+2] 365 GT4 2+2
+                tr#mwAyA
+                  td#mwAyI
+                    a#mwAyM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_308_GT4] Dino 308 GT4
+                tr#mwAyQ
+                  td#mwAyY
+                    a#mwAyc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_208_GT4] Dino 208 GT4
+                tr#mwAyg
+                  td#mwAyo
+                    a#mwAys.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTB] 308 GTB
+                tr#mwAyw
+                  td#mwAy4
+                    a#mwAy8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GT4] 308 GT4
+                tr#mwAzA
+                  td#mwAzI
+                    a#mwAzM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_400_Automatic] 400 Automatic
+                tr#mwAzQ
+                  td#mwAzY
+                    a#mwAzc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_400_GT] 400 GT
+                tr#mwAzg
+                  td#mwAzo
+                    a#mwAzs.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_BB] 512 BB
+                tr#mwAzw
+                  td#mwAz4
+                    a#mwAz8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTS] 308 GTS
+                tr#mwA0A
+                  td#mwA0I
+                    a#mwA0M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_400i_Automatic] 400i Automatic
+                tr#mwA0Q
+                  td#mwA0Y
+                    a#mwA0c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_400i_GT] 400i GT
+                tr#mwA0g
+                  td#mwA0o
+                    a#mwA0s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_208_GTB] 208 GTB
+                tr#mwA0w
+                  td#mwA04
+                    a#mwA08.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_208_GTS] 208 GTS
+                tr#mwA1A
+                  td#mwA1I
+                    a#mwA1M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTBi] 308 GTBi
+                tr#mwA1Q
+                  td#mwA1Y
+                    a#mwA1c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTSi] 308 GTSi
+                tr#mwA1g
+                  td#mwA1o
+                    a#mwA1s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_8] Mondial 8
+                tr#mwA1w
+                  td#mwA14
+                    a#mwA18.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_BBi] 512 BBi
+                tr#mwA2A
+                  td#mwA2I
+                    a#mwA2M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_208_GTB_Turbo] 208 GTB Turbo
+                tr#mwA2Q
+                  td#mwA2Y
+                    a#mwA2c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_208_GTS_Turbo] 208 GTS Turbo
+                tr#mwA2g
+                  td#mwA2o
+                    a#mwA2s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTB_Quattrovalvole] 308 GTB Quattrovalvole
+                tr#mwA2w
+                  td#mwA24
+                    a#mwA28.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_308_GTS_Quattrovalvole] 308 GTS Quattrovalvole
+                tr#mwA3A
+                  td#mwA3I
+                    a#mwA3M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_Quattrovalvole] Mondial Quattrovalvole
+                tr#mwA3Q
+                  td#mwA3Y
+                    a#mwA3c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_QV_Cabriolet] Mondial QV Cabriolet
+                tr#mwA3g
+                  td#mwA3o
+                    a#mwA3s[href=//it.wikipedia.org/wiki/Ferrari_288_GTO] GTO
+                tr#mwA3w
+                  td#mwA34
+                    a#mwA38[href=//it.wikipedia.org/wiki/Ferrari_Testarossa] Testarossa
+                tr#mwA4A
+                  td#mwA4I
+                    a#mwA4M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_328_GTB] 328 GTB
+                tr#mwA4Q
+                  td#mwA4Y
+                    a#mwA4c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_328_GTS] 328 GTS
+                tr#mwA4g
+                  td#mwA4o
+                    a#mwA4s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_412_Automatic] 412 Automatic
+                tr#mwA4w
+                  td#mwA44
+                    a#mwA48.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_412_GT] 412 GT
+                tr#mwA5A
+                  td#mwA5I
+                    a#mwA5M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_3.2_GTB] Mondial 3.2 GTB
+                tr#mwA5Q
+                  td#mwA5Y
+                    a#mwA5c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_3.2_GTS] Mondial 3.2 GTS
+                tr#mwA5g
+                  td#mwA5o
+                    a#mwA5s[href=//it.wikipedia.org/wiki/Ferrari_208] GTB Turbo
+                tr#mwA5w
+                  td#mwA54
+                    a#mwA58[href=//it.wikipedia.org/wiki/Ferrari_208] GTS Turbo
+                tr#mwA6A
+                  td#mwA6I
+                    a#mwA6M[href=//it.wikipedia.org/wiki/Ferrari_F40] F40
+                tr#mwA6Q
+                  td#mwA6Y
+                    a#mwA6c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_348_TB] 348 TB
+                tr#mwA6g
+                  td#mwA6o
+                    a#mwA6s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_348_TS] 348 TS
+                tr#mwA6w
+                  td#mwA64
+                    a#mwA68.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_T] Mondial T
+                tr#mwA7A
+                  td#mwA7I
+                    a#mwA7M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mondial_T_Cabriolet] Mondial T Cabriolet
+                tr#mwA7Q
+                  td#mwA7Y
+                    a#mwA7c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_TR] 512 TR
+                tr#mwA7g
+                  td#mwA7o
+                    a#mwA7s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_456_GT] 456 GT
+                tr#mwA7w
+                  td#mwA74
+                    a#mwA78.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_456_GTA] 456 GTA
+                tr#mwA8A
+                  td#mwA8I
+                    a#mwA8M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_348_GTB] 348 GTB
+                tr#mwA8Q
+                  td#mwA8Y
+                    a#mwA8c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_348_GTS] 348 GTS
+                tr#mwA8g
+                  td#mwA8o
+                    a#mwA8s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F355_Berlinetta] F355 Berlinetta
+                tr#mwA8w
+                  td#mwA84
+                    a#mwA88.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F355_GTS] F355 GTS
+                tr#mwA9A
+                  td#mwA9I
+                    a#mwA9M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F512_M] F512 M
+                tr#mwA9Q
+                  td#mwA9Y
+                    a#mwA9c[href=//it.wikipedia.org/wiki/Ferrari_F50] F50
+                tr#mwA9g
+                  td#mwA9o
+                    a#mwA9s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F355_Spider] F355 Spider
+                tr#mwA9w
+                  td#mwA94
+                    a#mwA98[href=//it.wikipedia.org/wiki/Ferrari_550_Maranello] 550 Maranello
+                tr#mwA-A
+                  td#mwA-I
+                    a#mwA-M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_355_F1_Berlinetta] 355 F1 Berlinetta
+                tr#mwA-Q
+                  td#mwA-Y
+                    a#mwA-c.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_355_F1_GTS] 355 F1 GTS
+                tr#mwA-g
+                  td#mwA-o
+                    a#mwA-s.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_355_F1_Spider] 355 F1 Spider
+                tr#mwA-w
+                  td#mwA-4
+                    a#mwA-8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_456M_GT] 456M GT
+                tr#mwA_A
+                  td#mwA_I
+                    a#mwA_M.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_456M_GTA] 456M GTA
+                tr#mwA_Q
+                  td#mwA_Y
+                    a#mwA_c[href=//it.wikipedia.org/wiki/Ferrari_360] 360 Modena
+                tr#mwA_g
+                  td#mwA_o
+                    a#mwA_s[href=//it.wikipedia.org/wiki/Ferrari_360] 360 Spider
+                tr#mwA_w
+                  td#mwA_4
+                    a#mwA_8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_550_Barchetta] 550 Barchetta
+                tr#mwBAA
+                  td#mwBAI
+                    a#mwBAM[href=//it.wikipedia.org/wiki/Ferrari_575M_Maranello] 575M Maranello
+                tr#mwBAQ
+                  td#mwBAY
+                    a#mwBAc[href=//it.wikipedia.org/wiki/Ferrari_Enzo] Enzo
+                tr#mwBAg
+                  td#mwBAo
+                    a#mwBAs[href=//it.wikipedia.org/wiki/Ferrari_360] 360 Challenge Stradale
+                tr#mwBAw
+                  td#mwBA4
+                    a#mwBA8[href=//it.wikipedia.org/wiki/Ferrari_612_Scaglietti] 612 Scaglietti
+                tr#mwBBA
+                  td#mwBBI
+                    a#mwBBM[href=//it.wikipedia.org/wiki/Ferrari_F430] F430
+                tr#mwBBQ
+                  td#mwBBY
+                    a#mwBBc[href=//it.wikipedia.org/wiki/Ferrari_F430] F430 Spider
+                tr#mwBBg
+                  td#mwBBo
+                    a#mwBBs.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_575_Superamerica] 575 Superamerica
+                tr#mwBBw
+                  td#mwBB4
+                    a#mwBB8[href=//it.wikipedia.org/wiki/Ferrari_599] 599 GTB Fiorano
+                tr#mwBCA
+                  td#mwBCI
+                    a#mwBCM[href=//it.wikipedia.org/wiki/Ferrari_612_Scaglietti] 612 Scaglietti "Sessanta"
+                tr#mwBCQ
+                  td#mwBCY
+                    a#mwBCc[href=//it.wikipedia.org/wiki/Ferrari_F430] 430 Scuderia
+                tr#mwBCg
+                  td#mwBCo
+                    a#mwBCs[href=//it.wikipedia.org/wiki/Ferrari_California] California
+                tr#mwBCw
+                  td#mwBC4
+                    a#mwBC8[href=//it.wikipedia.org/wiki/Ferrari_F430] Scuderia Spider 16M
+                tr#mwBDA
+                  td#mwBDI
+                    a#mwBDM[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Italia
+                tr#mwBDQ
+                  td#mwBDY
+                    a#mwBDc[href=//it.wikipedia.org/wiki/Ferrari_599] 599 GTO
+                tr#mwBDg
+                  td#mwBDo
+                    a#mwBDs[href=//it.wikipedia.org/wiki/Ferrari_599] SA Aperta
+                tr#mwBDw
+                  td#mwBD4
+                    a#mwBD8[href=//it.wikipedia.org/wiki/Ferrari_FF] FF
+                tr#mwBEA
+                  td#mwBEI
+                    a#mwBEM[href=//it.wikipedia.org/wiki/Ferrari_599] 599 GTB Fiorano HGTE
+                tr#mwBEQ
+                  td#mwBEY
+                    a#mwBEc[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Spider
+                tr#mwBEg
+                  td#mwBEo
+                    a#mwBEs[href=//it.wikipedia.org/wiki/Ferrari_F12berlinetta] F12berlinetta
+                tr#mwBEw
+                  td#mwBE4
+                    a#mwBE8[href=//it.wikipedia.org/wiki/Ferrari_458] 458 20th Anniversary Special Edition
+                tr#mwBFA
+                  td#mwBFI
+                    a#mwBFM[href=//it.wikipedia.org/wiki/Ferrari_LaFerrari] LaFerrari
+                tr#mwBFQ
+                  td#mwBFY
+                    a#mwBFc[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Speciale
+                tr#mwBFg
+                  td#mwBFo
+                    a#mwBFs[href=//it.wikipedia.org/wiki/Ferrari_458_Pininfarina_Sergio] 458 Pininfarina Sergio
+                tr#mwBFw
+                  td#mwBF4
+                    a#mwBF8[href=//it.wikipedia.org/wiki/Ferrari_California_T] California T
+                tr#mwBGA
+                  td#mwBGI
+                    a#mwBGM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_458_Speciale_A] 458 Speciale A
+                tr#mwBGQ
+                  td#mwBGY
+                    a#mwBGc[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] 488 GTB
+                tr#mwBGg
+                  td#mwBGo
+                    a#mwBGs[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] 488 Spider
+                tr#mwBGw
+                  td#mwBG4
+                    a#mwBG8[href=//it.wikipedia.org/wiki/Ferrari_GTC4Lusso] GTC4Lusso
+                tr#mwBHA
+                  td#mwBHI
+                    a#mwBHM[href=//it.wikipedia.org/wiki/Ferrari_J50] J50
+                tr#mwBHQ
+                  td#mwBHY
+                    a#mwBHc[href=//it.wikipedia.org/wiki/Ferrari_812_Superfast] 812 Superfast
+                tr#mwBHg
+                  td#mwBHo
+                    a#mwBHs[href=//it.wikipedia.org/wiki/Ferrari_Portofino] Portofino
+                tr#mwBHw
+                  td#mwBH4
+                    a#mwBH8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_488_Pista] 488 Pista
+                tr#mwBIA
+                  td#mwBII
+                    a#mwBIM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_488_Pista] 488 Pista Spider
+                tr#mwBIQ
+                  td#mwBIY
+                    a#mwBIc[href=//it.wikipedia.org/wiki/Ferrari_Monza_SP] Ferrari Monza SP
+                tr#mwBIk
+                  td#mwBIs
+                    a#mwBIw[href=//it.wikipedia.org/wiki/Ferrari_F8_Tributo] F8 Tributo
+                tr#mwBI0
+                  td#mwBI8
+                    a#mwBJA[href=//it.wikipedia.org/wiki/Ferrari_SF90_Stradale] SF90 Stradale
+                tr#mwBJE
+                  td#mwBJM
+                    a#mwBJQ.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F8_Spider] F8 Spider
+                tr#mwBJU
+                  td#mwBJc
+                    a#mwBJg.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_812_GTS] 812 GTS
+                tr#mwBJk
+                  td#mwBJs
+                    a#mwBJw[href=//it.wikipedia.org/wiki/Ferrari_Roma] Roma
+                tr#mwBJ0
+                  td#mwBJ8
+                    a#mwBKA[href=//it.wikipedia.org/wiki/Ferrari_Portofino] Portofino M
+                tr#mwBKE
+                  td#mwBKM
+                    a#mwBKQ[href=//it.wikipedia.org/wiki/Ferrari_SF90_Stradale] SF90 Assetto Fiorano
+                tr#mwBKU
+                  td#mwBKc
+                    a#mwBKg[href=//it.wikipedia.org/wiki/Ferrari_812_Superfast] 812 Competizione
+                tr#mwBKk
+                  td#mwBKs
+                    a#mwBKw[href=//it.wikipedia.org/wiki/Ferrari_812_Superfast] 812 Competizione A
+                tr#mwBK0
+                  td#mwBK8
+                    a#mwBLA[href=//it.wikipedia.org/wiki/Ferrari_296_GTB] 296 GTB
+                tr#mwBLE
+                  td#mwBLM
+                    a#mwBLQ[href=//it.wikipedia.org/wiki/Ferrari_Daytona_SP3] Daytona SP3
+                tr#mwBLU
+                  td#mwBLc
+                    a#mwBLg[href=//it.wikipedia.org/wiki/Ferrari_Purosangue] Purosangue
+                tr#mwBLk
+                  td#mwBLs
+                    a#mwBLw[href=//it.wikipedia.org/wiki/Ferrari_12Cilindri] 12Cilindri
+                tr#mwBL0
+                  td#mwBL8
+                    a#mwBMA[href=//it.wikipedia.org/wiki/Ferrari_F80] F80
+                tr#mwBME
+                  td#mwBMM
+                    a#mwBMQ[href=//it.wikipedia.org/wiki/Ferrari_Amalfi] Amalfi
+                tr#mwBMU
+                  td#mwBMc
+                    a#mwBMg[href=//it.wikipedia.org/wiki/Ferrari_849_Testarossa] 849 Testarossa
+                tr#mwBMk
+                  td#mwBMs
+                    a#mwBMw[href=//it.wikipedia.org/wiki/Ferrari_Luce] Luce
+          section#mwBM0
+            figure#mwBM4.mw-default-size
+              figcaption#mwBNE
+                a#mwBNI.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_458_Italia] Ferrari 458 Italia
+            figure#mwBNM.mw-default-size
+              figcaption#mwBNY
+                a#mwBNc[href=//it.wikipedia.org/wiki/Ferrari_166_F2] Ferrari 166 F2
+                a#mwBNg[href=//it.wikipedia.org/wiki/Formula_2] Formula 2
+            figure#mwBNk.mw-default-size
+              figcaption#mwBNw
+                a#mwBN0[href=//it.wikipedia.org/wiki/Ferrari_158] Ferrari 158
+                a#mwBN4[href=//it.wikipedia.org/wiki/Formula_1] Formula 1
+            figure#mwBN8.mw-default-size
+              figcaption#mwBOI
+                a#mwBOM[href=//it.wikipedia.org/wiki/Ferrari_312_T2] Ferrari 312 T2
+            figure#mwBOQ.mw-default-size
+              figcaption#mwBOc
+                a#mwBOg[href=//it.wikipedia.org/wiki/Ferrari_126_C2] Ferrari 126 C2
+            figure#mwBOk.mw-default-size
+              figcaption#mwBOw
+                a#mwBO0[href=//it.wikipedia.org/wiki/Ferrari_F2001] Ferrari F2001
+            figure#mwBO4.mw-default-size
+              figcaption#mwBPE
+                a#mwBPI[href=//it.wikipedia.org/wiki/Ferrari_F2007] Ferrari F2007
+            ul#mwBPM
+              li#mwBPQ
+                a#mwBPU[href=//it.wikipedia.org/wiki/Ferrari_125_C] Ferrari 125 C
+              li#mwBPY
+                a#mwBPc[href=//it.wikipedia.org/wiki/Ferrari_159_C] Ferrari 159 C
+              li#mwBPg
+                a#mwBPk[href=//it.wikipedia.org/wiki/Ferrari_166_FL] Ferrari 166 FL
+              li#mwBPo
+                a#mwBPs[href=//it.wikipedia.org/wiki/Ferrari_125_F1] Ferrari 125 F1
+              li#mwBPw
+                a#mwBP0[href=//it.wikipedia.org/wiki/Ferrari_166_F2] Ferrari 166 F2
+              li#mwBP4
+                a#mwBP8[href=//it.wikipedia.org/wiki/Ferrari_275_F1] Ferrari 275 F1
+              li#mwBQA
+                a#mwBQE[href=//it.wikipedia.org/wiki/Ferrari_340_F1] Ferrari 340 F1
+              li#mwBQI
+                a#mwBQM[href=//it.wikipedia.org/wiki/Ferrari_375_F1] Ferrari 375 F1
+              li#mwBQQ
+                a#mwBQU[href=//it.wikipedia.org/wiki/Ferrari_212_F1] Ferrari 212 F1
+              li#mwBQY
+                a#mwBQc[href=//it.wikipedia.org/wiki/Ferrari_500_F2] Ferrari 500 F2
+              li#mwBQg
+                a#mwBQk[href=//it.wikipedia.org/wiki/Ferrari_375_Indy] Ferrari 375 Indy
+              li#mwBQo
+                a#mwBQs[href=//it.wikipedia.org/wiki/Ferrari_166_C] Ferrari 166 C
+              li#mwBQw
+                a#mwBQ0.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_553_F2] Ferrari 553 F2
+              li#mwBQ4
+                a#mwBQ8[href=//it.wikipedia.org/wiki/Ferrari_553_F1] Ferrari 553 F1
+              li#mwBRA
+                a#mwBRE[href=//it.wikipedia.org/wiki/Ferrari_625_F1] Ferrari 625 F1
+              li#mwBRI
+                a#mwBRM[href=//it.wikipedia.org/wiki/Ferrari_555_F1] Ferrari 555 F1
+              li#mwBRQ
+                a#mwBRU.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_D50] Ferrari D50
+              li#mwBRY
+                a#mwBRc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_801_F1] Ferrari 801 F1
+              li#mwBRg
+                a#mwBRk.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Dino_156_F2] Ferrari Dino 156 F2
+              li#mwBRo
+                a#mwBRs[href=//it.wikipedia.org/wiki/Ferrari_326_MI] Ferrari 326 MI
+              li#mwBRw
+                a#mwBR0[href=//it.wikipedia.org/wiki/Ferrari_412_MI] Ferrari 412 MI
+              li#mwBR4
+                a#mwBR8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_246_F1] Ferrari 246 F1
+              li#mwBSA
+                a#mwBSE.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_256_F1] Ferrari 256 F1
+              li#mwBSI
+                a#mwBSM.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_246_P] Ferrari 246 P
+              li#mwBSQ
+                a#mwBSU.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_156_P] Ferrari 156 P
+              li#mwBSY
+                a#mwBSc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_156_F2] Ferrari 156 F2
+              li#mwBSg
+                a#mwBSk[href=//it.wikipedia.org/wiki/Ferrari_156_F1] Ferrari 156 F1
+              li#mwBSo
+                a#mwBSs[href=//it.wikipedia.org/wiki/Ferrari_156_F1-63] Ferrari 156 F1-63
+              li#mwBSw
+                a#mwBS0.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_158_F1] Ferrari 158 F1
+              li#mwBS4
+                a#mwBS8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_F1] Ferrari 512 F1
+              li#mwBTA
+                a#mwBTE[href=//it.wikipedia.org/wiki/Ferrari_246_F1-66] Ferrari 246 F1-66
+              li#mwBTI
+                a#mwBTM[href=//it.wikipedia.org/wiki/Ferrari_Dino_166_F2] Ferrari Dino 166 F2
+              li#mwBTQ
+                a#mwBTU[href=//it.wikipedia.org/wiki/Ferrari_312_F1] Ferrari 312 F1
+              li#mwBTY
+                a#mwBTc[href=//it.wikipedia.org/wiki/Ferrari_Dino_246_Tasmania] Ferrari Dino 246 Tasmania
+              li#mwBTg
+                a#mwBTk[href=//it.wikipedia.org/wiki/Ferrari_312_B] Ferrari 312 B
+              li#mwBTo
+                a#mwBTs[href=//it.wikipedia.org/wiki/Ferrari_312_B2] Ferrari 312 B2
+              li#mwBTw
+                a#mwBT0[href=//it.wikipedia.org/wiki/Ferrari_312_B3] Ferrari 312 B3
+              li#mwBT4
+                a#mwBT8[href=//it.wikipedia.org/wiki/Ferrari_312_B3-74] Ferrari 312 B3-74
+              li#mwBUA
+                a#mwBUE[href=//it.wikipedia.org/wiki/Ferrari_312_T] Ferrari 312 T
+              li#mwBUI
+                a#mwBUM[href=//it.wikipedia.org/wiki/Ferrari_312_T2] Ferrari 312 T2
+              li#mwBUQ
+                a#mwBUU[href=//it.wikipedia.org/wiki/Ferrari_312_T3] Ferrari 312 T3
+              li#mwBUY
+                a#mwBUc[href=//it.wikipedia.org/wiki/Ferrari_312_T4] Ferrari 312 T4
+              li#mwBUg
+                a#mwBUk[href=//it.wikipedia.org/wiki/Ferrari_312_T5] Ferrari 312 T5
+              li#mwBUo
+                a#mwBUs[href=//it.wikipedia.org/wiki/Ferrari_126_CK] Ferrari 126 CK
+              li#mwBUw
+                a#mwBU0.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_126_CX] Ferrari 126 CX
+              li#mwBU4
+                a#mwBU8[href=//it.wikipedia.org/wiki/Ferrari_126_C2] Ferrari 126 C2
+              li#mwBVA
+                a#mwBVE.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_126_C2B] Ferrari 126 C2B
+              li#mwBVI
+                a#mwBVM[href=//it.wikipedia.org/wiki/Ferrari_126_C3] Ferrari 126 C3
+              li#mwBVQ
+                a#mwBVU[href=//it.wikipedia.org/wiki/Ferrari_126_C4] Ferrari 126 C4
+              li#mwBVY
+                a#mwBVc[href=//it.wikipedia.org/wiki/Ferrari_156-85] Ferrari 156-85
+              li#mwBVg
+                a#mwBVk[href=//it.wikipedia.org/wiki/Ferrari_F1-86] Ferrari F1-86
+              li#mwBVo
+                a#mwBVs[href=//it.wikipedia.org/wiki/Ferrari_Cart] Ferrari 637
+              li#mwBVw
+                a#mwBV0[href=//it.wikipedia.org/wiki/Ferrari_F1-87] Ferrari F1-87
+              li#mwBV4
+                a#mwBV8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F1-87/88C] Ferrari F1-87/88C
+              li#mwBWA
+                a#mwBWE[href=//it.wikipedia.org/wiki/Ferrari_640_F1#Il_progetto_639_e_la_F1_87/88A_"ibrida"] Ferrari 639 (vettura laboratorio)
+              li#mwBWI
+                a#mwBWM[href=//it.wikipedia.org/wiki/Ferrari_640_F1] Ferrari 640 F1 (F1-89)
+              li#mwBWQ
+                a#mwBWU[href=//it.wikipedia.org/wiki/Ferrari_641_F1] Ferrari 641/1 F1 (F1-90)
+              li#mwBWY
+                a#mwBWc[href=//it.wikipedia.org/wiki/Ferrari_641_F1] Ferrari 641/2 F1 (F1-90)
+              li#mwBWg
+                a#mwBWk[href=//it.wikipedia.org/wiki/Ferrari_642_F1] Ferrari 642 (F1-91)
+              li#mwBWo
+                a#mwBWs[href=//it.wikipedia.org/wiki/Ferrari_643_F1] Ferrari 643 (F1-91)
+              li#mwBWw
+                a#mwBW0.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F92_A] Ferrari F92 A
+              li#mwBW4
+                a#mwBW8.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F92_AT] Ferrari F92 AT
+              li#mwBXA
+                a#mwBXE.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F93_A] Ferrari F93 A
+              li#mwBXI
+                a#mwBXM[href=//it.wikipedia.org/wiki/Ferrari_412_T1] Ferrari 412 T1
+              li#mwBXQ
+                a#mwBXU.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_412_T1B] Ferrari 412 T1B
+              li#mwBXY
+                a#mwBXc[href=//it.wikipedia.org/wiki/Ferrari_412_T2] Ferrari 412 T2
+              li#mwBXg
+                a#mwBXk[href=//it.wikipedia.org/wiki/Ferrari_F310] Ferrari F310
+              li#mwBXo
+                a#mwBXs[href=//it.wikipedia.org/wiki/Ferrari_F310B] Ferrari F310B
+              li#mwBXw
+                a#mwBX0[href=//it.wikipedia.org/wiki/Ferrari_F300] Ferrari F300
+              li#mwBX4
+                a#mwBX8[href=//it.wikipedia.org/wiki/Ferrari_F399] Ferrari F399
+              li#mwBYA
+                a#mwBYE[href=//it.wikipedia.org/wiki/Ferrari_F1-2000] Ferrari F1-2000
+              li#mwBYI
+                a#mwBYM[href=//it.wikipedia.org/wiki/Ferrari_F2001] Ferrari F2001
+              li#mwBYQ
+                a#mwBYU[href=//it.wikipedia.org/wiki/Ferrari_F2002] Ferrari F2002
+              li#mwBYY
+                a#mwBYc.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F2003GA] Ferrari F2003GA
+              li#mwBYg
+                a#mwBYk[href=//it.wikipedia.org/wiki/Ferrari_F2004] Ferrari F2004
+              li#mwBYo
+                a#mwBYs.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F2004M] Ferrari F2004M
+              li#mwBYw
+                a#mwBY0[href=//it.wikipedia.org/wiki/Ferrari_F2005] Ferrari F2005
+              li#mwBY4
+                a#mwBY8[href=//it.wikipedia.org/wiki/Ferrari_248_F1] Ferrari 248 F1
+              li#mwBZA
+                a#mwBZE[href=//it.wikipedia.org/wiki/Ferrari_F2007] Ferrari F2007
+              li#mwBZI
+                a#mwBZM[href=//it.wikipedia.org/wiki/Ferrari_F2008] Ferrari F2008
+              li#mwBZQ
+                a#mwBZU[href=//it.wikipedia.org/wiki/Ferrari_F60] Ferrari F60
+              li#mwBZY
+                a#mwBZc[href=//it.wikipedia.org/wiki/Ferrari_F10] Ferrari F10
+              li#mwBZg
+                a#mwBZk[href=//it.wikipedia.org/wiki/Ferrari_150º_Italia] Ferrari 150º Italia
+              li#mwBZo
+                a#mwBZs[href=//it.wikipedia.org/wiki/Ferrari_F2012] Ferrari F2012
+              li#mwBZw
+                a#mwBZ0[href=//it.wikipedia.org/wiki/Ferrari_F138] Ferrari F138
+              li#mwBZ4
+                a#mwBZ8[href=//it.wikipedia.org/wiki/Ferrari_F14_T] Ferrari F14-T
+              li#mwBaA
+                a#mwBaE[href=//it.wikipedia.org/wiki/Ferrari_SF15-T] Ferrari SF15-T
+              li#mwBaI
+                a#mwBaM[href=//it.wikipedia.org/wiki/Ferrari_SF16-H] Ferrari SF16-H
+              li#mwBaQ
+                a#mwBaU[href=//it.wikipedia.org/wiki/Ferrari_SF70H] Ferrari SF70H
+              li#mwBaY
+                a#mwBac[href=//it.wikipedia.org/wiki/Ferrari_SF71H] Ferrari SF71H
+              li#mwBag
+                a#mwBak[href=//it.wikipedia.org/wiki/Ferrari_SF90] Ferrari SF90
+              li#mwBao
+                a#mwBas[href=//it.wikipedia.org/wiki/Ferrari_SF1000] Ferrari SF1000
+              li#mwBaw
+                a#mwBa0[href=//it.wikipedia.org/wiki/Ferrari_SF21] Ferrari SF21
+              li#mwBa4
+                a#mwBa8[href=//it.wikipedia.org/wiki/Ferrari_F1-75] Ferrari F1-75
+              li#mwBbA
+                a#mwBbE[href=//it.wikipedia.org/wiki/Ferrari_SF-23] Ferrari SF-23
+              li#mwBbI
+                a#mwBbM[href=//it.wikipedia.org/wiki/Ferrari_SF-24] Ferrari SF-24
+              li#mwBbQ
+                a#mwBbU[href=//it.wikipedia.org/wiki/Ferrari_SF-25] Ferrari SF-25
+              li#mwBbY
+                a#mwBbc[href=//it.wikipedia.org/wiki/Ferrari_SF-26] Ferrari SF-26
+          section#mwBbk
+            div#mwBbs.responsive-columns
+              table.wikitable
+                a[href=//it.wikipedia.org/wiki/Ferrari_125_S] 125 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_159_S] 159 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_SC] 166 SC
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_S] 166 S Allemano (scoperta)
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_S] 166 S Allemano (coperta)
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_MM] 166 MM Touring
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_MM] 166 MM Zagato
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_Inter_Sport] 166 Inter Sport
+                a[href=//it.wikipedia.org/wiki/Ferrari_166_Inter_Corsa] 166 Inter Corsa
+                a[href=//it.wikipedia.org/wiki/Ferrari_195_S] 195 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_275_S] 275 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_340_America] 340 America
+                a[href=//it.wikipedia.org/wiki/Ferrari_212_Export] 212 Export
+                a[href=//it.wikipedia.org/wiki/Ferrari_212_Inter] 212 Inter
+                a[href=//it.wikipedia.org/wiki/Ferrari_225_S] 225 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_S] 250 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_340_Mexico] 340 Mexico
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_MM] 250 MM
+                a[href=//it.wikipedia.org/wiki/Ferrari_340_MM] 340 MM
+                a[href=//it.wikipedia.org/wiki/Ferrari_375_MM] 375 MM
+                a[href=//it.wikipedia.org/wiki/Ferrari_625_TF] 625 TF
+                a[href=//it.wikipedia.org/wiki/Ferrari_500_Mondial] 500 Mondial
+                a[href=//it.wikipedia.org/wiki/Ferrari_735_S] 735 S
+                a[href=//it.wikipedia.org/wiki/Ferrari-Abarth_166_MM/53] Abarth 166 MM/53
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_Monza] 250 Monza
+                a[href=//it.wikipedia.org/wiki/Ferrari_375_Plus] 375 Plus
+                a[href=//it.wikipedia.org/wiki/Ferrari_750_Monza] 750 Monza
+                a[href=//it.wikipedia.org/wiki/Ferrari_376_S] 376 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_735_LM] 735 LM
+                a[href=//it.wikipedia.org/wiki/Ferrari_857_S] 857 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_290_MM] 290 MM
+                a[href=//it.wikipedia.org/wiki/Ferrari_410_S] 410 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_500_TR] 500 TR
+                a[href=//it.wikipedia.org/wiki/Ferrari_625_LM] 625 LM
+                a[href=//it.wikipedia.org/wiki/Ferrari_860_Monza] 860 Monza
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Berlinetta_Tour_de_France] 250 GT Berlinetta TDF
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_Testa_Rossa] 250 Testa Rossa
+                a[href=//it.wikipedia.org/wiki/Ferrari_290_S] 290 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_315_S] 315 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_335_S] 335 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_500_TRC] 500 TRC
+                a[href=//it.wikipedia.org/wiki/Ferrari_312_S] 312 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_412_S] 412 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_196_S] Dino 196 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_296_S] Dino 296 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Berlinetta_passo_corto] 250 GT Berlinetta SWB
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GT_California] 250 GT California LWB
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GT_California] 250 GT California SWB
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_246_S] Dino 246 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_246_SP] 246 SP
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_TR_61_Spyder_Fantuzzi] 250 TR 61
+                a[href=//it.wikipedia.org/wiki/Ferrari_196_SP] 196 SP
+                a[href=//it.wikipedia.org/wiki/Ferrari_248_SP] 248 SP
+                a[href=//it.wikipedia.org/wiki/Ferrari_268_SP] 268 SP
+                a[href=//it.wikipedia.org/wiki/Ferrari_286_SP] 286 SP
+                a[href=//it.wikipedia.org/wiki/Ferrari_330_LM] 330 LM
+                a[href=//it.wikipedia.org/wiki/Ferrari_330_LM] 330 TR
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GTO] 250 GTO
+              table.wikitable
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_LM] 250 LM
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_P] 250 P
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_330_P] 330 P
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_275_P] 275 P
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GT_Berlinetta_Lusso] 250 GT Berlinetta Lusso
+                a[href=//it.wikipedia.org/wiki/Ferrari_250_GTO] 250 GTO/64
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_275_GTB_Competizione] 275 GTB/C Competizione
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_275_P2] 275 P2
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_330_P2] 330 P2
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_P2] 365 P2
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_166_P] Dino 166 P
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_206_SP] Dino 206 SP
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_P2] 365 P2/3
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_P2] 365 P2 Elefante bianco
+                a[href=//it.wikipedia.org/wiki/Ferrari_330_P3] 330 P3
+                a[href=//it.wikipedia.org/wiki/Ferrari_Dino_206_S] Dino 206 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_330_P4] 330 P4
+                a[href=//it.wikipedia.org/wiki/Ferrari_350_Can_Am] 350 Can Am
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_412_P] 412 P
+                a[href=//it.wikipedia.org/wiki/Ferrari_612_Can_Am] 612 Can Am
+                a[href=//it.wikipedia.org/wiki/Ferrari_212_E] 212 E
+                a[href=//it.wikipedia.org/wiki/Ferrari_312_P] 312 P
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_M] 512 M
+                a[href=//it.wikipedia.org/wiki/Ferrari_512_S] 512 S
+                a[href=//it.wikipedia.org/wiki/Ferrari_312_PB] 312 PB
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GTB4_Competizione] 365 GTB/4 Competizione
+                a[href=//it.wikipedia.org/wiki/Ferrari_712_Can_Am] 712 Can Am
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_365_GTB4_Competizione] 365 GT4/BB
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_512_BB/LM] 512 BB/LM
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F40_LM] F40 LM
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F40_Competizione] F40 Competizione
+                a[href=//it.wikipedia.org/wiki/Ferrari_348] 348 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_348] 348 GT Competizione
+                a[href=//it.wikipedia.org/wiki/Ferrari_333_SP] 333 SP
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F40_GTE] F40 GTE
+                a[href=//it.wikipedia.org/wiki/Ferrari_F355] F355 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_F50_GT] F50 GT
+                a[href=//it.wikipedia.org/wiki/Ferrari_F355] F355 GT
+                a[href=//it.wikipedia.org/wiki/Ferrari_360] 360 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_550_Maranello] 550 Maranello GTS
+                a[href=//it.wikipedia.org/wiki/Ferrari_360] 360 GT
+                a[href=//it.wikipedia.org/wiki/Ferrari_575M_Maranello#575_GTC] 575 GTC
+                a[href=//it.wikipedia.org/wiki/Ferrari_360_GTC] 360 GTC
+                a[href=//it.wikipedia.org/wiki/Ferrari_FXX] FXX
+                a[href=//it.wikipedia.org/wiki/Ferrari_F430_Challenge] F430 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_F430] F430 GTC
+                a[href=//it.wikipedia.org/wiki/Ferrari_FXX] FXX Evo
+                a[href=//it.wikipedia.org/wiki/Ferrari_F430] F430 Scuderia GT3
+                a[href=//it.wikipedia.org/wiki/Ferrari_599#599_XX] 599XX
+                a[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_458_Italia_GTC] 458 Italia GTC
+                a[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Italia GT3
+                a[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Grand AM
+                a[href=//it.wikipedia.org/wiki/Ferrari_599#599_XX] 599XX Evo
+                a[href=//it.wikipedia.org/wiki/Ferrari_FXX_K] FXX K
+                a[href=//it.wikipedia.org/wiki/Ferrari_458] 458 Challenge Evo
+                a[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] 488 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_488_GTE] 488 GTE
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_488] 488 GT3
+                a[href=//it.wikipedia.org/wiki/Ferrari_488_GTE] 488 GTE Evo
+                a[href=//it.wikipedia.org/wiki/Ferrari_FXX_K] FXX K Evo
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_488] 488 GT3 Evo
+                a[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] 488 Challenge Evo
+                a.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_488] 488 GT Modificata
+                a[href=//it.wikipedia.org/wiki/Ferrari_499P] 499P
+                a[href=//it.wikipedia.org/wiki/Ferrari_499P] 499P Modificata
+                a[href=//it.wikipedia.org/wiki/Ferrari_296_GTB] 296 Challenge
+                a[href=//it.wikipedia.org/wiki/Ferrari_296_GT3] 296 GT3
+              a[href=//it.wikipedia.org/wiki/Ferrari_250_Testa_Rossa] Ferrari 250 Testa Rossa
+              a[href=//it.wikipedia.org/wiki/Ferrari_250_GTO] Ferrari 250 GTO
+              a[href=//it.wikipedia.org/wiki/Ferrari_250_LM] Ferrari 250 LM
+              a[href=//it.wikipedia.org/wiki/Ferrari_333_SP] Ferrari 333 SP
+              a[href=//it.wikipedia.org/wiki/Ferrari_F430_Challenge] Ferrari F430 Challenge
+          section#mwBbw
+            section#mwBb0
+              figure#mwBb4.mw-default-size
+                figcaption#mwBcE
+                  a#mwBcI[href=//it.wikipedia.org/wiki/Ferrari_458_Pininfarina_Sergio] Ferrari 458 Pininfarina Sergio
+              figure#mwBcM.mw-default-size
+                figcaption#mwBcY
+                  a#mwBcc[href=//it.wikipedia.org/wiki/Circuito_di_Fiorano] circuito di Fiorano
+              ul#mwBcg
+                li#mwBck
+                  a#mwBco.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Modulo] Modulo
+                li#mwBcs
+                  a#mwBcw.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Pinin_Concept] Pinin Concept
+                li#mwBc0
+                  a#mwBc4[href=//it.wikipedia.org/wiki/Ferrari_Cart] Cart
+                li#mwBc8
+                  a#mwBdA[href=//it.wikipedia.org/wiki/Ferrari_408_4RM] 408 4RM
+                li#mwBdE
+                  a#mwBdI.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Mythos] Mythos
+                li#mwBdM
+                  a#mwBdQ.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F.Z.93] F.Z.93
+                li#mwBdU
+                  a#mwBdY.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_Rossa_Concept] Rossa Concept
+                li#mwBdc
+                  a#mwBdg[href=//it.wikipedia.org/wiki/Ferrari_GG50] GG50
+                li#mwBdk
+                  a#mwBdo[href=//it.wikipedia.org/wiki/Ferrari_Millechili] Millechili
+                li#mwBds
+                  a#mwBdw.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_F430_Spider_Biofuel] F430 Spider Biofuel
+                li#mwBd0
+                  a#mwBd4[href=//it.wikipedia.org/wiki/Ferrari_599] 599 HY-KERS
+                li#mwBd8
+                  a#mwBeA[href=//it.wikipedia.org/wiki/Ferrari_458_Pininfarina_Sergio] 458 Pininfarina Sergio
+            section#mwBeE
+              figure#mwBeI.mw-default-size
+                figcaption#mwBeU
+                  a#mwBeY[href=//it.wikipedia.org/wiki/Ferrari_P4/5] Ferrari P4/5
+              ul#mwBec
+                li#mwBeo
+                  a#mwBes[href=//it.wikipedia.org/wiki/Ferrari_456#456_Venice] 456 Venice Station Wagon
+                li#mwBe0
+                  a#mwBe4[href=//it.wikipedia.org/wiki/Ferrari_FX] FX
+                li#mwBe8
+                  a#mwBfA[href=//it.wikipedia.org/wiki/Ferrari_P4/5] P4/5
+                li#mwBfE
+                  a#mwBfI[href=//it.wikipedia.org/wiki/Ferrari_SP1] SP1
+                li#mwBfM
+                  a#mwBfQ[href=//it.wikipedia.org/wiki/Ferrari_P540_Superfast_Aperta] P540 Superfast Aperta
+                li#mwBfU
+                  a#mwBfY[href=//it.wikipedia.org/wiki/Ferrari_Superamerica_45] Superamerica 45
+                li#mwBfc
+                  a#mwBfg[href=//it.wikipedia.org/wiki/Ferrari_SP12_EC] SP12 EC
+            section#mwBgs
+              ul#mwBgw
+                li#mwBg0
+                  a#mwBg4[href=//it.wikipedia.org/wiki/Ferrari_Mondial] Ferrari Mondial PPG
+                  a#mwBg8[href=//it.wikipedia.org/wiki/Champ_Car] Champ Car
+                li#mwBhA
+                  a#mwBhE.mw-redirect[href=//it.wikipedia.org/wiki/Ferrari_348_TB] 348 TB
+                li#mwBhI
+                  a#mwBhM[href=//it.wikipedia.org/wiki/Ferrari_F430] F430
+                  a#mwBhQ[href=//it.wikipedia.org/wiki/Ferrari_Challenge_Trofeo_Pirelli] Ferrari Challenge
+                li#mwBhU
+                  a#mwBhY[href=//it.wikipedia.org/wiki/Ferrari_458] 458
+                li#mwBhc
+                  a#mwBhg[href=//it.wikipedia.org/wiki/Ferrari_488_GTB] 488 GTB
+        section#mwBhk
+          ul#mwBhs
+            li#mwBhw
+              a#mwBh0[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            li#mwBiA
+              a#mwBiE[href=//it.wikipedia.org/wiki/Vittorio_Ghidella] Vittorio Ghidella
+            li#mwBiM
+              a#mwBiQ[href=//it.wikipedia.org/wiki/Luca_Cordero_di_Montezemolo] Luca Cordero di Montezemolo
+            li#mwBiU
+              a#mwBiY[href=//it.wikipedia.org/wiki/Sergio_Marchionne] Sergio Marchionne
+            li#mwBic
+              a#mwBig[href=//it.wikipedia.org/wiki/John_Elkann] John Elkann
+        section#mwBik
+          p#mwBio
+            a#mwBis[href=//it.wikipedia.org/wiki/Amministratore_delegato] amministratori delegati
+          ul#mwBiw
+            li#mwBi0
+              a#mwBi4[href=//it.wikipedia.org/wiki/Luca_Cordero_di_Montezemolo] Luca Cordero di Montezemolo
+            li#mwBi8
+              a#mwBjA[href=//it.wikipedia.org/wiki/Jean_Todt] Jean Todt
+            li#mwBjE
+              a#mwBjI[href=//it.wikipedia.org/wiki/Amedeo_Felisa] Amedeo Felisa
+            li#mwBjM
+              a#mwBjQ[href=//it.wikipedia.org/wiki/Sergio_Marchionne] Sergio Marchionne
+              sup#cite_ref-18.mw-ref
+                a#mwBjU[href=#cite_note-18] [18]
+            li#mwBjo
+              a#mwBjs[href=//it.wikipedia.org/wiki/John_Elkann] John Elkann
+              sup#cite_ref-19.mw-ref
+                a#mwBj0[href=#cite_note-19] [19]
+            li#mwBkE
+              a#mwBkI[href=//it.wikipedia.org/wiki/Benedetto_Vigna] Benedetto Vigna
+        section#mwBkM
+          div#mwBkU.hatnote
+            a[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+          p#mwBkY
+            sup#cite_ref-20.mw-ref
+              a#mwBkc[href=#cite_note-20] [20]
+            sup#cite_ref-21.mw-ref
+              a#mwBks[href=#cite_note-21] [21]
+            a#mwBk8[href=//it.wikipedia.org/wiki/Euro] euro
+            sup#cite_ref-dati2012repubblica_22-0.mw-ref
+              a#mwBlA[href=#cite_note-dati2012repubblica-22] [22]
+            a#mwBlQ[href=//it.wikipedia.org/wiki/Ferrari_N.V.#Dati_finanziari] Ferrari N.V.
+        section#mwBlU
+          figure#mwBlY.mw-default-size
+          table#mwBlo.wikitable
+            tbody#mwBls
+              tr#mwBmA
+                td#mwBmE
+                  sup#cite_ref-23.mw-ref
+                    a#mwBmI[href=#cite_note-23] [23]
+              tr#mwBmg
+                td#mwBmk
+                  sup#cite_ref-24.mw-ref
+                    a#mwBmo[href=#cite_note-24] [24]
+              tr#mwBnA
+                td#mwBnE
+                  sup#cite_ref-25.mw-ref
+                    a#mwBnI[href=#cite_note-25] [25]
+              tr#mwBnk
+                td#mwBno
+                  sup#cite_ref-26.mw-ref
+                    a#mwBns[href=#cite_note-26] [26]
+              tr#mwBoI
+                td#mwBoM
+                  sup#cite_ref-27.mw-ref
+                    a#mwBoQ[href=#cite_note-27] [27]
+              tr#mwBos
+                td#mwBow
+                  sup#cite_ref-28.mw-ref
+                    a#mwBo0[href=#cite_note-28] [28]
+              tr#mwBpQ
+                td#mwBpU
+                  sup#cite_ref-29.mw-ref
+                    a#mwBpY[href=#cite_note-29] [29]
+              tr#mwBp0
+                td#mwBp4
+                  sup#cite_ref-30.mw-ref
+                    a#mwBp8[href=#cite_note-30] [30]
+              tr#mwBqY
+                td#mwBqc
+                  sup#cite_ref-31.mw-ref
+                    a#mwBqg[href=#cite_note-31] [31]
+              tr#mwBq8
+                td#mwBrA
+                  sup#cite_ref-32.mw-ref
+                    a#mwBrE[href=#cite_note-32] [32]
+              tr#mwBrg
+                td#mwBrk
+                  sup#cite_ref-33.mw-ref
+                    a#mwBro[href=#cite_note-33] [33]
+              tr#mwBsE
+                td#mwBsI
+                  sup#cite_ref-34.mw-ref
+                    a#mwBsM[href=#cite_note-34] [34]
+              tr#mwBso
+                td#mwBss
+                  sup#cite_ref-:0_35-0.mw-ref
+                    a#mwBsw[href=#cite_note-:0-35] [35]
+              tr#mwBtM
+                td#mwBtQ
+                  sup#cite_ref-:0_35-1.mw-ref
+                    a#mwBtU[href=#cite_note-:0-35] [35]
+              tr#mwBts
+                td#mwBtw
+                  sup#cite_ref-carsitaly.net_36-0.mw-ref
+                    a#mwBt0[href=#cite_note-carsitaly.net-36] [36]
+              tr#mwBuM
+                td#mwBuQ
+                  sup#cite_ref-carsitaly.net_36-1.mw-ref
+                    a#mwBuU[href=#cite_note-carsitaly.net-36] [36]
+              tr#mwBus
+                td#mwBuw
+                  sup#cite_ref-37.mw-ref
+                    a#mwBu0[href=#cite_note-37] [37]
+              tr#mwBvM
+                td#mwBvQ
+                  sup#cite_ref-38.mw-ref
+                    a#mwBvU[href=#cite_note-38] [38]
+              tr#mwBvs
+                td#mwBvw
+                  sup#cite_ref-39.mw-ref
+                    a#mwBv0[href=#cite_note-39] [39]
+              tr#mwBwM
+                td#mwBwQ
+                  sup#cite_ref-40.mw-ref
+                    a#mwBwU[href=#cite_note-40] [40]
+          p#mwByc
+            a#mwByg[href=//it.wikipedia.org/wiki/Ferrari_N.V.#Tabella_degli_esemplari_venduti_dal_2013] Ferrari N.V.
+        section#mwByk
+          div#mwByo.mw-references-wrap
+            ol#mwBys.mw-references
+              li#cite_note-AR-1
+                span#mwByw.mw-cite-backlink
+                span#mw-reference-text-cite_note-AR-1.mw-reference-text
+                  cite#mwBzE.citation
+                    a#mwBzM.external https://www.ferrari.com/it-IT/corporate/articles/risultati-dell-esercizio-e-del-quarto-trimestre-2023
+              li#cite_note-brand-2
+                span#mwBzg.mw-cite-backlink
+                span#mw-reference-text-cite_note-brand-2.mw-reference-text
+                  cite#mwBz0.citation
+                    a#mwBz4.external Anche il marchio è il più forte al mondo
+              li#cite_note-3
+                span#mwB0I.mw-cite-backlink
+                span#mw-reference-text-cite_note-3.mw-reference-text
+                  cite#mwB0U.citation
+                    a#mwB0Y.external Marchio Ferrari più famoso al mondo batte la concorrenza di Coca cola e Google
+              li#cite_note-4
+                span#mwB0w.mw-cite-backlink
+                span#mw-reference-text-cite_note-4.mw-reference-text
+                  cite#mwB08.citation
+                    a#mwB1I.external[href=http://brandirectory.com/league_tables/table/global-500-2015] Best Global Brands | Brand Profiles & Valuations of the World's Top Brands
+              li#cite_note-5
+                span#mwB1Y.mw-cite-backlink
+                span#mw-reference-text-cite_note-5.mw-reference-text
+                  cite#mwB1k.citation
+                    a#mwB1o.external[href=https://web.archive.org/web/20180404201119/http://www.virtualcar.it/?p=3558] Franco Cortese, il primo pilota Ferrari
+              li#cite_note-6
+                span#mwB2A.mw-cite-backlink
+                span#mw-reference-text-cite_note-6.mw-reference-text
+                  a#mwB2M[href=//it.wikipedia.org/wiki/Giovanni_Canestrini_(giornalista)] Giovanni Canestrini
+                  a#mwB2U[href=//it.wikipedia.org/wiki/L'Automobile] L'Automobile
+              li#cite_note-7
+                span#mwB2Y.mw-cite-backlink
+                span#mw-reference-text-cite_note-7.mw-reference-text
+                  cite#mwB2k.citation
+                    a#mwB2o.external Enzo Ferrari
+              li#cite_note-8
+                span#mwB3A.mw-cite-backlink
+                span#mw-reference-text-cite_note-8.mw-reference-text
+                  a#mwB3Q[href=//it.wikipedia.org/wiki/La_Stampa] La Stampa
+              li#cite_note-9
+                span#mwB3U.mw-cite-backlink
+                span#mw-reference-text-cite_note-9.mw-reference-text
+                  cite#mwB3g.citation
+                    a#mwB3k.external Fiat riacquista il 5% di Ferrari venduto agli arabi
+              li#cite_note-10
+                span#mwB38.mw-cite-backlink
+                span#mw-reference-text-cite_note-10.mw-reference-text
+                  cite#mwB4I.citation
+                    a#mwB4M.external Archivio storico Fotografie Fondazione Pirelli - Gran premio d'Italia 1948
+              li#cite_note-panorama-auto-11
+                span#mwB4Y.mw-cite-backlink
+                span#mw-reference-text-cite_note-panorama-auto-11.mw-reference-text
+                  cite#mwB7M.citation
+                    a#mwB7Q.external La storia della Ferrari in F1
+              li#cite_note-12
+                span#mwB7o.mw-cite-backlink
+                span#mw-reference-text-cite_note-12.mw-reference-text
+                  cite#mwB70.citation
+                    a#mwB74.external[href=http://www.merateonline.it/articolo.php?idd=12740] Verderio S: 50 anni fa la tragedia al GP di Monza.
+              li#cite_note-13
+                span#mwB8I.mw-cite-backlink
+                span#mw-reference-text-cite_note-13.mw-reference-text
+                  cite#mwB8U.citation
+                    a#mwB8Y.external Delirio Ferrari! Trionfa a Le Mans per il secondo anno di fila con Fuoco-Molina-Nielsen
+              li#cite_note-14
+                span#mwB8o.mw-cite-backlink
+              li#cite_note-Massaro-15
+                span#mwB88.mw-cite-backlink
+                span#mw-reference-text-cite_note-Massaro-15.mw-reference-text
+                  cite#mwB9I.citation
+                    a#mwB9M.mw-selflink-fragment[href=#CITEREFMassaro] Massaro
+              li#cite_note-16
+                span#mwB9Q.mw-cite-backlink
+                span#mw-reference-text-cite_note-16.mw-reference-text
+                  cite#mwB9c.citation
+                    a#mwB9g.external[href=https://logos.fandom.com/Ferrari] Ferrari
+              li#cite_note-esclusivit-17
+                span#mwB9w.mw-cite-backlink
+                span#mw-reference-text-cite_note-esclusivit-17.mw-reference-text
+                  cite#mwB98.citation
+                    a#mwB-A.external Meno Ferrari nel futuro per mantenere l'esclusività
+                    sup#mwB-Y.noprint
+                      i#mwB-g
+                        a#mwB-k[href=//it.wikipedia.org/wiki/Aiuto:Collegamenti_interrotti] collegamento interrotto
+              li#cite_note-18
+                span#mwB-4.mw-cite-backlink
+                span#mw-reference-text-cite_note-18.mw-reference-text
+                  cite#mwB_E.citation
+                    a#mwB_I.external Sergio Marchionne nuovo ad del cavallino
+              li#cite_note-19
+                span#mwB_Y.mw-cite-backlink
+                span#mw-reference-text-cite_note-19.mw-reference-text
+                  cite#mwB_k.citation
+                    a#mwB_w.external Louis Camilleri Abruptly Retires From Ferrari, Philip Morris
+              li#cite_note-20
+                span#mwCAA.mw-cite-backlink
+                span#mw-reference-text-cite_note-20.mw-reference-text
+                  cite#mwCAM.citation
+                    a#mwCAQ.external Ferrari, nel 2011 un bilancio record
+              li#cite_note-21
+                span#mwCAg.mw-cite-backlink
+                span#mw-reference-text-cite_note-21.mw-reference-text
+                  cite#mwCAs.citation
+                    a#mwCAw.external[href=http://www.borsaedintorni.it/finanza/ferrari-record-vendite-anno-2012/] Ferrari record vendite anno 2012
+              li#cite_note-dati2012repubblica-22
+                span#mwCA8.mw-cite-backlink
+                span#mw-reference-text-cite_note-dati2012repubblica-22.mw-reference-text
+                  cite#mwCBI.citation
+                    a#mwCBU.external Ferrari, nel 2012 miglior bilancio di sempre. È il marchio più forte al mondo
+              li#cite_note-23
+                span#mwCBk.mw-cite-backlink
+                span#mw-reference-text-cite_note-23.mw-reference-text
+                  cite#mwCBw.citation
+                    a#mwCB0.external Risultati del Gruppo Fiat (1999) (PDF)
+              li#cite_note-24
+                span#mwCCQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-24.mw-reference-text
+                  cite#mwCCc.citation
+                    a#mwCCg.external Risultati del Gruppo Fiat (2000) (PDF)
+              li#cite_note-25
+                span#mwCC8.mw-cite-backlink
+                span#mw-reference-text-cite_note-25.mw-reference-text
+                  cite#mwCDI.citation
+                    a#mwCDM.external Risultati del Gruppo Fiat (2001) (PDF)
+              li#cite_note-26
+                span#mwCDo.mw-cite-backlink
+                span#mw-reference-text-cite_note-26.mw-reference-text
+                  cite#mwCD0.citation
+                    a#mwCD4.external Risultati del Gruppo Fiat (2002)
+              li#cite_note-27
+                span#mwCEU.mw-cite-backlink
+                span#mw-reference-text-cite_note-27.mw-reference-text
+                  cite#mwCEg.citation
+                    a#mwCEk.external Risultati del Gruppo Fiat (2003)
+              li#cite_note-28
+                span#mwCFA.mw-cite-backlink
+                span#mw-reference-text-cite_note-28.mw-reference-text
+                  cite#mwCFM.citation
+                    a#mwCFQ.external Risultati del Gruppo Fiat (2004)
+              li#cite_note-29
+                span#mwCFs.mw-cite-backlink
+                span#mw-reference-text-cite_note-29.mw-reference-text
+                  cite#mwCF4.citation
+                    a#mwCF8.external Risultati del Gruppo Fiat (2005)
+              li#cite_note-30
+                span#mwCGY.mw-cite-backlink
+                span#mw-reference-text-cite_note-30.mw-reference-text
+                  cite#mwCGk.citation
+                    a#mwCGo.external Risultati del Gruppo Fiat (2006)
+              li#cite_note-31
+                span#mwCHE.mw-cite-backlink
+                span#mw-reference-text-cite_note-31.mw-reference-text
+                  cite#mwCHQ.citation
+                    a#mwCHU.external Risultati del Gruppo Fiat (2007)
+              li#cite_note-32
+                span#mwCHw.mw-cite-backlink
+                span#mw-reference-text-cite_note-32.mw-reference-text
+                  cite#mwCH8.citation
+                    a#mwCIA.external Risultati del Gruppo Fiat (2008)
+              li#cite_note-33
+                span#mwCIc.mw-cite-backlink
+                span#mw-reference-text-cite_note-33.mw-reference-text
+                  cite#mwCIo.citation
+                    a#mwCIs.external Articolo L'usine Nouvelle
+              li#cite_note-34
+                span#mwCI4.mw-cite-backlink
+                span#mw-reference-text-cite_note-34.mw-reference-text
+                  cite#mwCJE.citation
+                    a#mwCJI.external Articolo Sport Auto
+              li#cite_note-:0-35
+                span#mwCJg.mw-cite-backlink
+                span#mw-reference-text-cite_note-:0-35.mw-reference-text
+                  cite#mwCJ0.citation
+                    a#mwCJ4.external[href=https://www.carsitaly.net/ferrari-sales.htm] Articolo Cars Italy
+              li#cite_note-carsitaly.net-36
+                span#mwCKE.mw-cite-backlink
+                span#mw-reference-text-cite_note-carsitaly.net-36.mw-reference-text
+                  cite#mwCKY.citation
+                    a#mwCKc.external[href=https://www.carsitaly.net/ferrari-sales.htm] Ferrari sales | vendite Ferrari
+              li#cite_note-37
+                span#mwCKs.mw-cite-backlink
+                span#mw-reference-text-cite_note-37.mw-reference-text
+                  cite#mwCK4.citation
+                    a#mwCK8.external Articolo Sport Auto
+              li#cite_note-38
+                span#mwCLI.mw-cite-backlink
+                span#mw-reference-text-cite_note-38.mw-reference-text
+                  cite#mwCLU.citation
+                    a#mwCLY.external FY 2016 Results
+              li#cite_note-39
+                span#mwCLw.mw-cite-backlink
+                span#mw-reference-text-cite_note-39.mw-reference-text
+                  cite#mwCL8.citation
+                    a#mwCMA.external FY 2017 Results
+              li#cite_note-40
+                span#mwCMY.mw-cite-backlink
+                span#mw-reference-text-cite_note-40.mw-reference-text
+                  cite#mwCMk.citation
+                    a#mwCMo.external FY 2018 Results
+        section#mwCNA
+          ul#mwCNE
+            li#mwCNI
+              cite#CITEREFAcerbi.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/978-88-7911-436-3] 978-88-7911-436-3
+            li#mwCNM
+              cite#CITEREFMassaro.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-440-1635-4] 88-440-1635-4
+            li#mwCNQ
+              cite#mwCNU.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7166-578-3] 88-7166-578-3
+            li#mwCNY
+              cite#mwCNc.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7715-531-0] 88-7715-531-0
+            li#mwCNk
+              cite#mwCNo.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/978-88-8089-864-1] 978-88-8089-864-1
+            li#mwCNw
+              cite#mwCN0.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/978-88-6052-088-3] 978-88-6052-088-3
+            li#mwCN4
+              cite#mwCN8.citation
+                a[href=//it.wikipedia.org/wiki/Leo_Turrini] Leo Turrini
+                a.external[href=https://archive.org/details/enzoferrariunero0000turr] Enzo Ferrari. Un eroe italiano
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-04-51145-1] 88-04-51145-1
+        section#mwCOA
+          ul#mwCOE
+            li#mwCOI
+              a#mwCOM[href=//it.wikipedia.org/wiki/Ferrari_N.V.] Ferrari N.V.
+            li#mwCOQ
+              a#mwCOU[href=//it.wikipedia.org/wiki/Museo_Ferrari] Museo Ferrari
+            li#mwCOY
+              a#mwCOc[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+        section#mwCOg
+          ul
+            a.extiw[href=https://it.wikiquote.org/wiki/] Wikiquote
+            a.extiw[href=https://it.wikiquote.org/wiki/Ferrari] Ferrari
+            a.external[href=https://commons.wikimedia.org/wiki/?uselang=it] Wikimedia Commons
+            a.external[href=https://commons.wikimedia.org/wiki/Category:Ferrari?uselang=it] Ferrari
+        section#mwCOk
+          ul#mwCOo
+            a.external[href=https://www.ferrari.com/] Sito ufficiale
+            a.external[href=https://www.youtube.com/channel/UCd8iY-kEHtaB8qt8MH--zGw] Ferrari
+            a[href=//it.wikipedia.org/wiki/YouTube] YouTube
+            cite#CITEREFTreccani.it.citation
+              a.external[href=https://www.treccani.it/enciclopedia/ferrari] Ferrari
+              a[href=//it.wikipedia.org/wiki/Istituto_dell'Enciclopedia_Italiana] Istituto dell'Enciclopedia Italiana
+            cite#CITEREFSapere.it.citation
+              a.external[href=https://www.sapere.it/enciclopedia/Ferrari.html] Ferrari
+              a[href=//it.wikipedia.org/wiki/De_Agostini] De Agostini
+            cite#CITEREFBritannica.com.citation
+              a.external[href=https://www.britannica.com/topic/Ferrari-SpA] Ferrari SpA
+              a[href=//it.wikipedia.org/wiki/Enciclopedia_Britannica] Enciclopedia Britannica
+          table#navbox-Ferrari.navbox
+            a[href=//it.wikipedia.org/wiki/Template:Ferrari] V
+            a[href=//it.wikipedia.org/wiki/Discussioni_template:Ferrari] D
+            a.external[href=https://it.wikipedia.org/w/index.php?title=Template:Ferrari&action=edit] M
+            a.mw-selflink[href=//it.wikipedia.org/wiki/Ferrari] Ferrari
+          table.CdA
+            a[href=//it.wikipedia.org/wiki/Aiuto:Controllo_di_autorità] Controllo di autorità
+            a[href=//it.wikipedia.org/wiki/Virtual_International_Authority_File] VIAF
+            a.external[href=https://viaf.org/viaf/193720481] 193720481
+            a[href=//it.wikipedia.org/wiki/International_Standard_Name_Identifier] ISNI
+            a.external[href=http://isni.org/isni/0000000406145235] 0000 0004 0614 5235
+            a[href=//it.wikipedia.org/wiki/Library_of_Congress_Control_Number] LCCN
+            a.external[href=http://id.loc.gov/authorities/names/n83123873] n83123873
+            a[href=//it.wikipedia.org/wiki/Gemeinsame_Normdatei] GND
+            a.external[href=https://d-nb.info/gnd/2092682-0] 2092682-0
+            a[href=//it.wikipedia.org/wiki/Biblioteca_nazionale_di_Francia] BNF
+            a.external[href=https://catalogue.bnf.fr/ark:/12148/cb119444373] cb119444373
+            a.external[href=https://data.bnf.fr/ark:/12148/cb119444373] (data)
+            a[href=//it.wikipedia.org/wiki/Biblioteca_nazionale_di_Israele] J9U
+            a.external[href=https://www.nli.org.il/en/authorities/987007336646205171] 987007336646205171
+            a[href=//it.wikipedia.org/wiki/Biblioteca_della_Dieta_nazionale_del_Giappone] NDL
+            a.external[href=https://id.ndl.go.jp/auth/ndlna/00697031] 00697031
+          div#mwCO8.noprint
+            a[href=//it.wikipedia.org/wiki/Portale:Aziende] Portale Aziende
+            a[href=//it.wikipedia.org/wiki/Portale:Ferrari] Portale Ferrari
+      div#catlinks.catlinks
+        div#mw-normal-catlinks.mw-normal-catlinks
+          a[href=/wiki/Categoria:Categorie] Categorie
+          ul
+            a[href=/wiki/Categoria:Aziende_fondate_nel_1947] Aziende fondate nel 1947
+            a[href=/wiki/Categoria:Aziende_premiate_con_il_Compasso_d%27oro] Aziende premiate con il Compasso d'oro
+            a[href=/wiki/Categoria:Ferrari] Ferrari
+            a[href=/wiki/Categoria:Enzo_Ferrari] Enzo Ferrari
+  footer#footer.mw-footer
+    ul#footer-info
+      li#footer-info-renderedwith
+        a.extiw[href=https://www.mediawiki.org/wiki/Special:MyLanguage/Parsoid] Parsoid
+      li#footer-info-copyright
+        a.external[href=https://creativecommons.org/licenses/by-sa/4.0/deed.it] licenza Creative Commons Attribuzione-Condividi allo stesso modo
+        a.external[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use/it] condizioni d'uso
+    ul#footer-places
+      li#footer-places-privacy
+        a Informativa sulla privacy
+      li#footer-places-about
+        a[href=/wiki/Wikipedia:Sala_stampa/Wikipedia] Informazioni su Wikipedia
+      li#footer-places-disclaimers
+        a[href=/wiki/Wikipedia:Avvertenze_generali] Avvertenze
+      li#footer-places-legal-safety-contacts
+        a Contatti legali e di sicurezza
+      li#footer-places-wm-codeofconduct
+        a Codice di condotta
+      li#footer-places-developers
+        a[href=https://developer.wikimedia.org] Sviluppatori
+      li#footer-places-statslink
+        a[href=https://stats.wikimedia.org/#/it.wikipedia.org] Statistiche
+      li#footer-places-cookiestatement
+        a[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Cookie_statement] Dichiarazione sui cookie
+      li#footer-places-mobileview
+        a.noprint[href=//it.wikipedia.org/w/index.php?title=Ferrari&mobileaction=toggle_view_mobile] Versione mobile
+    ul#footer-icons.noprint
+      li#footer-copyrightico
+      li#footer-poweredbyico
+
+To interact, invoke 'execute_web_action' with:
+- tag: the HTML tag (e.g. 'a', 'button', 'input')
+- text: the visible text of the element
+- attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
+For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
+For 'goto' provide the URL.
+Call 'done' ONLY when the entire objective is complete.
+
+Operating rules:
+- If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
+- Do not repeat actions already present in history.

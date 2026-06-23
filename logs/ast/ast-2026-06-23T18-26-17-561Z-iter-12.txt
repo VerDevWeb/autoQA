@@ -1,0 +1,131 @@
+You are an autonomous web automation agent.
+Your final objective is: Vai su Google, cerca Verdevweb e clicca sul primo risultato, analizza il sito e dimmi cos'è verdev in 250 parole
+You are currently at URL: https://www.google.com/search?q=Verdevweb&sca_esv=8b05f3ac82e626a4&source=hp&ei=ds86arH1EJW7i-gP46qaWA&iflsig=ABILxe8AAAAAajrdhj3OAJjpbcrzUdUNiXs8ZtFPY-nU&ved=0ahUKEwixiPqA_p2VAxWV3QIHHWOVBgsQ4dUDCCw&uact=5&oq=Verdevweb&gs_lp=Egdnd3Mtd2l6IglWZXJkZXZ3ZWIyBRAAGO8FMgUQABjvBTIFEAAY7wUyBRAAGO8FSK0VUABYAHAAeACQAQCYAVGgAVGqAQExuAEDyAEA-AEBmAIBoAJZmAMAkgcBMaAH3QGyBwExuAdZwgcDMi0xyAcEgAgB&sclient=gws-wiz
+
+Actions already executed (DO NOT repeat):
+1. click su <button> "Accetta tutto"
+2. fill su <textarea> "" valore="Verdevweb"
+3. enter su <textarea> ""
+4. enter su <textarea> ""
+5. enter su <textarea> ""
+6. click su <input> ""
+7. click su <input> "Cerca con Google"
+8. fill su <textarea> "" valore="Verdevweb"
+9. click su <input> "Cerca con Google"
+
+
+
+📋 YOUR PROGRESS CHECKPOINT (what you wrote last time):
+Ho inserito la query, ora avvio la ricerca per trovare il sito di Verdevweb.
+
+Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
+body#gsr.srp
+  a.gyPpGe[role=link] Vai ai contenuti principali
+  a.gyPpGe[href=https://support.google.com/websearch/answer/181196?hl=it] Guida per l'accessibilità
+  div#searchform.CvDJxb
+    form#tsf.tsf[role=search][name=f]
+      textarea#APjFqb.gLFyf[role=combobox][name=q][aria-label=Cerca] Verdevweb
+    header#gb.gb_y[role=none]
+      div#gbwa.gb_L
+      a.gb_A[aria-label=Accedi] Accedi
+  div#main.main
+    div#cnt.e9EfHf
+      div.GG4mbd[role=navigation]
+        div#_x886au7vIbPqi-gP34y5wQM_52
+          div#_x886au7vIbPqi-gP34y5wQM_54.Gcxb4e
+            div.beZ0tf[role=list]
+              div[role=listitem]
+                a.XVMlrc AI Mode
+              div[role=listitem]
+                a.C6AK7c[role=link] Tutti
+              div[role=listitem]
+                a.C6AK7c Immagini
+              div[role=listitem]
+                a.C6AK7c Video
+              div[role=listitem]
+                a.C6AK7c Prodotti
+              div[role=listitem]
+                a.C6AK7c Notizie
+              div[role=listitem]
+                a.C6AK7c Video brevi
+              div[role=listitem]
+                div.mTpL7c[role=button] Altro
+            div#_x886au7vIbPqi-gP34y5wQM_50.yeKjxb
+              div#hdtb-tls.mOKdDc[role=button] Strumenti
+      div#rcnt.NbTBrb
+        div#center_col.s6JM6d[role=main]
+          div#taw
+            div#oFNiHe
+              a.N5az4b[role=button][href=#] Scegli l'area
+          div#gevUs.eqAnXb
+            div#search
+              div#rso.dURPMd
+                a.zReHs[href=https://verdevweb.com/] Giacomo Verde | Sviluppatore Web e Full Stack Developer verdevweb.com https://verdevweb.com
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_47
+                table.SwU7oc[role=group][aria-label=Consigli personalizzati in base alla tua cronologia]
+                  a.l[href=https://verdevweb.com/the_lab/theta.html] Theta
+                  a.l[href=https://verdevweb.com/the_lab/yuvi.html] YUVI SaaS
+                  a.Gwptse Altri risultati in verdevweb.com »
+                a.zReHs[href=https://github.com/verdevweb] Giacomo Verde VerDevWeb GitHub https://github.com › verdevweb
+                a.dEEN8c Traduci questa pagina
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_75
+                a.zReHs[href=https://it.linkedin.com/in/giacomo-verde-6174b12a0] Giacomo Verde - Full Stack Software and Hardware ... LinkedIn · Giacomo Verde Oltre 30 follower
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_70
+                a.zReHs[href=https://www.facebook.com/TeamDev.srl/] TeamDev | Perugia Facebook · TeamDev Oltre 1,2K follower
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_71
+                a.zReHs[href=https://aulab.it/hackademy] Hackademy+ | Corso Full‑stack Web Developer Aulab https://aulab.it › hackademy
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_77
+                a.zReHs[href=https://web.dev/?hl=it] web.dev web.dev https://web.dev › ...
+                div#atritem-_x886au7vIbPqi-gP34y5wQM_72
+                div#iur
+                  div#aj1bBSyq9DnoqM
+                    div#atritem-_x886au7vIbPqi-gP34y5wQM_87
+                  div#8vCUvAVYStwoyM
+                    div#atritem-_x886au7vIbPqi-gP34y5wQM_98
+                  div#IXPsfQLlHDvS0M
+                    div#atritem-_x886au7vIbPqi-gP34y5wQM_99
+                div.p8FEIf[role=button] Mostra altre immagini
+                div#_x886au7vIbPqi-gP34y5wQM_88.LQCGqc
+                  div#x886au7vIbPqi-gP34y5wQM__27
+                    div.dnXCYb[role=button] Cosa si intende per developer?
+                  div#x886au7vIbPqi-gP34y5wQM__29
+                    div.dnXCYb[role=button] Quanto prende un web developer?
+                  div#x886au7vIbPqi-gP34y5wQM__31
+                    div.dnXCYb[role=button] Quanto costa un corso di web developer?
+                  div#x886au7vIbPqi-gP34y5wQM__33
+                    div.dnXCYb[role=button] Che cosa fa un web developer?
+                div#ow15.WVV5ke
+                  a.zReHs[href=https://www.youtube.com/watch?v=jcA14coZqEM] Stai ancora pensando che l'AS400 sia solo nero-verde? YouTube · bigblue Oltre 230 visualizzazioni · 3 anni fa
+                  div#atritem-_x886au7vIbPqi-gP34y5wQM_63
+                  div.rIRoqf[role=button] 2:21
+          div#botstuff
+            div[role=navigation]
+              table.AaVjTc[role=presentation]
+                a.fl[aria-label=Page 2] 2
+                a.fl[aria-label=Page 3] 3
+                td.d6cvqb[role=heading]
+                  a#pnnext.LLNLxf Avanti
+      div#sfooter.puIGge[role=contentinfo]
+        div#footcnt
+          div#fbarcnt
+            div#fbar.f6F9Be
+              div#CE62Bb.fbar
+                a[role=button][href=#] Bologna, Città Metropolitana di Bologna - In base alla tua attività passata
+                div.VtPCGb[role=button] Aggiorna posizione
+              span#fsl
+                a.Fx4vi[href=https://support.google.com/websearch/?p=ws_results_help&hl=it&fg=1] Guida
+                a.Fx4vi[href=#] Invia feedback
+                a.Fx4vi[href=https://policies.google.com/privacy?hl=it&fg=1] Privacy
+                a.Fx4vi[href=https://policies.google.com/terms?hl=it&fg=1] Termini
+
+To interact, invoke 'execute_web_action' with:
+- tag: the HTML tag (e.g. 'a', 'button', 'input')
+- text: the visible text of the element
+- attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
+For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
+For 'goto' provide the URL.
+Call 'done' ONLY when the entire objective is complete.
+
+Operating rules:
+- If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
+- Do not repeat actions already present in history.

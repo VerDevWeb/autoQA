@@ -1,0 +1,2957 @@
+You are an autonomous web automation agent.
+Your final objective is: Vai su it.wikipedia.org, cerca 'Ferrari', premi Invio, poi clicca sul link 'Formula 1' nella pagina, poi torna alla homepage di Wikipedia e cerca un altro argomento a tua scelta.
+You are currently at URL: https://it.wikipedia.org/wiki/Formula_1
+
+Actions already executed (DO NOT repeat):
+1. fill su <input> "Cerca in Wikipedia" valore="Ferrari"
+2. enter su <input> "Cerca in Wikipedia"
+3. enter su <input> "Cerca in Wikipedia"
+4. fill su <input> "" valore="Ferrari"
+5. enter su <input> "Cerca in Wikipedia"
+6. enter su <input> "Cerca in Wikipedia"
+7. enter su <input> "Cerca in Wikipedia"
+8. enter su <input> "Cerca in Wikipedia"
+9. enter su <input> "Cerca in Wikipedia"
+10. click su <button> "Ricerca"
+11. click su <button> "Ricerca"
+12. click su <a> "Formula 1"
+
+
+Objective domains in order: it.wikipedia.org
+Completed domains: it.wikipedia.org
+Next target domain: none
+
+
+📋 YOUR PROGRESS CHECKPOINT (what you wrote last time):
+I am on the Ferrari page and I am now clicking on the 'Formula 1' link as requested.
+
+Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
+body.skin--responsive
+  a.mw-jump-link[href=#bodyContent] Vai al contenuto
+  header.vector-header
+    div#p-search.vector-search-box-vue[role=search]
+      form#searchform.cdx-search-input
+        div#simpleSearch.cdx-search-input__input-wrapper
+          input#searchInput.cdx-text-input__input[type=search][placeholder=Cerca in Wikipedia][name=search][aria-label=Cerca in Wikipedia] Cerca in Wikipedia
+        button.cdx-button Ricerca
+    nav.vector-user-links[aria-label=Strumenti personali]
+      div#p-vector-user-menu-overflow.vector-menu
+        ul.vector-menu-content-list
+          li#pt-sitesupport-2.mw-list-item
+            a Fai una donazione
+          li#pt-createaccount-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:CreaUtenza&returnto=Formula+1] Registrati
+          li#pt-login-2.mw-list-item
+            a[href=/w/index.php?title=Speciale:Entra&returnto=Formula+1] Entra
+  div#siteNotice
+    div#centralNotice.cn-wle_2026_it
+      div#cn-toggle-box
+      a.extiw[href=http://www.wikilovesearth.it/] Wiki Loves Earth Italia è il concorso fotografico dedicato alle aree naturali protette italiane.
+      a.extiw[href=http://www.wikilovesearth.it/] Dal 15 giugno fai una foto, promuovi il territorio, aiuta Wikipedia e vinci!
+    a[role=button] nascondi
+    div#localNotice
+      a.external Wikimedia Italia
+  nav#mw-panel-toc.mw-table-of-contents-container[aria-label=Indice]
+    div#vector-toc-pinned-container.vector-pinned-container
+      div#vector-toc.vector-toc
+        button.vector-pinnable-header-toggle-button nascondi
+        ul#mw-panel-toc-list.vector-toc-contents
+          li#toc-mw-content-text.vector-toc-list-item
+            a.vector-toc-link[href=#] Inizio
+          li#toc-Storia.vector-toc-list-item
+            a.vector-toc-link[href=#Storia] Storia
+            button.cdx-button Attiva/disattiva la sottosezione Storia
+          li#toc-Titoli_della_Formula_1.vector-toc-list-item
+            a.vector-toc-link[href=#Titoli_della_Formula_1] Titoli della Formula 1
+            button.cdx-button Attiva/disattiva la sottosezione Titoli della Formula 1
+          li#toc-Tecnologia_e_prestazioni_velocistiche.vector-toc-list-item
+            a.vector-toc-link[href=#Tecnologia_e_prestazioni_velocistiche] Tecnologia e prestazioni velocistiche
+          li#toc-Gran_Premi.vector-toc-list-item
+            a.vector-toc-link[href=#Gran_Premi] Gran Premi
+            button.cdx-button Attiva/disattiva la sottosezione Gran Premi
+          li#toc-Circuiti.vector-toc-list-item
+            a.vector-toc-link[href=#Circuiti] Circuiti
+          li#toc-Punteggio.vector-toc-list-item
+            a.vector-toc-link[href=#Punteggio] Punteggio
+          li#toc-Numerazione.vector-toc-list-item
+            a.vector-toc-link[href=#Numerazione] Numerazione
+          li#toc-Record.vector-toc-list-item
+            a.vector-toc-link[href=#Record] Record
+          li#toc-Prove_di_qualificazione_e_regolamento_di_gara.vector-toc-list-item
+            a.vector-toc-link[href=#Prove_di_qualificazione_e_regolamento_di_gara] Prove di qualificazione e regolamento di gara
+            button.cdx-button Attiva/disattiva la sottosezione Prove di qualificazione e regolamento di gara
+          li#toc-Gomme.vector-toc-list-item
+            a.vector-toc-link[href=#Gomme] Gomme
+          li#toc-Bandiere.vector-toc-list-item
+            a.vector-toc-link[href=#Bandiere] Bandiere
+          li#toc-Sorpassi.vector-toc-list-item
+            a.vector-toc-link[href=#Sorpassi] Sorpassi
+          li#toc-Incidenti.vector-toc-list-item
+            a.vector-toc-link[href=#Incidenti] Incidenti
+          li#toc-Giochi_di_squadra.vector-toc-list-item
+            a.vector-toc-link[href=#Giochi_di_squadra] Giochi di squadra
+          li#toc-Il_controllo_della_Formula_1.vector-toc-list-item
+            a.vector-toc-link[href=#Il_controllo_della_Formula_1] Il controllo della Formula 1
+          li#toc-La_Formula_1_e_i_media.vector-toc-list-item
+            a.vector-toc-link[href=#La_Formula_1_e_i_media] La Formula 1 e i media
+            button.cdx-button Attiva/disattiva la sottosezione La Formula 1 e i media
+          li#toc-Sponsor.vector-toc-list-item
+            a.vector-toc-link[href=#Sponsor] Sponsor
+          li#toc-Loghi.vector-toc-list-item
+            a.vector-toc-link[href=#Loghi] Loghi
+          li#toc-Note.vector-toc-list-item
+            a.vector-toc-link[href=#Note] Note
+          li#toc-Bibliografia.vector-toc-list-item
+            a.vector-toc-link[href=#Bibliografia] Bibliografia
+          li#toc-Voci_correlate.vector-toc-list-item
+            a.vector-toc-link[href=#Voci_correlate] Voci correlate
+          li#toc-Altri_progetti.vector-toc-list-item
+            a.vector-toc-link[href=#Altri_progetti] Altri progetti
+          li#toc-Collegamenti_esterni.vector-toc-list-item
+            a.vector-toc-link[href=#Collegamenti_esterni] Collegamenti esterni
+  main#content.mw-body
+    div#left-navigation
+      nav[aria-label=Namespace]
+        div#p-associated-pages.vector-menu
+          ul.vector-menu-content-list
+            li#ca-nstab-main.selected
+              a[href=/wiki/Formula_1] Voce
+            li#ca-talk.vector-tab-noicon
+              a[href=/wiki/Discussione:Formula_1] Discussione
+    div#right-navigation.vector-collapsible
+      nav[aria-label=Visite]
+        div#p-views.vector-menu
+          ul.vector-menu-content-list
+            li#ca-view.selected
+              a[href=/wiki/Formula_1] Leggi
+            li#ca-ve-edit.mw-list-item
+              a[href=/w/index.php?title=Formula_1&veaction=edit] Modifica
+            li#ca-edit.collapsible
+              a[href=/w/index.php?title=Formula_1&action=edit] Modifica wikitesto
+            li#ca-history.mw-list-item
+              a[href=/w/index.php?title=Formula_1&action=history] Cronologia
+    nav.vector-appearance-landmark[aria-label=Aspetto]
+      div#vector-appearance-pinned-container.vector-pinned-container
+        div#vector-appearance.vector-appearance
+          button.vector-pinnable-header-toggle-button nascondi
+    div#bodyContent.vector-body
+      div#mw-content-text.mw-body-content
+        section#mwAQ
+          div#mwAw.hatnote
+            a[href=//it.wikipedia.org/wiki/Aiuto:Disambiguazione] Disambiguazione
+            a.mw-disambig[href=//it.wikipedia.org/wiki/Formula_1_(disambigua)] Formula 1 (disambigua)
+            a.mw-disambig[href=//it.wikipedia.org/wiki/Formula_One] Formula One
+          div#mwBQ.ambox
+            a[href=//it.wikipedia.org/wiki/Discussione:Formula_1] discussione
+            a[href=//it.wikipedia.org/wiki/Progetto:Sport] progetto di riferimento
+          div#mwBw.ambox
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Uso_delle_fonti] non cita le fonti necessarie
+            a.external[href=https://it.wikipedia.org/w/index.php?title=Formula_1&action=edit] migliorare questa voce
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Fonti_attendibili] fonti attendibili
+            a[href=//it.wikipedia.org/wiki/Wikipedia:Uso_delle_fonti] linee guida sull'uso delle fonti
+          table.infobox
+            a[href=//it.wikipedia.org/wiki/Monoposto] Monoposto
+            a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1950] 1950
+            a[href=//it.wikipedia.org/wiki/Pirelli_Tyre] P
+            a[href=//it.wikipedia.org/wiki/Pirelli_Tyre] Pirelli
+            a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2025] 2025
+            a[href=//it.wikipedia.org/wiki/Lando_Norris] Lando Norris
+            a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2025] 2025
+            a[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a.external[href=https://www.formula1.com] www.formula1.com
+            a.mw-redirect[href=//it.wikipedia.org/wiki/Formula_1_2026] Formula 1 2026
+          p#mwCg
+            sup#cite_ref-1.mw-ref
+              a#mwDA[href=#cite_note-1] [1]
+            a#mwEA.mw-redirect[href=//it.wikipedia.org/wiki/Sigla_(linguistica)] sigla
+            a#mwEg[href=//it.wikipedia.org/wiki/Lingua_italiana] italiano
+            a#mwFA[href=//it.wikipedia.org/wiki/Autovettura] vetture
+            a#mwFQ[href=//it.wikipedia.org/wiki/Monoposto] monoposto
+            a#mwFg[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+          p#mwFw
+            a#mwGA[href=//it.wikipedia.org/wiki/Gran_Premi_di_automobilismo_1948] 1948
+            a#mwGQ[href=//it.wikipedia.org/wiki/Formula_Grand_Prix] Formula A
+            a#mwGg[href=//it.wikipedia.org/wiki/Gran_Premi_di_automobilismo_1946] 1946
+            sup#cite_ref-2.mw-ref
+              a#mwGw[href=#cite_note-2] [2]
+            a#mwHw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1950] 1950
+            a#mwIA[href=//it.wikipedia.org/wiki/Federazione_Internazionale_Sport_Automobilistico] Commissione Sportiva Internazionale
+            a#mwIQ[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Associazione Internazionale degli Automobil Club Riconosciuti
+            a#mwIg[href=//it.wikipedia.org/wiki/Consiglio_Automobilistico_Mondiale_della_FIA] Consiglio Mondiale degli Sport Motoristici
+            a#mwJA[href=//it.wikipedia.org/wiki/Formula_One_Group] Formula One Group
+            a#mwJQ[href=//it.wikipedia.org/wiki/Liberty_Media] Liberty Media
+            sup#cite_ref-3.mw-ref
+              a#mwJg[href=#cite_note-3] [3]
+            sup#cite_ref-4.mw-ref
+              a#mwKg[href=#cite_note-4] [4]
+        section#mwMA
+          div#mwMg.hatnote
+            a[href=//it.wikipedia.org/wiki/Storia_della_Formula_1] Storia della Formula 1
+          section#mwMw
+            figure#mwNA.mw-default-size
+              figcaption#mwNw
+                a#mwOA[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] autodromo di Monza
+                a#mwOQ[href=//it.wikipedia.org/wiki/Coppa_Fiera_di_Milano] Coppa Fiera di Milano
+                a#mwOg[href=//it.wikipedia.org/wiki/Formula_Grand_Prix] Formula Grand Prix
+            p#mwOw
+              a#mwPQ.mw-redirect[href=//it.wikipedia.org/wiki/Gran_Premi_di_automobilismo] Gran Premi
+              a#mwPg[href=//it.wikipedia.org/wiki/Formula_Grand_Prix] Formula Grand Prix
+              a#mwPw[href=//it.wikipedia.org/wiki/Campionato_europeo_di_automobilismo] Campionato Automobilistico Internazionale
+              a#mwQA[href=//it.wikipedia.org/wiki/Ferdinando_Minoia] Ferdinando Minoia
+              a#mwQQ[href=//it.wikipedia.org/wiki/Tazio_Nuvolari] Tazio Nuvolari
+            p#mwQg
+              a#mwQw[href=//it.wikipedia.org/wiki/Seconda_guerra_mondiale] seconda guerra mondiale
+              a#mwRA[href=//it.wikipedia.org/wiki/Torino] Torino
+              a#mwRQ.mw-redirect[href=//it.wikipedia.org/wiki/Gran_Premio_di_Torino_1946] Gran Premio di Torino
+              a#mwRg[href=//it.wikipedia.org/wiki/Parco_del_Valentino] parco omonimo
+              a#mwRw[href=//it.wikipedia.org/wiki/Achille_Varzi] Achille Varzi
+              a#mwSA[href=//it.wikipedia.org/wiki/Alfa_Romeo_158] Alfa Romeo 158
+            p#mwSQ
+              a#mwSg[href=//it.wikipedia.org/wiki/Cisitalia_D46] Cisitalia D46
+              span#mwSw.nowrap
+                a[href=//it.wikipedia.org/wiki/Centimetro_cubo] cm³
+              a#mwTA[href=//it.wikipedia.org/wiki/Turbocompressore] turbocompresso
+              a#mwTQ[href=//it.wikipedia.org/wiki/Ferdinand_Porsche] Ferdinand Porsche
+              span#mwTg.nowrap
+                a[href=//it.wikipedia.org/wiki/Chilometro_orario] km/h
+              sup#cite_ref-5.mw-ref
+                a#mwTw[href=#cite_note-5] [5]
+            figure#mwUw.mw-default-size
+              figcaption#mwVg
+                a#mwVw[href=//it.wikipedia.org/wiki/Auto_Union_Type_C] Auto Union Type C
+                a#mwWA[href=//it.wikipedia.org/wiki/Bernd_Rosemeyer] Bernd Rosemeyer
+                a#mwWQ[href=//it.wikipedia.org/wiki/Nürburgring_Nordschleife] Nürburgring Nordschleife
+            p#mwWg
+              a#mwWw[href=//it.wikipedia.org/wiki/Formula_2] Formula 2
+              a#mwXA[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Juan Manuel Fangio
+              a#mwXQ[href=//it.wikipedia.org/wiki/Pau_(Francia)] Pau
+              sup#cite_ref-:1_6-0.mw-ref
+                a#mwXg[href=#cite_note-:1-6] [6]
+            p#mwYg
+              a#mwYw[href=//it.wikipedia.org/wiki/Gran_Premio_di_Gran_Bretagna_1950] Gran Premio di Gran Bretagna del 1950
+              sup#cite_ref-7.mw-ref
+                a#mwZA[href=#cite_note-7] [7]
+              sup#cite_ref-8.mw-ref
+                a#mwaA[href=#cite_note-8] [8]
+              a#mwbA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1958] 1958
+              sup#cite_ref-9.mw-ref
+                a#mwbQ[href=#cite_note-9] [9]
+              a#mwcQ[href=//it.wikipedia.org/wiki/Campionato] campionato
+              a#mwcg[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premi
+              a#mwcw[href=//it.wikipedia.org/wiki/Europa] Europa
+              a#mwdA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] Campionato mondiale di Formula 1
+              a#mwdQ[href=//it.wikipedia.org/wiki/Nino_Farina] Nino Farina
+              a#mwdg[href=//it.wikipedia.org/wiki/Alfa_Romeo_158] Alfa Romeo 158
+              a#mwdw[href=//it.wikipedia.org/wiki/500_Miglia_di_Indianapolis] 500 Miglia di Indianapolis
+            p#mweA
+              a#mweQ.mw-redirect[href=//it.wikipedia.org/wiki/Formula_1_Aurora] British Formula One Series
+              a#mweg[href=//it.wikipedia.org/wiki/Regno_Unito] Regno Unito
+            p#mwew
+              a#mwfA[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+              a#mwfQ[href=//it.wikipedia.org/wiki/Automobilismo] automobilismo
+            p#mwfg
+              a#mwfw[href=//it.wikipedia.org/wiki/Vettura_di_Formula_1] vettura di Formula 1
+          section#mwgA
+            figure#mwgQ.mw-default-size
+              figcaption#mwhA
+                a#mwhQ[href=//it.wikipedia.org/wiki/Alfa_Romeo_158] Alfa Romeo 158
+                a#mwhg[href=//it.wikipedia.org/wiki/Nino_Farina] Nino Farina
+            p#mwhw
+              a#mwiA[href=//it.wikipedia.org/wiki/Nino_Farina] Nino Farina
+              a#mwiQ[href=//it.wikipedia.org/wiki/Alfa_Romeo_158] Alfa Romeo 158
+              a#mwig[href=//it.wikipedia.org/wiki/Alberto_Ascari] Alberto Ascari
+            p#mwiw
+              a#mwjA[href=//it.wikipedia.org/wiki/Argentina] argentino
+              a#mwjQ[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Juan Manuel Fangio
+              a#mwjg.mw-redirect[href=//it.wikipedia.org/wiki/Alfa_Romeo_159_(F1)] Alfa Romeo 159
+              sup#cite_ref-10.mw-ref
+                a#mwjw[href=#cite_note-10] [10]
+              a#mwkw[href=//it.wikipedia.org/wiki/Mercedes-Benz_(automobilismo)] Mercedes
+              a#mwlA.mw-redirect[href=//it.wikipedia.org/wiki/Maserati_Squadra_Corse] Maserati
+              a#mwlQ[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+              a#mwlg[href=//it.wikipedia.org/wiki/Lancia_D50] Lancia-Ferrari D50
+              a#mwlw[href=//it.wikipedia.org/wiki/Stirling_Moss] Stirling Moss
+              sup#cite_ref-11.mw-ref
+                a#mwmQ[href=#cite_note-11] [11]
+              a#mwnQ[href=//it.wikipedia.org/wiki/Mike_Hawthorn] Mike Hawthorn
+              a#mwng[href=//it.wikipedia.org/wiki/Vanwall] Vanwall
+              sup#cite_ref-12.mw-ref
+                a#mwnw[href=#cite_note-12] [12]
+              sup#cite_ref-13.mw-ref
+                a#mwow[href=#cite_note-13] [13]
+            p#mwpw
+              a#mwqA[href=//it.wikipedia.org/wiki/Formula_3] Formula 3
+              a#mwqQ[href=//it.wikipedia.org/wiki/Auto_Union] Auto Union
+              a#mwqg[href=//it.wikipedia.org/wiki/Ferdinand_Porsche] Ferdinand Porsche
+              sup#cite_ref-14.mw-ref
+                a#mwqw[href=#cite_note-14] [14]
+            figure#mwrw.mw-default-size
+              figcaption#mwsg
+                a#mwsw[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Juan Manuel Fangio
+                a#mwtA[href=//it.wikipedia.org/wiki/Mercedes-Benz_W_196_R] Mercedes-Benz W 196 R
+                a#mwtQ[href=//it.wikipedia.org/wiki/Ferrari_625_F1] Ferrari 625 F1
+                a#mwtg[href=//it.wikipedia.org/wiki/Alberto_Ascari] Alberto Ascari
+                a#mwtw[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_1954] Gran Premio d'Italia 1954
+            p#mwuA
+              span#mwuQ.nowrap
+                a[href=//it.wikipedia.org/wiki/Centimetro_cubo] cm³
+              a#mwug[href=//it.wikipedia.org/wiki/Disastro_di_Le_Mans_del_1955] terribile incidente che funestò la 24 ore di Le Mans del 1955
+              sup#cite_ref-15.mw-ref
+                a#mwuw[href=#cite_note-15] [15]
+              a#mwvw[href=//it.wikipedia.org/wiki/Luigi_Musso] Luigi Musso
+              a#mwwA[href=//it.wikipedia.org/wiki/Gran_Premio_di_Francia_1958] Gran Premio di Francia 1958
+              a#mwwQ[href=//it.wikipedia.org/wiki/Peter_Collins] Peter Collins
+              a#mwwg.mw-redirect[href=//it.wikipedia.org/wiki/Osservatore_Romano] Osservatore Romano
+              a#mwww[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+              sup#cite_ref-16.mw-ref
+                a#mwxA[href=#cite_note-16] [16]
+              a#mwyA[href=//it.wikipedia.org/wiki/Tragedia_di_Guidizzolo] Mille Miglia del 1957
+              a#mwyQ.mw-redirect[href=//it.wikipedia.org/wiki/Alfonso_De_Portago] Alfonso De Portago
+              a#mwyg[href=//it.wikipedia.org/wiki/Guidizzolo] Guidizzolo
+              sup#cite_ref-17.mw-ref
+                a#mwyw[href=#cite_note-17] [17]
+          section#mwzw
+            p#mw0A
+              span#mw0Q.nowrap
+                a[href=//it.wikipedia.org/wiki/Centimetro_cubo] cm³
+              a#mw0g[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_1961] Gran Premio d'Italia 1961
+              a#mw0w.mw-redirect[href=//it.wikipedia.org/wiki/Wolfgang_Von_Trips] Wolfgang Von Trips
+              a#mw1A[href=//it.wikipedia.org/wiki/Ricardo_Rodríguez_de_la_Vega] Ricardo Rodriguez
+              a#mw1Q[href=//it.wikipedia.org/wiki/Carel_Godin_de_Beaufort] Carel Godin de Beaufort
+            figure#mw1g.mw-default-size
+              figcaption#mw2Q
+                a#mw2g[href=//it.wikipedia.org/wiki/Stirling_Moss] Stirling Moss
+                a#mw2w[href=//it.wikipedia.org/wiki/Lotus_Cars] Lotus
+                a#mw3A[href=//it.wikipedia.org/wiki/Coventry_Climax] Climax
+                a#mw3Q[href=//it.wikipedia.org/wiki/Gran_Premio_di_Germania_1961] Gran Premio di Germania 1961
+                a#mw3g[href=//it.wikipedia.org/wiki/Colin_Chapman] Colin Chapman
+            p#mw3w
+              sup#cite_ref-18.mw-ref
+                a#mw4A[href=#cite_note-18] [18]
+              a#mw5A[href=//it.wikipedia.org/wiki/Colin_Chapman] Colin Chapman
+              a#mw5Q[href=//it.wikipedia.org/wiki/Team_Lotus] Lotus
+            p#mw5g
+              a#mw5w[href=//it.wikipedia.org/wiki/Phil_Hill] Phil Hill
+              a#mw6A[href=//it.wikipedia.org/wiki/John_Surtees] John Surtees
+            p#mw6Q
+              a#mw6g[href=//it.wikipedia.org/wiki/Jack_Brabham] Jack Brabham
+              a#mw6w[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1959] 1959
+              a#mw7A[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1960] 1960
+              a#mw7Q[href=//it.wikipedia.org/wiki/Cooper_Car_Company] Cooper
+              a#mw7g[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1966] 1966
+              a#mw7w.mw-redirect[href=//it.wikipedia.org/wiki/Brabham_Racing_Organisation] Brabham Racing Organisation
+              a#mw8A[href=//it.wikipedia.org/wiki/Denny_Hulme] Denny Hulme
+            p#mw8Q
+              a#mw8g[href=//it.wikipedia.org/wiki/Jim_Clark] Jim Clark
+              a#mw8w[href=//it.wikipedia.org/wiki/Graham_Hill] Graham Hill
+            p#mw9A
+              span#mw9Q.nowrap
+                a[href=//it.wikipedia.org/wiki/Centimetro_cubo] cm³
+              a#mw9g[href=//it.wikipedia.org/wiki/Lorenzo_Bandini] Lorenzo Bandini
+              a#mw9w[href=//it.wikipedia.org/wiki/Jo_Schlesser] Jo Schlesser
+              a#mw-A[href=//it.wikipedia.org/wiki/Jim_Clark] Jim Clark
+              a#mw-Q[href=//it.wikipedia.org/wiki/Graham_Hill] Graham Hill
+              a#mw-g[href=//it.wikipedia.org/wiki/Jackie_Stewart] Jackie Stewart
+              a#mw-w[href=//it.wikipedia.org/wiki/Matra] Matra
+              a#mw_A[href=//it.wikipedia.org/wiki/Ken_Tyrrell] Ken Tyrrell
+            figure#mw_Q.mw-default-size
+              figcaption#mwAQA
+                a#mwAQE[href=//it.wikipedia.org/wiki/Jack_Brabham] Jack Brabham
+                a#mwAQI[href=//it.wikipedia.org/wiki/Gran_Premio_di_Germania_1965] Gran Premio di Germania 1965
+                a#mwAQM[href=//it.wikipedia.org/wiki/Brabham] Brabham
+                a#mwAQQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1966] 1966
+            p#mwAQU
+              a#mwAQY[href=//it.wikipedia.org/wiki/Sponsor] sponsor
+              sup#cite_ref-19.mw-ref
+                a#mwAQc[href=#cite_note-19] [19]
+          section#mwAQs
+            p#mwAQw
+              a#mwAQ0[href=//it.wikipedia.org/wiki/Lotus_72] Lotus 72
+              a#mwAQ4[href=//it.wikipedia.org/wiki/Lotus_79] Lotus 79
+              sup#cite_ref-guardian280397_20-0.mw-ref
+                a#mwAQ8[href=#cite_note-guardian280397-20] [20]
+              sup#cite_ref-mrformula_21-0.mw-ref
+                a#mwARM[href=#cite_note-mrformula-21] [21]
+            p#mwARc
+              a#mwARg[href=//it.wikipedia.org/wiki/Jochen_Rindt] Jochen Rindt
+              a#mwARo[href=//it.wikipedia.org/wiki/Jackie_Stewart] Jackie Stewart
+              sup#cite_ref-22.mw-ref
+                a#mwARs[href=#cite_note-22] [22]
+              a#mwAR8[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+            p#mwASA
+              a#mwASE.mw-redirect[href=//it.wikipedia.org/wiki/GPDA] GPDA
+              sup#cite_ref-23.mw-ref
+                a#mwASI[href=#cite_note-23] [23]
+              a#mwASc[href=//it.wikipedia.org/wiki/François_Cevert] François Cevert
+              a#mwASg[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_d'America_1973] Gran Premio degli Stati Uniti d'America 1973
+            figure#mwASk.mw-default-size
+              figcaption#mwASw
+                a#mwAS0[href=//it.wikipedia.org/wiki/Tyrrell_P34] Tyrrell P34
+                a#mwAS4[href=//it.wikipedia.org/wiki/Jody_Scheckter] Jody Scheckter
+            p#mwAS8
+              a#mwATA[href=//it.wikipedia.org/wiki/Emerson_Fittipaldi] Emerson Fittipaldi
+              a#mwATE[href=//it.wikipedia.org/wiki/James_Hunt] James Hunt
+              a#mwATI[href=//it.wikipedia.org/wiki/Alan_Jones_(pilota_automobilistico)] Alan Jones
+              a#mwATM[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+              a#mwATQ[href=//it.wikipedia.org/wiki/Anglo_American_Racers] Eagle
+              a#mwATU.mw-redirect[href=//it.wikipedia.org/wiki/Shadow] Shadow
+              a#mwATY[href=//it.wikipedia.org/wiki/Penske] Penske
+              a#mwATc[href=//it.wikipedia.org/wiki/Parnelli] Parnelli
+              a#mwATg[href=//it.wikipedia.org/wiki/Mario_Andretti] Mario Andretti
+              a#mwATk[href=//it.wikipedia.org/wiki/Jody_Scheckter] Jody Scheckter
+            p#mwATo
+              a#mwATs[href=//it.wikipedia.org/wiki/Roger_Williamson] Roger Williamson
+              a#mwATw[href=//it.wikipedia.org/wiki/Gran_Premio_d'Olanda_1973] Gran Premio d'Olanda 1973
+              a#mwAT0[href=//it.wikipedia.org/wiki/David_Purley] David Purley
+            figure#mwAT4.mw-default-size
+              figcaption#mwAUE
+                a#mwAUI[href=//it.wikipedia.org/wiki/Lotus_79] Lotus 79
+                a#mwAUM[href=//it.wikipedia.org/wiki/Effetto_suolo_(automobilismo)] effetto suolo
+                a#mwAUQ[href=//it.wikipedia.org/wiki/Mario_Andretti] Mario Andretti
+            p#mwAUU
+              a#mwAUY[href=//it.wikipedia.org/wiki/Piers_Courage] Piers Courage
+              a#mwAUc[href=//it.wikipedia.org/wiki/Jo_Siffert] Jo Siffert
+              a#mwAUg[href=//it.wikipedia.org/wiki/Peter_Revson] Peter Revson
+              a#mwAUk[href=//it.wikipedia.org/wiki/Jochen_Rindt] Jochen Rindt
+              a#mwAUo[href=//it.wikipedia.org/wiki/Helmuth_Koinigg] Helmuth Koinigg
+              a#mwAUs[href=//it.wikipedia.org/wiki/Mark_Donohue] Mark Donohue
+              a#mwAUw[href=//it.wikipedia.org/wiki/François_Cevert] François Cevert
+              a#mwAU0[href=//it.wikipedia.org/wiki/Tom_Pryce] Tom Pryce
+              a#mwAU4[href=//it.wikipedia.org/wiki/Ronnie_Peterson] Ronnie Peterson
+              a#mwAU8[href=//it.wikipedia.org/wiki/Patrick_Depailler] Patrick Depailler
+              a#mwAVA[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles Villeneuve
+              a#mwAVE[href=//it.wikipedia.org/wiki/Riccardo_Paletti] Riccardo Paletti
+              a#mwAVI[href=//it.wikipedia.org/wiki/Elio_De_Angelis] Elio De Angelis
+            p#mwAVM
+              a#mwAVQ[href=//it.wikipedia.org/wiki/Maria_Teresa_de_Filippis] Maria Teresa de Filippis
+              a#mwAVU[href=//it.wikipedia.org/wiki/Lella_Lombardi] Lella Lombardi
+              a#mwAVY[href=//it.wikipedia.org/wiki/Divina_Galica] Divina Galica
+              a#mwAVc[href=//it.wikipedia.org/wiki/Desiré_Wilson] Desiré Wilson
+              a#mwAVg[href=//it.wikipedia.org/wiki/Giovanna_Amati] Giovanna Amati
+            p#mwAVk
+              a#mwAVo[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1979] 1979
+              a#mwAVs[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FISA
+              a#mwAV0[href=//it.wikipedia.org/wiki/Jean-Marie_Balestre] Jean-Marie Balestre
+              a#mwAV4.mw-redirect[href=//it.wikipedia.org/wiki/FOCA] FOCA
+              sup#cite_ref-24.mw-ref
+                a#mwAWA[href=#cite_note-24] [24]
+            p#mwAWQ
+              a#mwAWU[href=//it.wikipedia.org/wiki/Ford_Cosworth_DFV] Ford Cosworth
+              a#mwAWY[href=//it.wikipedia.org/wiki/Michele_Alboreto] Michele Alboreto
+          section#mwAWc
+            div#mwAWk.hatnote
+              a[href=//it.wikipedia.org/wiki/Patto_della_Concordia] Patto della Concordia
+            figure#mwAWo.mw-default-size
+              figcaption#mwAW0
+                a#mwAW4[href=//it.wikipedia.org/wiki/Ligier_JS11] Ligier JS11
+            p#mwAXE
+              a#mwAXI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1981] 1981
+              a#mwAXM[href=//it.wikipedia.org/wiki/Patto_della_Concordia] Patto della Concordia
+              a#mwAXQ[href=//it.wikipedia.org/wiki/Place_de_la_Concorde] Place de la Concorde
+              a#mwAXU[href=//it.wikipedia.org/wiki/Formula_One_Constructors_Association] FOCA
+              a#mwAXY[href=//it.wikipedia.org/wiki/Bernie_Ecclestone] Bernie Ecclestone
+            p#mwAXc
+              a#mwAXg[href=//it.wikipedia.org/wiki/Gran_Premio_del_Sudafrica_1982] Gran Premio del Sudafrica 1982
+              a#mwAXk[href=//it.wikipedia.org/wiki/Gran_Premio_del_Brasile_1982] Gran Premio del Brasile
+              a#mwAXo[href=//it.wikipedia.org/wiki/Gran_Premio_di_San_Marino_1982] Gran Premio di San Marino
+              a#mwAXs[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+              a#mwAXw[href=//it.wikipedia.org/wiki/Effetto_suolo_(automobilismo)] effetto suolo aerodinamico
+              a#mwAX0[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1983] stagione 1983
+              sup#cite_ref-25.mw-ref
+                a#mwAX4[href=#cite_note-25] [25]
+              sup#cite_ref-26.mw-ref
+                a#mwAYI[href=#cite_note-26] [26]
+            figure#mwAYY.mw-default-size
+              figcaption#mwAYk
+                a#mwAYo[href=//it.wikipedia.org/wiki/Keke_Rosberg] Keke Rosberg
+                a#mwAYs[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_d'America] Gran Premio di Dallas
+            p#mwAYw
+              a#mwAY0[href=//it.wikipedia.org/wiki/Turbocompressore] motori turbo
+              a#mwAY8.mw-redirect[href=//it.wikipedia.org/wiki/Ford_Cosworth] Ford Cosworth
+              a#mwAZA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1986] 1986
+            p#mwAZM
+              a#mwAZQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1984] stagione 1984
+              sup#cite_ref-27.mw-ref
+                a#mwAZU[href=#cite_note-27] [27]
+              a#mwAZk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1987] 1987
+              sup#cite_ref-28.mw-ref
+                a#mwAZo[href=#cite_note-28] [28]
+              a#mwAZ4[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1989] 1989
+              sup#cite_ref-29.mw-ref
+                a#mwAZ8[href=#cite_note-29] [29]
+            figure#mwAaM.mw-default-size
+              figcaption#mwAaY
+                a#mwAac[href=//it.wikipedia.org/wiki/Riccardo_Patrese] Riccardo Patrese
+                a#mwAag[href=//it.wikipedia.org/wiki/Alfa_Romeo_185T] Alfa Romeo 185T
+            p#mwAak
+              a#mwAao[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            p#mwAas
+              sup#cite_ref-30.mw-ref
+                a#mwAaw[href=#cite_note-30] [30]
+            figure#mwAbA.mw-default-size
+              figcaption#mwAbM
+                a#mwAbQ[href=//it.wikipedia.org/wiki/McLaren_MP4/4] McLaren MP4/4
+                a#mwAbU[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+                a#mwAbY[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+                a#mwAbc[href=//it.wikipedia.org/wiki/Rivalità_Prost-Senna] acceso dualismo
+            p#mwAbg
+              sup#cite_ref-31.mw-ref
+                a#mwAbk[href=#cite_note-31] [31]
+          section#mwAb0
+            p#mwAb4
+              a#mwAb8[href=//it.wikipedia.org/wiki/Sospensione_attiva] sospensioni attive
+              a#mwAcA[href=//it.wikipedia.org/wiki/Cambio_robotizzato] cambio semiautomatico
+              a#mwAcE[href=//it.wikipedia.org/wiki/Controllo_della_trazione] controllo della trazione
+              a#mwAcI[href=//it.wikipedia.org/wiki/Sistema_anti_bloccaggio] sistema anti bloccaggio
+              sup#cite_ref-32.mw-ref
+                a#mwAcM[href=#cite_note-32] [32]
+              sup#cite_ref-MarshallDeaths2000s_33-0.mw-ref
+                a#mwAcc[href=#cite_note-MarshallDeaths2000s-33] [33]
+            p#mwAcs
+              a#mwAcw[href=//it.wikipedia.org/wiki/McLaren] McLaren
+              a#mwAc0[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+              a#mwAc4.mw-redirect[href=//it.wikipedia.org/wiki/Honda_Racing_F1_Team] Honda
+              a#mwAc8[href=//it.wikipedia.org/wiki/Renault] Renault
+              a#mwAdA[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+              a#mwAdE[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            p#mwAdI
+              a#mwAdM[href=//it.wikipedia.org/wiki/Roland_Ratzenberger] Roland Ratzenberger
+              a#mwAdQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1998] stagione 1998
+              sup#cite_ref-34.mw-ref
+                a#mwAdU[href=#cite_note-34] [34]
+            figure#mwAdk.mw-default-size
+              figcaption#mwAdw
+                a#mwAd0[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+                a#mwAd4[href=//it.wikipedia.org/wiki/Jacques_Villeneuve] Jacques Villeneuve
+                a#mwAd8[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles
+            p#mwAeA
+              a#mwAeE[href=//it.wikipedia.org/wiki/McLaren] McLaren
+              a#mwAeI[href=//it.wikipedia.org/wiki/Adrian_Newey] Adrian Newey
+              a#mwAeM[href=//it.wikipedia.org/wiki/Jules_Bianchi] Jules Bianchi
+            p#mwAeQ
+              a#mwAeU[href=//it.wikipedia.org/wiki/McLaren] McLaren
+              a#mwAeY[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+              a#mwAec[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+              a#mwAeg.mw-redirect[href=//it.wikipedia.org/wiki/Benetton_F1] Benetton
+              a#mwAek[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+              a#mwAeo[href=//it.wikipedia.org/wiki/Jordan_Grand_Prix] Jordan
+              sup#cite_ref-35.mw-ref
+                a#mwAes[href=#cite_note-35] [35]
+          section#mwAe8
+            section#mwAfA
+              figure#mwAfE.mw-default-size
+                figcaption#mwAfQ
+                  a#mwAfU[href=//it.wikipedia.org/wiki/Mika_Häkkinen] Mika Häkkinen
+              p#mwAfY
+                sup#cite_ref-36.mw-ref
+                  a#mwAfg[href=#cite_note-36] [36]
+              p#mwAfw
+                a#mwAf0[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+                a#mwAf4[href=//it.wikipedia.org/wiki/Gran_Premio_del_Belgio] Gran Premio del Belgio
+              p#mwAf8
+                a#mwAgA[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+                a#mwAgE[href=//it.wikipedia.org/wiki/Max_Verstappen] Max Verstappen
+              p#mwAgI
+                a#mwAgM[href=//it.wikipedia.org/wiki/Riccardo_Patrese] Riccardo Patrese
+                a#mwAgQ[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Rubens Barrichello
+              figure#mwAgU.mw-default-size
+                figcaption#mwAgg
+                  a#mwAgk[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+                  a#mwAgo[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+                  a#mwAgs[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+              p#mwAgw
+                a#mwAg0[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+                a#mwAg4[href=//it.wikipedia.org/wiki/Emerson_Fittipaldi] Emerson Fittipaldi
+                a#mwAg8[href=//it.wikipedia.org/wiki/Pole_position] pole position
+                a#mwAhA[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+                a#mwAhE[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+                sup#cite_ref-37.mw-ref
+                  a#mwAhI[href=#cite_note-37] [37]
+              p#mwAhY
+                a#mwAhc[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+                a#mwAhg[href=//it.wikipedia.org/wiki/Juan_Pablo_Montoya] Juan Pablo Montoya
+                a#mwAhk[href=//it.wikipedia.org/wiki/Ralf_Schumacher] Ralf Schumacher
+              p#mwAho
+                sup#cite_ref-regolamento_38-0.mw-ref
+                  a#mwAhs[href=#cite_note-regolamento-38] [38]
+                a[href=//it.wikipedia.org/wiki/Aiuto:Chiarezza] da quale stagione?
+            section#mwAiE
+              p#mwAiI
+                sup#cite_ref-39.mw-ref
+                  a#mwAiU[href=#cite_note-39] [39]
+                span#mwAik.nowrap
+                  a[href=//it.wikipedia.org/wiki/Metro] mm
+                a#mwAis[href=//it.wikipedia.org/wiki/Giri_al_minuto] giri/minuto
+              figure#mwAiw.mw-default-size
+                figcaption#mwAi8
+                  a#mwAjA[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+                  a#mwAjE[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+                  a#mwAjI[href=//it.wikipedia.org/wiki/Motore_V10] motori V10
+              p#mwAjM
+                a#mwAjQ[href=//it.wikipedia.org/wiki/Peter_Sauber] Peter Sauber
+                a#mwAjU[href=//it.wikipedia.org/wiki/Alex_Shnaider] Alex Shnaider
+                a#mwAjY.mw-redirect[href=//it.wikipedia.org/wiki/Midland_F1] Midland
+                a#mwAjc[href=//it.wikipedia.org/wiki/Spyker_F1] Spyker
+                a#mwAjg[href=//it.wikipedia.org/wiki/Force_India] Force India
+                a#mwAjk[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+                a#mwAjo[href=//it.wikipedia.org/wiki/Gran_Premio_del_Belgio_2009] Gran Premio del Belgio 2009
+                a#mwAjs[href=//it.wikipedia.org/wiki/Giancarlo_Fisichella] Giancarlo Fisichella
+              p#mwAjw
+                a#mwAj0[href=//it.wikipedia.org/wiki/Dietrich_Mateschitz] Dietrich Mateschitz
+                a#mwAj4[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull Racing
+                a#mwAj8[href=//it.wikipedia.org/wiki/Cosworth] Cosworth
+                a#mwAkA[href=//it.wikipedia.org/wiki/Minardi] Minardi
+                a#mwAkE[href=//it.wikipedia.org/wiki/Cosworth] Cosworth
+                a#mwAkI.mw-redirect[href=//it.wikipedia.org/wiki/Scuderia_Toro_Rosso] Scuderia Toro Rosso
+                a#mwAkM[href=//it.wikipedia.org/wiki/Cosworth] Cosworth
+                a#mwAkQ[href=//it.wikipedia.org/wiki/Ferrari] Ferrari
+                a#mwAkU[href=//it.wikipedia.org/wiki/Renault] Renault
+                a#mwAkY.mw-redirect[href=//it.wikipedia.org/wiki/Turbo] Turbo
+                a#mwAkc[href=//it.wikipedia.org/wiki/Cosworth] Cosworth
+                a#mwAkg[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+                a#mwAkk.mw-redirect[href=//it.wikipedia.org/wiki/Scuderia_AlphaTauri] Scuderia Toro Rosso
+                a#mwAko[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_2008] Gran Premio d'Italia 2008
+                a#mwAks[href=//it.wikipedia.org/wiki/Gran_Premio_di_Cina_2009] Gran Premio di Cina 2009
+              figure#mwAkw.mw-default-size
+                figcaption#mwAk8
+                  a#mwAlA[href=//it.wikipedia.org/wiki/Jenson_Button] Jenson Button
+                  a#mwAlE[href=//it.wikipedia.org/wiki/Brawn_GP] Brawn GP
+                  a#mwAlI[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+                  a#mwAlQ[href=//it.wikipedia.org/wiki/Ross_Brawn] Ross Brawn
+              p#mwAlU
+                a#mwAlY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2009] 2009
+                a#mwAlc[href=//it.wikipedia.org/wiki/Brawn_GP] Brawn GP
+                a#mwAlg.mw-redirect[href=//it.wikipedia.org/wiki/Honda_Racing_F1_Team] Honda
+                a#mwAlk[href=//it.wikipedia.org/wiki/Ross_Brawn] Ross Brawn
+                a#mwAlo[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+                a#mwAls[href=//it.wikipedia.org/wiki/Jenson_Button] Jenson Button
+                a#mwAlw[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Rubens Barrichello
+                a#mwAl0[href=//it.wikipedia.org/wiki/Brawn_GP] Brawn GP
+                a#mwAl4[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+                a#mwAl8[href=//it.wikipedia.org/wiki/Mercedes] Mercedes
+                a#mwAmA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2010] Mondiale 2010
+                a#mwAmE.mw-redirect[href=//it.wikipedia.org/wiki/Toyota_F1_Team] Toyota
+                a#mwAmI[href=//it.wikipedia.org/wiki/BMW] BMW
+                a#mwAmM[href=//it.wikipedia.org/wiki/KERS] KERS
+              p#mwAmQ
+                a#mwAmU[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+                a#mwAmY[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+                a#mwAmc.mw-redirect[href=//it.wikipedia.org/wiki/BMW_Sauber] BMW
+                a#mwAmg[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull
+                a#mwAmk[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+          section#mwAmo
+            section#mwAms
+              p#mwAmw
+                a#mwAm0[href=//it.wikipedia.org/wiki/Max_Mosley] Max Mosley
+              figure#mwAm4.mw-default-size
+                figcaption#mwAnE
+                  a#mwAnI[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+                  a#mwAnM[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull
+              p#mwAnU
+                a#mwAnY[href=//it.wikipedia.org/wiki/Cosworth] Cosworth
+                a#mwAnc[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2010] 2010
+                a#mwAng.mw-redirect[href=//it.wikipedia.org/wiki/Lotus_Racing] Lotus
+                a#mwAnk.mw-redirect[href=//it.wikipedia.org/wiki/Virgin_Racing] Virgin
+                a#mwAno.mw-redirect[href=//it.wikipedia.org/wiki/Hispania_Racing_F1_Team] HRT
+                a#mwAns[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+                a#mwAnw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2010] 2010
+                a#mwAn0[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2011] 2011
+                a#mwAn4[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+                a#mwAn8[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull
+                a#mwAoA[href=//it.wikipedia.org/wiki/Mark_Webber] Mark Webber
+                a#mwAoE[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+                a#mwAoI[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+              p#mwAoM
+                a#mwAoQ[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull
+                a#mwAoU[href=//it.wikipedia.org/wiki/Renault] Renault
+                a#mwAoY[href=//it.wikipedia.org/wiki/Red_Bull_Racing] Red Bull
+                a#mwAoc[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+            section#mwAok
+              figure#mwAoo.mw-default-size
+                figcaption#mwAo0
+                  a#mwAo4[href=//it.wikipedia.org/wiki/Mercedes_AMG_F1] Mercedes
+                  a#mwAo8[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+                  a#mwApA[href=//it.wikipedia.org/wiki/Nico_Rosberg] Nico Rosberg
+              p#mwApE
+                a#mwApI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2014] 2014
+                a#mwApM[href=//it.wikipedia.org/wiki/Turbocompressore] turbo
+                a#mwApU[href=//it.wikipedia.org/wiki/MGU-K] MGU-K
+                a#mwApc[href=//it.wikipedia.org/wiki/Motore_a_combustione_interna] termica
+                a#mwApg[href=//it.wikipedia.org/wiki/Motore_elettrico_di_trazione] elettrica
+              p#mwApk
+                a#mwApo[href=//it.wikipedia.org/wiki/Mercedes_AMG_F1] Mercedes
+                a#mwAps[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+                a#mwApw[href=//it.wikipedia.org/wiki/Nico_Rosberg] Nico Rosberg
+                a#mwAp0[href=//it.wikipedia.org/wiki/Daniel_Ricciardo] Daniel Ricciardo
+                a#mwAp4[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+                a#mwAp8[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+                a#mwAqA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2015] 2015
+                a#mwAqE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2016] 2016
+              p#mwAqI
+                a#mwAqM[href=//it.wikipedia.org/wiki/Valtteri_Bottas] Valtteri Bottas
+                a#mwAqQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2017] 2017
+              p#mwAqU
+                a#mwAqY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2018] 2018
+                a#mwAqc[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Juan Manuel Fangio
+                a#mwAqg[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2019] 2019
+                a#mwAqk[href=//it.wikipedia.org/wiki/Mattia_Binotto] Mattia Binotto
+                a#mwAqo[href=//it.wikipedia.org/wiki/Maurizio_Arrivabene] Maurizio Arrivabene
+                a#mwAqs[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2020] 2020
+                a#mwAqw[href=//it.wikipedia.org/wiki/Pandemia_di_COVID-19] pandemia di COVID-19
+                a#mwAq0[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+              p#mwAq4
+                a#mwAq8[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2021] 2021
+                a#mwArA[href=//it.wikipedia.org/wiki/Paesi_Bassi] olandese
+                a#mwArE[href=//it.wikipedia.org/wiki/Max_Verstappen] Max Verstappen
+                a#mwArI[href=//it.wikipedia.org/wiki/Gran_Premio_di_Abu_Dhabi_2021] Abu Dhabi
+                sup#cite_ref-40.mw-ref
+                  a#mwArM[href=#cite_note-40] [40]
+            section#mwArc
+              p#mwArg
+                sup#cite_ref-41.mw-ref
+                  a#mwAro[href=#cite_note-41] [41]
+              p#mwAr4
+                a#mwAr8[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2022] 2022
+                sup#cite_ref-42.mw-ref
+                  a#mwAsA[href=#cite_note-42] [42]
+                sup#cite_ref-43.mw-ref
+                  a#mwAsQ[href=#cite_note-43] [43]
+                a#mwAsg[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2023] 2023
+                sup#cite_ref-44.mw-ref
+                  a#mwAsk[href=#cite_note-44] [44]
+                sup#cite_ref-45.mw-ref
+                  a#mwAs0[href=#cite_note-45] [45]
+                a#mwAtE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2024] 2024
+                a#mwAtI[href=//it.wikipedia.org/wiki/McLaren] McLaren
+                a#mwAtM[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2025] 2025
+                a#mwAtU[href=//it.wikipedia.org/wiki/Lando_Norris] Lando Norris
+                a#mwAtY[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+        section#mwAtc
+          div#mwAtk.hatnote
+            a[href=//it.wikipedia.org/wiki/Medagliere_perpetuo_dei_mondiali_di_Formula_1] Medagliere perpetuo dei mondiali di Formula 1
+          section#mwAto
+            figure#mwAts.mw-default-size
+            p#mwAt8
+              sup#cite_ref-46.mw-ref
+                a#mwAuA[href=#cite_note-46] [46]
+              sup#cite_ref-47.mw-ref
+                a#mwAuQ[href=#cite_note-47] [47]
+              a#mwAug[href=//it.wikipedia.org/wiki/Superlicenza_FIA] Superlicenza FIA
+              sup#cite_ref-AppL_48-0.mw-ref
+                a#mwAuk[href=#cite_note-AppL-48] [48]
+            p#mwAu0
+              sup#cite_ref-49.mw-ref
+                a#mwAu4[href=#cite_note-49] [49]
+              sup#cite_ref-rFPro_50-0.mw-ref
+                a#mwAvI[href=#cite_note-rFPro-50] [50]
+              sup#cite_ref-51.mw-ref
+                a#mwAvY[href=#cite_note-51] [51]
+              sup#cite_ref-rfProMars_52-0.mw-ref
+                a#mwAvo[href=#cite_note-rfProMars-52] [52]
+              sup#cite_ref-rFProISI_53-0.mw-ref
+                a#mwAv4[href=#cite_note-rFProISI-53] [53]
+            p#mwAwI
+              a#mwAwM[href=//it.wikipedia.org/wiki/Jules_Bianchi] Jules Bianchi
+              sup#cite_ref-54.mw-ref
+                a#mwAwQ[href=#cite_note-54] [54]
+              sup#cite_ref-55.mw-ref
+                a#mwAwg[href=#cite_note-55] [55]
+          section#mwAww
+            figure#mwAw0.mw-default-size
+              figcaption#mwAxA
+                a#mwAxE[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            p#mwAxI
+              sup#cite_ref-:0_56-0.mw-ref
+                a#mwAxM[href=#cite_note-:0-56] [56]
+              sup#cite_ref-57.mw-ref
+                a#mwAxc[href=#cite_note-57] [57]
+              sup#cite_ref-58.mw-ref
+                a#mwAxs[href=#cite_note-58] [58]
+            figure#mwAx8.mw-default-size
+              figcaption#mwAyI
+                a#mwAyM[href=//it.wikipedia.org/wiki/McLaren] McLaren
+                a#mwAyQ[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1988] 1988
+                a#mwAyU[href=//it.wikipedia.org/wiki/Honda_in_Formula_1] Honda
+            p#mwAyY
+              sup#cite_ref-59.mw-ref
+                a#mwAyc[href=#cite_note-59] [59]
+        section#mwAyw
+          div#mwAy4.hatnote
+            a[href=//it.wikipedia.org/wiki/Vettura_di_Formula_1] Vettura di Formula 1
+            a[href=//it.wikipedia.org/wiki/Motori_di_Formula_1] Motori di Formula 1
+          div#mwAy8.thumb
+            a[href=//it.wikipedia.org/wiki/Ferrari_500_F2] Ferrari 500 F2
+            a[href=//it.wikipedia.org/wiki/Honda_RA272] Honda RA272
+            a[href=//it.wikipedia.org/wiki/McLaren_MP4/2] McLaren MP4/2
+            a[href=//it.wikipedia.org/wiki/Fibra_di_carbonio] fibra di carbonio
+            a[href=//it.wikipedia.org/wiki/Lotus_E20] Lotus E20
+            a[href=//it.wikipedia.org/wiki/Quadro_strumenti] quadro strumenti
+          p#mwAzA
+            sup#cite_ref-60.mw-ref
+              a#mwAzE[href=#cite_note-60] [60]
+          p#mwAzU
+            sup#cite_ref-61.mw-ref
+              a#mwAzY[href=#cite_note-61] [61]
+          p#mwAzo
+            a#mwAzs[href=//it.wikipedia.org/wiki/Carbonio] carbonio
+            a#mwAz0[href=//it.wikipedia.org/wiki/Motore_V8] V8
+            a#mwAz8[href=//it.wikipedia.org/wiki/Giri_al_minuto] rpm
+            a#mwA0E[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2006] stagione 2006
+            sup#cite_ref-62.mw-ref
+              a#mwA0M[href=#cite_note-62] [62]
+            a#mwA0c[href=//it.wikipedia.org/wiki/Metanolo] metanolo
+            a#mwA0g[href=//it.wikipedia.org/wiki/Benzene] benzene
+            a#mwA0k[href=//it.wikipedia.org/wiki/Toluene] toluene
+            sup#cite_ref-63.mw-ref
+              a#mwA0o[href=#cite_note-63] [63]
+          figure#mwA04.mw-default-size
+            figcaption#mwA1E
+              a#mwA1I[href=//it.wikipedia.org/wiki/Drag_Reduction_System] ala posteriore mobile
+          p#mwA1M
+            a#mwA1U[href=//it.wikipedia.org/wiki/British_American_Racing] BAR
+            a#mwA1Y[href=//it.wikipedia.org/wiki/Honda] Honda
+            a#mwA1g[href=//it.wikipedia.org/wiki/Salt_Lake_City] Salt Lake City
+            sup#cite_ref-64.mw-ref
+              a#mwA1k[href=#cite_note-64] [64]
+            sup#cite_ref-65.mw-ref
+              a#mwA10[href=#cite_note-65] [65]
+        section#mwA2E
+          div#mwA2M.hatnote
+            a[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premio di Formula 1
+            a[href=//it.wikipedia.org/wiki/Lista_dei_Gran_Premi_di_Formula_1] Lista dei Gran Premi di Formula 1
+          p#mwA2Q
+            a#mwA2U[href=//it.wikipedia.org/wiki/500_Miglia_di_Indianapolis] 500 Miglia di Indianapolis
+            a#mwA2Y[href=//it.wikipedia.org/wiki/Anni_1960] anni sessanta
+            a#mwA2c[href=//it.wikipedia.org/wiki/Anni_1980] anni ottanta
+            sup#cite_ref-66.mw-ref
+              a#mwA2g[href=#cite_note-66] [66]
+            sup#cite_ref-67.mw-ref
+              a#mwA2w[href=#cite_note-67] [67]
+            a#mwA3A[href=//it.wikipedia.org/wiki/Liberty_Media] Liberty Media
+            sup#cite_ref-68.mw-ref
+              a#mwA3E[href=#cite_note-68] [68]
+            sup#cite_ref-69.mw-ref
+              a#mwA3U[href=#cite_note-69] [69]
+            sup#cite_ref-70.mw-ref
+              a#mwA3k[href=#cite_note-70] [70]
+            sup#cite_ref-71.mw-ref
+              a#mwA30[href=#cite_note-71] [71]
+          figure#mwA4E.mw-default-size
+            figcaption#mwA4Q
+              a#mwA4U[href=//it.wikipedia.org/wiki/Verde] verde
+              a#mwA4Y[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premio di Formula 1
+              a#mwA4c[href=//it.wikipedia.org/wiki/Nero] nero
+              a#mwA4g[href=//it.wikipedia.org/wiki/Grigio] grigio
+              a#mwA4k[href=//it.wikipedia.org/wiki/Bianco] bianco
+          p#mwA4o
+            a#mwA4s[href=//it.wikipedia.org/wiki/500_Miglia_di_Indianapolis_1950] 500 Miglia di Indianapolis
+            a#mwA4w[href=//it.wikipedia.org/wiki/Kurtis_Kraft] Kurtis Kraft
+            a#mwA40[href=//it.wikipedia.org/wiki/Watson_(automobilismo)] Watson
+            a#mwA44[href=//it.wikipedia.org/wiki/Epperly] Epperly
+            a#mwA48[href=//it.wikipedia.org/wiki/Kuzma_(automobilismo)] Kuzma
+            a#mwA5A[href=//it.wikipedia.org/wiki/Jim_Clark] Jim Clark
+            a#mwA5E[href=//it.wikipedia.org/wiki/Graham_Hill] Graham Hill
+            a#mwA5I[href=//it.wikipedia.org/wiki/Mario_Andretti] Mario Andretti
+            a#mwA5M[href=//it.wikipedia.org/wiki/Emerson_Fittipaldi] Emerson Fittipaldi
+            a#mwA5Q[href=//it.wikipedia.org/wiki/Jacques_Villeneuve] Jacques Villeneuve
+          p#mwA5U
+            a#mwA5Y[href=//it.wikipedia.org/wiki/Argentina] Argentina
+            a#mwA5c[href=//it.wikipedia.org/wiki/Circuito_di_Sebring] Sebring
+            a#mwA5g[href=//it.wikipedia.org/wiki/Circuito_di_Riverside] Riverside
+            a#mwA5k.mw-redirect[href=//it.wikipedia.org/wiki/Circuito_di_Watkins_Glen] circuito di Watkins Glen
+            a#mwA5o[href=//it.wikipedia.org/wiki/New_York] New York
+            a#mwA5s[href=//it.wikipedia.org/wiki/Circuito_di_Long_Beach] Long Beach
+            a#mwA5w[href=//it.wikipedia.org/wiki/Marocco] Marocco
+            a#mwA50[href=//it.wikipedia.org/wiki/Africa] africano
+            a#mwA54[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1958] 1958
+            a#mwA58[href=//it.wikipedia.org/wiki/Sudafrica] Sudafrica
+            a#mwA6A[href=//it.wikipedia.org/wiki/Asia] Asia
+            a#mwA6E[href=//it.wikipedia.org/wiki/Giappone] Giappone
+            a#mwA6I[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1976] 1976
+            a#mwA6M[href=//it.wikipedia.org/wiki/Oceania] Oceania
+            a#mwA6Q[href=//it.wikipedia.org/wiki/Australia] Australia
+          p#mwA6U
+            a#mwA6Y[href=//it.wikipedia.org/wiki/500_Miglia_di_Indianapolis] 500 Miglia di Indianapolis
+            a#mwA6c[href=//it.wikipedia.org/wiki/Cina] Cina
+            a#mwA6g[href=//it.wikipedia.org/wiki/Zhou_Guanyu] Zhou Guanyu
+          p#mwA7I
+            a#mwA7M[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] Monza
+            a#mwA7Q[href=//it.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari] Imola
+          p#mwA7U
+            a#mwA7Y[href=//it.wikipedia.org/wiki/Race_of_Champions_(Formula_1)] Race of Champions
+            a#mwA7c[href=//it.wikipedia.org/wiki/Circuito_di_Brands_Hatch] Circuito di Brands Hatch
+            a#mwA7g[href=//it.wikipedia.org/wiki/Keke_Rosberg] Keke Rosberg
+            sup#cite_ref-72.mw-ref
+              a#mwA7k[href=#cite_note-72] [72]
+            a#mwA70[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1984] 1984
+          figure#mwA8Y.mw-default-size
+          p#mwA8o
+            a#mwA8s[href=//it.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari] Imola
+            a#mwA8w[href=//it.wikipedia.org/wiki/Gran_Premio_di_San_Marino] Gran Premio di San Marino
+            a#mwA80[href=//it.wikipedia.org/wiki/Nürburgring] Nürburgring
+            a#mwA84[href=//it.wikipedia.org/wiki/Gran_Premio_d'Europa] Gran Premio d'Europa
+            a#mwA88[href=//it.wikipedia.org/wiki/Gran_Premio_del_Lussemburgo] Gran Premio del Lussemburgo
+            a#mwA9A[href=//it.wikipedia.org/wiki/Stati_Uniti_d'America] Stati Uniti d'America
+            a#mwA9E[href=//it.wikipedia.org/wiki/Italia] Italia
+          p#mwA9I
+            a#mwA9M[href=//it.wikipedia.org/wiki/Nürburgring] Nürburgring
+            a#mwA9Q[href=//it.wikipedia.org/wiki/Hockenheim] Hockenheim
+          section#mwA9U
+            section#mwA9c
+              p#mwA9g
+                sup#cite_ref-GPofA_73-0.mw-ref
+                  a#mwA9k[href=#cite_note-GPofA-73] [73]
+                a#mwA90[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] campionato mondiale di Formula 1
+                a#mwA94[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2014] 2014
+                sup#cite_ref-NJ_delay_74-0.mw-ref
+                  a#mwA98[href=#cite_note-NJ_delay-74] [74]
+                a#mwA-Q[href=//it.wikipedia.org/wiki/New_Jersey] New Jersey
+                a#mwA-U[href=//it.wikipedia.org/wiki/West_New_York] West New York
+                a#mwA-Y[href=//it.wikipedia.org/wiki/Weehawken] Weehawken
+                sup#cite_ref-GPofA_73-1.mw-ref
+                  a#mwA-c[href=#cite_note-GPofA-73] [73]
+                sup#cite_ref-Autosport_10-25_75-0.mw-ref
+                  a#mwA-s[href=#cite_note-Autosport_10-25-75] [75]
+                a#mwA-8[href=//it.wikipedia.org/wiki/Skyline] skyline
+                a#mwA_A[href=//it.wikipedia.org/wiki/New_York] New York
+                sup#cite_ref-FIA_Calendar_76-0.mw-ref
+                  a#mwA_E[href=#cite_note-FIA_Calendar-76] [76]
+            section#mwA_U
+              p#mwA_Y
+                a#mwA_c[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2020] 2020
+                a#mwA_g[href=//it.wikipedia.org/wiki/Circuito_di_Hanoi] tracciato cittadino
+                a#mwA_k[href=//it.wikipedia.org/wiki/Hanoi] Hanoi
+                a#mwA_o[href=//it.wikipedia.org/wiki/Pandemia_di_COVID-19] pandemia di COVID-19
+                sup#cite_ref-77.mw-ref
+                  a#mwA_s[href=#cite_note-77] [77]
+                sup#cite_ref-formulapassion.it_78-0.mw-ref
+                  a#mwA_8[href=#cite_note-formulapassion.it-78] [78]
+                a#mwBAM[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2021] 2021
+                sup#cite_ref-79.mw-ref
+                  a#mwBAQ[href=#cite_note-79] [79]
+        section#mwBAg
+          figure#mwBAk.mw-default-size
+            figcaption#mwBAw
+              a#mwBA0[href=//it.wikipedia.org/wiki/Circuito_di_Spa-Francorchamps] circuito di Spa-Francorchamps
+          p#mwBA4
+            sup#cite_ref-80.mw-ref
+              a#mwBA8[href=#cite_note-80] [80]
+            a#mwBBM[href=//it.wikipedia.org/wiki/Circuito_di_Pescara] Pescara
+          figure#mwBBQ.mw-default-size
+            figcaption#mwBBc
+              a#mwBBg[href=//it.wikipedia.org/wiki/Circuito_di_Interlagos] autodromo José Carlos Pace
+              a#mwBBk[href=//it.wikipedia.org/wiki/Senso_di_rotazione] senso antiorario
+          p#mwBBo
+            a#mwBBs[href=//it.wikipedia.org/wiki/Indianapolis_Motor_Speedway] Indianapolis
+            a#mwBBw[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] Monza
+            a#mwBB4[href=//it.wikipedia.org/wiki/Nürburgring] Nürburgring
+            a#mwBCA[href=//it.wikipedia.org/wiki/Circuito_di_Silverstone] circuito di Silverstone
+            a#mwBCE[href=//it.wikipedia.org/wiki/Circuito_Paul_Ricard] circuito Paul Ricard
+            a#mwBCI.mw-redirect[href=//it.wikipedia.org/wiki/Le_Castellet_(Varo)] Le Castellet
+            a#mwBCM[href=//it.wikipedia.org/wiki/Elio_De_Angelis] Elio De Angelis
+          p#mwBCQ
+            a#mwBCU[href=//it.wikipedia.org/wiki/Circuito_di_Interlagos] Interlagos
+          p#mwBCY
+            a#mwBCc[href=//it.wikipedia.org/wiki/Anni_1990] anni 1990
+            a#mwBCg[href=//it.wikipedia.org/wiki/Pasquale_Lattuneddu] Pasquale Lattuneddu
+            a#mwBCk[href=//it.wikipedia.org/wiki/Bernie_Ecclestone] Bernie Ecclestone
+          p#mwBCo
+            a#mwBCs[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] Monza
+            a#mwBCw[href=//it.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari] Imola
+            a#mwBC0[href=//it.wikipedia.org/wiki/Circuito_di_Monte_Carlo] Monte Carlo
+            a#mwBC4[href=//it.wikipedia.org/wiki/Circuito_di_Zandvoort] Zandvoort
+            a#mwBC8[href=//it.wikipedia.org/wiki/Circuito_di_Spa-Francorchamps] Spa-Francorchamps
+            a#mwBDA[href=//it.wikipedia.org/wiki/Circuito_di_Istanbul] Istanbul Park
+            a#mwBDE[href=//it.wikipedia.org/wiki/Circuito_di_Suzuka] Suzuka
+            a#mwBDI[href=//it.wikipedia.org/wiki/Indianapolis_Motor_Speedway] Indianapolis
+          figure#mwBDM.mw-default-size
+            figcaption#mwBDY
+              a#mwBDc[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] autodromo nazionale di Monza
+              a#mwBDg[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia] Gran Premio d'Italia
+          p#mwBDk
+            a#mwBDo[href=//it.wikipedia.org/wiki/Autodromo_Hermanos_Rodríguez] Città del Messico
+            a#mwBDs[href=//it.wikipedia.org/wiki/Circuito_di_Kyalami] Kyalami
+            a#mwBDw[href=//it.wikipedia.org/wiki/Circuito_di_Monte_Carlo] Monte Carlo
+            a#mwBD0[href=//it.wikipedia.org/wiki/Keke_Rosberg] Keke Rosberg
+            a#mwBD4[href=//it.wikipedia.org/wiki/Nelson_Piquet] Nelson Piquet
+          p#mwBD8
+            a#mwBEA[href=//it.wikipedia.org/wiki/Singapore_Street_Circuit] Singapore
+            a#mwBEE[href=//it.wikipedia.org/wiki/Circuito_di_Baku] Baku
+            a#mwBEI[href=//it.wikipedia.org/wiki/Circuito_di_Montréal] Montreal
+            a#mwBEM[href=//it.wikipedia.org/wiki/Circuito_Albert_Park] Melbourne
+            a#mwBEQ.mw-redirect[href=//it.wikipedia.org/wiki/Jeddah_Corniche_Circuit] Jeddah Corniche Circuit
+            a#mwBEU[href=//it.wikipedia.org/wiki/Miami_International_Autodrome] Miami International Autodrome
+            a#mwBEY[href=//it.wikipedia.org/wiki/Circuito_di_Long_Beach] Long Beach
+            a#mwBEc[href=//it.wikipedia.org/wiki/Circuito_di_Detroit] Detroit
+            a#mwBEg[href=//it.wikipedia.org/wiki/Circuito_di_Phoenix] Phoenix
+            a#mwBEk[href=//it.wikipedia.org/wiki/Circuito_del_Caesars_Palace] Las Vegas
+            a#mwBEo[href=//it.wikipedia.org/wiki/Circuito_di_Dallas] Dallas
+          p#mwBEw
+            a#mwBE0[href=//it.wikipedia.org/wiki/Circuito_di_Yas_Marina] circuito di Yas Marina
+            a#mwBE4[href=//it.wikipedia.org/wiki/Gran_Premio_di_Abu_Dhabi] Gran Premio di Abu Dhabi
+          figure#mwBE8.mw-default-size
+            figcaption#mwBFI
+              a#mwBFM[href=//it.wikipedia.org/wiki/Circuito_di_Monte_Carlo] tracciato cittadino di Monte Carlo
+              a#mwBFQ[href=//it.wikipedia.org/wiki/Gran_Premio_di_Monaco] Gran Premio di Monaco
+          p#mwBFU
+            a#mwBFY[href=//it.wikipedia.org/wiki/Circuito_di_Sepang] pista malese di Sepang
+            a#mwBFc[href=//it.wikipedia.org/wiki/Hermann_Tilke] Hermann Tilke
+            a#mwBFg[href=//it.wikipedia.org/wiki/Bahrain_International_Circuit] Sakhir
+            a#mwBFk[href=//it.wikipedia.org/wiki/Circuito_internazionale_di_Corea] Yeongam
+            a#mwBFo[href=//it.wikipedia.org/wiki/Circuito_di_Shanghai] Shanghai
+            a#mwBFs[href=//it.wikipedia.org/wiki/Circuito_di_Istanbul] Istanbul
+          p#mwBFw
+            a#mwBF0[href=//it.wikipedia.org/wiki/Gran_Premio_motociclistico_di_Gran_Bretagna] gara del motomondiale
+            a#mwBF4[href=//it.wikipedia.org/wiki/Hockenheimring] Hockenheimring
+            a#mwBF8[href=//it.wikipedia.org/wiki/Autodromo_nazionale_di_Monza] Monza
+          figure#mwBGE.mw-default-size
+            figcaption#mwBGQ
+              a#mwBGU[href=//it.wikipedia.org/wiki/Circuito_di_Sepang] circuito di Sepang
+              a#mwBGY[href=//it.wikipedia.org/wiki/Hermann_Tilke] Hermann Tilke
+              a#mwBGc[href=//it.wikipedia.org/wiki/Gran_Premio_della_Malesia] Gran Premio della Malesia
+              a#mwBGg[href=//it.wikipedia.org/wiki/Architettura] architettonica
+          p#mwBGk
+            a#mwBGo[href=//it.wikipedia.org/wiki/Gran_Premio_del_Messico] Gran Premio del Messico
+            a#mwBGs[href=//it.wikipedia.org/wiki/Cancún] Cancún
+            sup#cite_ref-81.mw-ref
+              a#mwBGw[href=#cite_note-81] [81]
+          p#mwBHA
+            a#mwBHE[href=//it.wikipedia.org/wiki/India] India
+            a#mwBHI[href=//it.wikipedia.org/wiki/Buddh_International_Circuit] circuito di Buddh
+            a#mwBHM[href=//it.wikipedia.org/wiki/Nuova_Delhi] Nuova Delhi
+            a#mwBHQ[href=//it.wikipedia.org/wiki/Russia] Russia
+            a#mwBHU[href=//it.wikipedia.org/wiki/Autodromo_di_Soči] autodromo
+            a#mwBHY[href=//it.wikipedia.org/wiki/Circuito_di_Baku] circuito di Baku
+            a#mwBHc[href=//it.wikipedia.org/wiki/Azerbaigian] Azerbaigian
+          p#mwBHg
+            a#mwBHk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2020] 2020
+            a#mwBHo[href=//it.wikipedia.org/wiki/Gran_Premio_d'Olanda] Gran Premio d'Olanda
+            a#mwBHs[href=//it.wikipedia.org/wiki/Circuito_di_Zandvoort] circuito di Zandvoort
+            a#mwBHw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2021] 2021
+            a#mwBH0[href=//it.wikipedia.org/wiki/Pandemia_di_COVID-19] pandemia di COVID-19
+            sup#cite_ref-formulapassion.it_78-1.mw-ref
+              a#mwBH4[href=#cite_note-formulapassion.it-78] [78]
+            a#mwBII[href=//it.wikipedia.org/wiki/Autodromo_internazionale_del_Mugello] Mugello
+            a#mwBIM[href=//it.wikipedia.org/wiki/Gran_Premio_della_Toscana] Gran Premio della Toscana
+            a#mwBIQ[href=//it.wikipedia.org/wiki/Autódromo_Internacional_do_Algarve] Autódromo Internacional do Algarve
+            a#mwBIU[href=//it.wikipedia.org/wiki/Gran_Premio_del_Portogallo] Gran Premio del Portogallo
+            a#mwBIY[href=//it.wikipedia.org/wiki/Bahrain_International_Circuit] circuito di Manama
+            a#mwBIc[href=//it.wikipedia.org/wiki/Gran_Premio_di_Sakhir] Gran Premio di Sakhir
+            sup#cite_ref-82.mw-ref
+              a#mwBIg[href=#cite_note-82] [82]
+            sup#cite_ref-83.mw-ref
+              a#mwBIw[href=#cite_note-83] [83]
+          p#mwBJA
+            a#mwBJE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2021] 2021
+            a#mwBJI.mw-redirect[href=//it.wikipedia.org/wiki/Circuito_di_Losail] circuito di Losail
+            a#mwBJM[href=//it.wikipedia.org/wiki/Qatar] Qatar
+            a#mwBJQ[href=//it.wikipedia.org/wiki/Motomondiale] Motomondiale
+            a#mwBJU[href=//it.wikipedia.org/wiki/Motomondiale_2004] 2004
+            sup#cite_ref-84.mw-ref
+              a#mwBJY[href=#cite_note-84] [84]
+            a#mwBJo.mw-redirect[href=//it.wikipedia.org/wiki/Jeddah_Corniche_Circuit] Jeddah Corniche Circuit
+            a#mwBJs[href=//it.wikipedia.org/wiki/Gedda] Gedda
+            a#mwBJw[href=//it.wikipedia.org/wiki/Arabia_Saudita] Arabia Saudita
+            sup#cite_ref-85.mw-ref
+              a#mwBJ0[href=#cite_note-85] [85]
+          p#mwBKE
+            a#mwBKI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2022] 2022
+            a#mwBKM[href=//it.wikipedia.org/wiki/Miami_International_Autodrome] Miami International Autodrome
+            a#mwBKQ[href=//it.wikipedia.org/wiki/Stati_Uniti_d'America] Stati Uniti d'America
+            a#mwBKU[href=//it.wikipedia.org/wiki/Hard_Rock_Stadium] Hard Rock Stadium
+            a#mwBKY[href=//it.wikipedia.org/wiki/Miami_Gardens] Miami Gardens
+            a#mwBKc[href=//it.wikipedia.org/wiki/Florida] Florida
+            a#mwBKg[href=//it.wikipedia.org/wiki/Gran_Premio_di_Miami] Gran Premio di Miami
+            a#mwBKk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1950] 1950
+            sup#cite_ref-86.mw-ref
+              a#mwBKo[href=#cite_note-86] [86]
+          p#mwBK4
+            a#mwBK8[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2023] 2023
+            a#mwBLA[href=//it.wikipedia.org/wiki/Las_Vegas_Strip_Circuit] Las Vegas Strip Circuit
+            a#mwBLE[href=//it.wikipedia.org/wiki/Paradise_(Nevada)] Paradise
+            a#mwBLI[href=//it.wikipedia.org/wiki/Las_Vegas] Las Vegas
+            a#mwBLM[href=//it.wikipedia.org/wiki/Nevada] Nevada
+            a#mwBLQ[href=//it.wikipedia.org/wiki/Gran_Premio_di_Las_Vegas] Gran Premio di Las Vegas
+            a#mwBLU[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1982] 1982
+            a#mwBLY[href=//it.wikipedia.org/wiki/Circuito_del_Caesars_Palace] circuito del Caesars Palace
+            sup#cite_ref-87.mw-ref
+              a#mwBLc[href=#cite_note-87] [87]
+          p#mwBLs
+            a#mwBLw[href=//it.wikipedia.org/wiki/Madrid] Madrid
+            a#mwBL0[href=//it.wikipedia.org/wiki/Gran_Premio_di_Spagna] Gran Premio di Spagna
+            a#mwBL4[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1981] 1981
+            a#mwBL8[href=//it.wikipedia.org/wiki/Circuito_permanente_del_Jarama] circuito del Jarama
+            sup#cite_ref-88.mw-ref
+              a#mwBMA[href=#cite_note-88] [88]
+        section#mwBMQ
+          div#mwBMY.hatnote
+            a[href=//it.wikipedia.org/wiki/Sistema_di_punteggio_della_Formula_1] Sistema di punteggio della Formula 1
+          p#mwBMc
+            a#mwBMg[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+            a#mwBMk[href=//it.wikipedia.org/wiki/Giro_più_veloce] giro più veloce
+          p#mwBMo
+            sup#cite_ref-89.mw-ref
+              a#mwBMw[href=#cite_note-89] [89]
+          figure#mwBNA.mw-default-size
+            figcaption#mwBNM
+              a#mwBNQ[href=//it.wikipedia.org/wiki/Jim_Clark] Jim Clark
+          p#mwBNU
+            a#mwBNY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1964] 1964
+            a#mwBNc[href=//it.wikipedia.org/wiki/Graham_Hill] Graham Hill
+            a#mwBNg[href=//it.wikipedia.org/wiki/John_Surtees] John Surtees
+            a#mwBNk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1988] 1988
+            a#mwBNo[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            a#mwBNs[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+          figure#mwBN4.mw-default-size
+            figcaption#mwBOE
+              a#mwBOI[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+              a#mwBOM[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+          p#mwBOU
+            a#mwBOY[href=//it.wikipedia.org/wiki/Clay_Regazzoni] Clay Regazzoni
+            a#mwBOc[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+          p#mwBOg
+            a#mwBOo[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2010] mondiale 2010
+          p#mwBOs
+            sup#cite_ref-90.mw-ref
+              a#mwBOw[href=#cite_note-90] [90]
+          p#mwBPA
+            sup#cite_ref-91.mw-ref
+              a#mwBPE[href=#cite_note-91] [91]
+            sup#cite_ref-92.mw-ref
+              a#mwBPU[href=#cite_note-92] [92]
+        section#mwBPk
+          p#mwBPo
+            a#mwBPs[href=//it.wikipedia.org/wiki/Numero_di_gara_(automobilismo)] numero di gara
+          figure#mwBPw.mw-default-size
+            figcaption#mwBP8
+              a#mwBQA[href=//it.wikipedia.org/wiki/Damon_Hill] Damon Hill
+              a#mwBQE[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1993] 1993
+              a#mwBQI[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1994] 1994
+              a#mwBQM[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+              a#mwBQQ[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+          p#mwBQU
+            a#mwBQY[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwBQc[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            a#mwBQg[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwBQk[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+            a#mwBQo[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            a#mwBQs[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+            a#mwBQw[href=//it.wikipedia.org/wiki/Brabham] Brabham
+            a#mwBQ0[href=//it.wikipedia.org/wiki/Nelson_Piquet] Nelson Piquet
+            a#mwBQ4[href=//it.wikipedia.org/wiki/Lotus_Cars] Lotus
+          p#mwBQ8
+            a#mwBRA[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+            a#mwBRE[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            a#mwBRI[href=//it.wikipedia.org/wiki/Damon_Hill] Damon Hill
+            a#mwBRM[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+            a#mwBRQ[href=//it.wikipedia.org/wiki/David_Coulthard] David Coulthard
+            a#mwBRU[href=//it.wikipedia.org/wiki/Jody_Scheckter] Jody Scheckter
+          figure#mwBRY.mw-default-size
+            figcaption#mwBRk
+              a#mwBRo[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2015] 2015
+              a#mwBRs[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+          p#mwBRw
+            a#mwBR0[href=//it.wikipedia.org/wiki/13_(numero)] numero 13
+            a#mwBR4[href=//it.wikipedia.org/wiki/Triscaidecafobia] superstizione
+          p#mwBR8
+            a#mwBSA[href=//it.wikipedia.org/wiki/Pastor_Maldonado] Pastor Maldonado
+            sup#cite_ref-93.mw-ref
+              a#mwBSE[href=#cite_note-93] [93]
+            a#mwBSU[href=//it.wikipedia.org/wiki/Jules_Bianchi] Jules Bianchi
+            a#mwBSY[href=//it.wikipedia.org/wiki/Gran_Premio_del_Giappone_2014] Gran Premio del Giappone 2014
+            sup#cite_ref-94.mw-ref
+              a#mwBSc[href=#cite_note-94] [94]
+            sup#cite_ref-95.mw-ref
+              a#mwBSs[href=#cite_note-95] [95]
+            a#mwBS8[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+            a#mwBTA[href=//it.wikipedia.org/wiki/Nico_Rosberg] Nico Rosberg
+            a#mwBTE[href=//it.wikipedia.org/wiki/Max_Verstappen] Max Verstappen
+          p#mwBTI
+            a#mwBTM[href=//it.wikipedia.org/wiki/Jacques_Laffite] Jacques Laffite
+            a#mwBTQ[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+            a#mwBTU[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+        section#mwBTY
+          div#mwBTg.hatnote
+            a[href=//it.wikipedia.org/wiki/Statistiche_di_Formula_1] Statistiche di Formula 1
+          figure#mwBTk.mw-default-size
+            figcaption#mwBTw
+              a#mwBT0[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1961] 1961
+              a#mwBT4[href=//it.wikipedia.org/wiki/Giancarlo_Baghetti] Giancarlo Baghetti
+              a#mwBT8[href=//it.wikipedia.org/wiki/Ferrari_156_F1] Ferrari 156 F1
+              a#mwBUA[href=//it.wikipedia.org/wiki/Gran_Premio_di_Siracusa] di Siracusa
+              a#mwBUE[href=//it.wikipedia.org/wiki/Gran_Premio_di_Napoli] di Napoli
+          p#mwBUI
+            a#mwBUM[href=//it.wikipedia.org/wiki/XXI_secolo] XXI secolo
+            a#mwBUQ[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+            a#mwBUU[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_2017] Gran Premio d'Italia 2017
+            a#mwBUY[href=//it.wikipedia.org/wiki/Gran_Premio_del_Portogallo_2020] Gran Premio del Portogallo 2020
+            sup#cite_ref-CF1Champs_96-0.mw-ref
+              a#mwBUc[href=#cite_note-CF1Champs-96] [96]
+          p#mwBUs
+            a#mwBUw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2020] stagione 2020
+            a#mwBU0[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+            sup#cite_ref-97.mw-ref
+              a#mwBU4[href=#cite_note-97] [97]
+          figure#mwBVI.mw-default-size
+            figcaption#mwBVU
+              a#mwBVY[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+              a#mwBVc[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+              a#mwBVg[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2020] 2020
+          p#mwBVs
+            a#mwBVw[href=//it.wikipedia.org/wiki/Jacques_Laffite] Jacques Laffite
+            a#mwBV0[href=//it.wikipedia.org/wiki/Graham_Hill] Graham Hill
+            a#mwBV4[href=//it.wikipedia.org/wiki/Riccardo_Patrese] Riccardo Patrese
+            a#mwBV8[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Rubens Barrichello
+            a#mwBWA[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+            a#mwBWE[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+          p#mwBWM
+            a#mwBWQ[href=//it.wikipedia.org/wiki/Carlos_Reutemann] Carlos Reutemann
+            a#mwBWU[href=//it.wikipedia.org/wiki/Gran_Premio_d'Ungheria_2001] Gran Premio d'Ungheria 2001
+            a#mwBWY[href=//it.wikipedia.org/wiki/Gran_Premio_della_Malesia_2003] Gran Premio della Malesia 2003
+            a#mwBWc[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+            a#mwBWg[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+            a#mwBWk[href=//it.wikipedia.org/wiki/Gran_Premio_di_Gran_Bretagna_2018] Gran Premio di Gran Bretagna 2018
+            a#mwBWo[href=//it.wikipedia.org/wiki/Gran_Premio_del_Bahrein_2020] Gran Premio del Bahrein 2020
+          p#mwBWs
+            a#mwBWw[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+            a#mwBW0[href=//it.wikipedia.org/wiki/Sistema_di_punteggio_della_Formula_1] sistemi di punteggio
+            sup#cite_ref-98.mw-ref
+              a#mwBW4[href=#cite_note-98] [98]
+            a#mwBXI[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+            a#mwBXM[href=//it.wikipedia.org/wiki/Fernando_Alonso] Alonso
+            a#mwBXQ[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Vettel
+            a#mwBXU[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Hamilton
+          figure#mwBXY.mw-default-size
+            figcaption#mwBXk
+              a#mwBXo[href=//it.wikipedia.org/wiki/Arrows_Grand_Prix_International] Arrows
+              a#mwBXs[href=//it.wikipedia.org/wiki/Shadow_Racing_Cars] Shadow
+              a#mwBXw[href=//it.wikipedia.org/wiki/Arrows_A1] A1
+          p#mwBX0
+            a#mwBX4[href=//it.wikipedia.org/wiki/Jacques_Villeneuve] Jacques Villeneuve
+            a#mwBX8[href=//it.wikipedia.org/wiki/Max_Verstappen] Max Verstappen
+          p#mwBYE
+            a#mwBYI[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+            a#mwBYM[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_d'America_2018] Gran Premio degli Stati Uniti
+          p#mwBYQ
+            a#mwBYU[href=//it.wikipedia.org/wiki/Mercedes_AMG_F1] Mercedes
+          figure#mwBYY.mw-default-size
+            figcaption#mwBYk
+              a#mwBYo[href=//it.wikipedia.org/wiki/Sauber_F1_Team] Sauber
+              a#mwBYs[href=//it.wikipedia.org/wiki/Sauber_F1_Team] Alfa Romeo
+          p#mwBYw
+            a#mwBY0[href=//it.wikipedia.org/wiki/Gran_Premio_del_Belgio_1974] Belgio 1974
+            a#mwBY4[href=//it.wikipedia.org/wiki/Circuito_di_Nivelles] circuito di Nivelles
+            span#mwBY8.nowrap
+              a[href=//it.wikipedia.org/wiki/Metro] m
+            a#mwBZA.mw-redirect[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_2005] Gran Premio degli Stati Uniti 2005
+            a#mwBZE[href=//it.wikipedia.org/wiki/Michelin] Michelin
+            sup#cite_ref-99.mw-ref
+              a#mwBZI[href=#cite_note-99] [99]
+            a#mwBZY[href=//it.wikipedia.org/wiki/Gran_Premio_del_Belgio_2021] Gran Premio del Belgio 2021
+            a#mwBZc[href=//it.wikipedia.org/wiki/Safety_car] safety car
+            sup#cite_ref-100.mw-ref
+              a#mwBZk[href=#cite_note-100] [100]
+            a#mwBZ0[href=//it.wikipedia.org/wiki/Gran_Premio_del_Canada_2011] Gran Premio del Canada 2011
+            a#mwBZ4[href=//it.wikipedia.org/wiki/Jenson_Button] Jenson Button
+            sup#cite_ref-101.mw-ref
+              a#mwBZ8[href=#cite_note-101] [101]
+            a#mwBaM[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_2003] Italia 2003
+            a#mwBaY[href=//it.wikipedia.org/wiki/Peter_Gethin] Peter Gethin
+            a#mwBac[href=//it.wikipedia.org/wiki/British_Racing_Motors] BRM
+            a#mwBak[href=//it.wikipedia.org/wiki/Gran_Premio_d'Europa_2011] Gran Premio d'Europa
+            a#mwBao[href=//it.wikipedia.org/wiki/Circuito_urbano_di_Valencia] Valencia
+        section#mwBas
+          div#mwBa0.hatnote
+            a[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premio di Formula 1
+          p#mwBa4
+            a#mwBa8[href=//it.wikipedia.org/wiki/Campionato_mondiale_Superbike] campionato mondiale Superbike
+          p#mwBbI
+            a#mwBbM[href=//it.wikipedia.org/wiki/Pole_position] pole position
+          figure#mwBbQ.mw-default-size
+            figcaption#mwBbc
+              a#mwBbg.mw-redirect[href=//it.wikipedia.org/wiki/Circuito_di_Indianapolis] circuito di Indianapolis
+              a#mwBbk.mw-redirect[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_2003] Gran Premio degli Stati Uniti 2003
+          p#mwBbs
+            sup#cite_ref-regolamento_38-1.mw-ref
+              a#mwBbw[href=#cite_note-regolamento-38] [38]
+          section#mwBcA
+            p#mwBcE
+              sup#cite_ref-102.mw-ref
+                a#mwBcI[href=#cite_note-102] [102]
+            p#mwBcY
+              a#mwBcc[href=//it.wikipedia.org/wiki/Chilometro] km
+              a#mwBcg.mw-redirect[href=//it.wikipedia.org/wiki/Miglia] miglia
+              sup#cite_ref-103.mw-ref
+                a#mwBck[href=#cite_note-103] [103]
+          section#mwBc0
+            p#mwBc4
+              sup#cite_ref-104.mw-ref
+                a#mwBc8[href=#cite_note-104] [104]
+              sup#cite_ref-105.mw-ref
+                a#mwBdM[href=#cite_note-105] [105]
+              a#mwBdc[href=//it.wikipedia.org/wiki/Safety_car] safety car
+        section#mwBdg
+          figure#mwBdk.mw-default-size
+          p#mwBd0
+            a#mwBd4[href=//it.wikipedia.org/wiki/Pirelli_Tyre] Pirelli
+            a#mwBd8[href=//it.wikipedia.org/wiki/Gran_Premio_di_Formula_1] Gran Premio
+            sup#cite_ref-Qual_106-0.mw-ref
+              a#mwBeA[href=#cite_note-Qual-106] [106]
+            sup#cite_ref-DriveChang_107-0.mw-ref
+              a#mwBeQ[href=#cite_note-DriveChang-107] [107]
+          p#mwBeg
+            sup#cite_ref-108.mw-ref
+              a#mwBek[href=#cite_note-108] [108]
+          p#mwBe4
+            sup#cite_ref-109.mw-ref
+              a#mwBfI[href=#cite_note-109] [109]
+          table#mwBfc.wikitable
+            tbody#mwBfg
+              tr#mwBgE
+                td#mwBgQ
+                  span#mwBgU
+                td#mwBgk
+                  a#mwBgo[href=//it.wikipedia.org/wiki/Pneumatico_slick] Liscio
+              tr#mwBg8
+                td#mwBhI
+                  span#mwBhM
+              tr#mwBho
+                td#mwBh0
+                  span#mwBh4
+              tr#mwBiU
+                td#mwBig
+                  span#mwBik
+              tr#mwBjI
+                td#mwBjU
+                  span#mwBjY
+        section#mwBj4
+          div#mwBkA.hatnote
+            a[href=//it.wikipedia.org/wiki/Commissario_di_gara#Bandiere] Commissario di gara § Bandiere
+        section#mwBkE
+          div#mwBkM.ambox
+            a[href=//it.wikipedia.org/wiki/Aiuto:Punto_di_vista_neutrale] neutralità
+            a[href=//it.wikipedia.org/wiki/Discussione:Formula_1] discussione
+            a.mw-redirect[href=//it.wikipedia.org/wiki/Progetto:Formula_1] progetto di riferimento
+          figure#mwBkU.mw-default-size
+            figcaption#mwBkg
+              a#mwBkk[href=//it.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari] Imola
+              a#mwBko[href=//it.wikipedia.org/wiki/Circuito_di_Jerez_de_la_Frontera] Jerez
+          p#mwBks
+            a#mwBkw[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+            a#mwBk0[href=//it.wikipedia.org/wiki/Mika_Häkkinen] Mika Häkkinen
+            a#mwBk4[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+            a#mwBk8[href=//it.wikipedia.org/wiki/Juan_Pablo_Montoya] Juan Pablo Montoya
+            sup#cite_ref-110.mw-ref
+              a#mwBlA[href=#cite_note-110] [110]
+          p#mwBlQ
+            sup#cite_ref-111.mw-ref
+              a#mwBlU[href=#cite_note-111] [111]
+          p#mwBlk
+            a#mwBlo[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles Villeneuve
+            sup#cite_ref-112.mw-ref
+              a#mwBls[href=#cite_note-112] [112]
+            sup#cite_ref-113.mw-ref
+              a#mwBl8[href=#cite_note-113] [113]
+          p#mwBmM
+            sup#cite_ref-114.mw-ref
+              a#mwBmQ[href=#cite_note-114] [114]
+          p#mwBmg
+            sup#cite_ref-115.mw-ref
+              a#mwBmk[href=#cite_note-115] [115]
+        section#mwBm0
+          div#mwBm8.hatnote
+            a[href=//it.wikipedia.org/wiki/Incidenti_mortali_di_Formula_1] Incidenti mortali di Formula 1
+            a[href=//it.wikipedia.org/wiki/Safety_car] Safety car
+            a[href=//it.wikipedia.org/wiki/Medical_car] Medical car
+          p#mwBnA
+            sup#cite_ref-ESPN_116-0.mw-ref
+              a#mwBnE[href=#cite_note-ESPN-116] [116]
+            a#mwBnU[href=//it.wikipedia.org/wiki/Ayrton_Senna] Ayrton Senna
+            a#mwBnY[href=//it.wikipedia.org/wiki/Alain_Prost] Alain Prost
+            a#mwBnc[href=//it.wikipedia.org/wiki/Damon_Hill] Damon Hill
+            a#mwBng[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+            a#mwBnk[href=//it.wikipedia.org/wiki/Alan_Jones_(pilota_automobilistico)] Alan Jones
+            a#mwBno[href=//it.wikipedia.org/wiki/Nelson_Piquet] Nelson Piquet
+            a#mwBns[href=//it.wikipedia.org/wiki/Nigel_Mansell] Nigel Mansell
+            a#mwBnw[href=//it.wikipedia.org/wiki/David_Coulthard] David Coulthard
+          figure#mwBn0.mw-default-size
+            figcaption#mwBoA
+              a#mwBoE[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles Villeneuve
+          p#mwBoU
+            a#mwBoY[href=//it.wikipedia.org/wiki/Eliseo_Salazar] Eliseo Salazar
+            a#mwBoc[href=//it.wikipedia.org/wiki/Jean-Louis_Schlesser] Jean-Louis Schlesser
+            sup#cite_ref-117.mw-ref
+              a#mwBog[href=#cite_note-117] [117]
+            a#mwBow[href=//it.wikipedia.org/wiki/Jos_Verstappen] Jos Verstappen
+            a#mwBo0[href=//it.wikipedia.org/wiki/Juan_Pablo_Montoya] Juan Pablo Montoya
+            a#mwBo4[href=//it.wikipedia.org/wiki/Sebastian_Vettel] Sebastian Vettel
+            a#mwBo8[href=//it.wikipedia.org/wiki/Mark_Webber] Mark Webber
+            a#mwBpA[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_1995] Gran Premio d'Italia 1995
+            a#mwBpE[href=//it.wikipedia.org/wiki/Jean_Alesi] Jean Alesi
+            a#mwBpI[href=//it.wikipedia.org/wiki/Gerhard_Berger] Gerhard Berger
+          p#mwBpM
+            a#mwBpQ[href=//it.wikipedia.org/wiki/Riccardo_Patrese] Riccardo Patrese
+            a#mwBpU[href=//it.wikipedia.org/wiki/Ralf_Schumacher] Ralf Schumacher
+            a#mwBpY[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Rubens Barrichello
+            a#mwBpc[href=//it.wikipedia.org/wiki/Heikki_Kovalainen] Heikki Kovalainen
+            a#mwBpg[href=//it.wikipedia.org/wiki/Christian_Fittipaldi] Christian Fittipaldi
+          p#mwBpo
+            a#mwBps[href=//it.wikipedia.org/wiki/Martin_Donnelly] Martin Donnelly
+            a#mwBpw[href=//it.wikipedia.org/wiki/Gran_Premio_di_Spagna_1990] Gran Premio di Spagna 1990
+            a#mwBp0[href=//it.wikipedia.org/wiki/Romain_Grosjean] Romain Grosjean
+            a#mwBp4[href=//it.wikipedia.org/wiki/Gran_Premio_del_Bahrein_2020] Gran Premio del Bahrein 2020
+            a#mwBp8[href=//it.wikipedia.org/wiki/Daniil_Kvjat] Daniil Kvjat
+            sup#cite_ref-118.mw-ref
+              a#mwBqI[href=#cite_note-118] [118]
+          p#mwBqY
+            a#mwBqc[href=//it.wikipedia.org/wiki/Derek_Warwick] Derek Warwick
+            a#mwBqg[href=//it.wikipedia.org/wiki/Derek_Daly] Derek Daly
+            a#mwBqk[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+            a#mwBqo[href=//it.wikipedia.org/wiki/Robert_Kubica] Robert Kubica
+            a#mwBqs[href=//it.wikipedia.org/wiki/CEA_Squadra_Corse] CEA
+          p#mwBqw
+            a#mwBq0[href=//it.wikipedia.org/wiki/Gilles_Villeneuve] Gilles Villeneuve
+            sup#cite_ref-119.mw-ref
+              a#mwBq4[href=#cite_note-119] [119]
+            a#mwBrI[href=//it.wikipedia.org/wiki/Roland_Ratzenberger] Roland Ratzenberger
+            sup#cite_ref-120.mw-ref
+              a#mwBrM[href=#cite_note-120] [120]
+            a#mwBrc[href=//it.wikipedia.org/wiki/Jules_Bianchi] Jules Bianchi
+            a#mwBrg[href=//it.wikipedia.org/wiki/Adrian_Sutil] Adrian Sutil
+            a#mwBrk[href=//it.wikipedia.org/wiki/Yokkaichi] Yokkaichi
+            sup#cite_ref-Bianchi_121-0.mw-ref
+              a#mwBro[href=#cite_note-Bianchi-121] [121]
+        section#mwBr4
+          figure#mwBr8.mw-default-size
+            figcaption#mwBsI
+              a#mwBsM[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Rubens Barrichello
+              a#mwBsQ[href=//it.wikipedia.org/wiki/Michael_Schumacher] Michael Schumacher
+              a#mwBsU[href=//it.wikipedia.org/wiki/Gran_Premio_d'Austria_2002] Gran Premio d'Austria 2002
+          p#mwBsY
+            a#mwBsc[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1982] 1982
+            a#mwBsg[href=//it.wikipedia.org/wiki/Brabham] Brabham
+            a#mwBso[href=//it.wikipedia.org/wiki/Gran_Premio_d'Austria_1982] Gran Premio d'Austria
+            a#mwBsw[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1983] 1983
+            a#mwBs0[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1994] 1994
+            a#mwBs4[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2009] 2009
+            sup#cite_ref-122.mw-ref
+              a#mwBtA[href=#cite_note-122] [122]
+          p#mwBtQ
+            a#mwBtU[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1985] 1985
+            a#mwBtY.mw-redirect[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_1985] GP di Detroit
+          p#mwBtc
+            a#mwBtg[href=//it.wikipedia.org/wiki/Gran_Premio_d'Austria_2002] Gran Premio d'Austria 2002
+            a#mwBtk[href=//it.wikipedia.org/wiki/Rubens_Barrichello] Barrichello
+            a#mwBto[href=//it.wikipedia.org/wiki/Michael_Schumacher] Schumacher
+            a#mwBts[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            a#mwBtw[href=//it.wikipedia.org/wiki/Germania] tedesco
+            a#mwBt0[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+            sup#cite_ref-123.mw-ref
+              a#mwBt4[href=#cite_note-123] [123]
+          figure#mwBuI.mw-default-size
+            figcaption#mwBuU
+              a#mwBuY[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+              a#mwBuc[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2007] 2007
+              a#mwBug[href=//it.wikipedia.org/wiki/McLaren] McLaren
+              sup#cite_ref-Morlidge_124-0.mw-ref
+                a#mwBuk[href=#cite_note-Morlidge-124] [124]
+              sup#cite_ref-Vana_125-0.mw-ref
+                a#mwBu0[href=#cite_note-Vana-125] [125]
+              a#mwBvE[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+              sup#cite_ref-Alonso_126-0.mw-ref
+                a#mwBvI[href=#cite_note-Alonso-126] [126]
+              a#mwBvY[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+          p#mwBvc
+            a#mwBvo[href=//it.wikipedia.org/wiki/Dollaro_statunitense] dollari
+            sup#cite_ref-127.mw-ref
+              a#mwBvs[href=#cite_note-127] [127]
+            sup#cite_ref-128.mw-ref
+              a#mwBv8[href=#cite_note-128] [128]
+          p#mwBwM
+            a#mwBwQ[href=//it.wikipedia.org/wiki/Gran_Premio_di_Gran_Bretagna_1955] Gran Premio di Gran Bretagna 1955
+            a#mwBwU[href=//it.wikipedia.org/wiki/Mercedes-Benz_(automobilismo)] Mercedes
+            a#mwBwY[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Fangio
+            a#mwBwc[href=//it.wikipedia.org/wiki/Stirling_Moss] Moss
+            a#mwBwg[href=//it.wikipedia.org/wiki/Argentina] argentino
+            a#mwBwk[href=//it.wikipedia.org/wiki/Ayrton_Senna] Senna
+            a#mwBwo[href=//it.wikipedia.org/wiki/Gran_Premio_del_Giappone_1991] Gran Premio del Giappone 1991
+            a#mwBws[href=//it.wikipedia.org/wiki/Gerhard_Berger] Berger
+            a#mwBww[href=//it.wikipedia.org/wiki/Gran_Premio_di_Francia_1982] Gran Premio di Francia 1982
+            a#mwBw0[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+            a#mwBw4[href=//it.wikipedia.org/wiki/René_Arnoux] Arnoux
+            a#mwBw8[href=//it.wikipedia.org/wiki/Alain_Prost] Prost
+            a#mwBxA[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1983] 1983
+            a#mwBxE[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            a#mwBxI[href=//it.wikipedia.org/wiki/Gran_Premio_d'Europa_1985] Gran Premio d'Europa 1985
+            a#mwBxM[href=//it.wikipedia.org/wiki/Keke_Rosberg] Rosberg
+            a#mwBxQ[href=//it.wikipedia.org/wiki/Ayrton_Senna] Senna
+            a#mwBxU[href=//it.wikipedia.org/wiki/Nigel_Mansell] Mansell
+          p#mwBxY
+            a#mwBxc[href=//it.wikipedia.org/wiki/Gran_Premio_di_Germania_1999] di Germania
+            a#mwBxg[href=//it.wikipedia.org/wiki/Gran_Premio_della_Malesia_1999] di Malesia
+            a#mwBxk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1999] 1999
+            a#mwBxo[href=//it.wikipedia.org/wiki/Mika_Salo] Salo
+            a#mwBxs[href=//it.wikipedia.org/wiki/Michael_Schumacher] Schumacher
+            a#mwBxw[href=//it.wikipedia.org/wiki/Eddie_Irvine] Irvine
+            a#mwBx0[href=//it.wikipedia.org/wiki/Gran_Premio_del_Messico_1964] Gran Premio del Messico 1964
+            a#mwBx4[href=//it.wikipedia.org/wiki/Lorenzo_Bandini] Bandini
+            a#mwBx8[href=//it.wikipedia.org/wiki/British_Racing_Motors] BRM
+            a#mwByA[href=//it.wikipedia.org/wiki/Graham_Hill] Hill
+            a#mwByE[href=//it.wikipedia.org/wiki/John_Surtees] Surtees
+            a#mwByI[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia_1956] Gran Premio d'Italia 1956
+            a#mwByM[href=//it.wikipedia.org/wiki/Peter_Collins] Collins
+            a#mwByQ[href=//it.wikipedia.org/wiki/Juan_Manuel_Fangio] Fangio
+          p#mwByU
+            a#mwByY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1967] 1967
+            a#mwByc[href=//it.wikipedia.org/wiki/Jack_Brabham] Brabham
+            a#mwByg[href=//it.wikipedia.org/wiki/Denny_Hulme] Hulme
+            a#mwByk[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1981] 1981
+            a#mwByo[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+            a#mwBys[href=//it.wikipedia.org/wiki/Alan_Jones_(pilota_automobilistico)] Jones
+            a#mwByw[href=//it.wikipedia.org/wiki/Carlos_Reutemann] Reutemann
+            a#mwBy0[href=//it.wikipedia.org/wiki/Nelson_Piquet] Piquet
+            a#mwBy4[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1986] 1986
+            a#mwBy8[href=//it.wikipedia.org/wiki/Nigel_Mansell] Mansell
+            a#mwBzA[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwBzE[href=//it.wikipedia.org/wiki/Alain_Prost] Prost
+            a#mwBzI[href=//it.wikipedia.org/wiki/Ayrton_Senna] Senna
+            a#mwBzM[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1996] 1996
+            a#mwBzQ[href=//it.wikipedia.org/wiki/Damon_Hill] Damon Hill
+            a#mwBzU[href=//it.wikipedia.org/wiki/Jacques_Villeneuve] Jacques Villeneuve
+            a#mwBzY[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2007] 2007
+            a#mwBzc[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwBzg[href=//it.wikipedia.org/wiki/Fernando_Alonso] Alonso
+            a#mwBzk[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Hamilton
+            sup#cite_ref-Morlidge_124-1.mw-ref
+              a#mwBzs[href=#cite_note-Morlidge-124] [124]
+            sup#cite_ref-Vana_125-1.mw-ref
+              a#mwBz8[href=#cite_note-Vana-125] [125]
+            sup#cite_ref-Alonso_126-1.mw-ref
+              a#mwB0M[href=#cite_note-Alonso-126] [126]
+            a#mwB0c[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Räikkönen
+            a#mwB0g[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1978] 1978
+            a#mwB0k[href=//it.wikipedia.org/wiki/Team_Lotus] Lotus
+            a#mwB0o[href=//it.wikipedia.org/wiki/Ronnie_Peterson] Peterson
+            a#mwB0s[href=//it.wikipedia.org/wiki/Mario_Andretti] Andretti
+          p#mwB0w
+            a#mwB00[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            a#mwB04[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwB08[href=//it.wikipedia.org/wiki/Nigel_Stepney] Nigel Stepney
+            a#mwB1A[href=//it.wikipedia.org/wiki/Mike_Coughlan] Mike Coughlan
+            a#mwB1E[href=//it.wikipedia.org/wiki/Gran_Premio_di_Monaco_2007] Gran Premio di Monaco
+            a#mwB1M[href=//it.wikipedia.org/wiki/Dollaro_statunitense] dollari
+            sup#cite_ref-129.mw-ref
+              a#mwB1Q[href=#cite_note-129] [129]
+            a#mwB1g[href=//it.wikipedia.org/wiki/Kimi_Räikkönen] Kimi Räikkönen
+            a#mwB1k[href=//it.wikipedia.org/wiki/Felipe_Massa] Felipe Massa
+            a#mwB1o[href=//it.wikipedia.org/wiki/Fernando_Alonso] Fernando Alonso
+            a#mwB1s[href=//it.wikipedia.org/wiki/Lewis_Hamilton] Lewis Hamilton
+        section#mwB1w
+          div#mwB14.hatnote
+            a[href=//it.wikipedia.org/wiki/Formula_One_Group] Formula One Group
+          figure#mwB18.mw-default-size
+            figcaption#mwB2I
+              a#mwB2M[href=//it.wikipedia.org/wiki/Bernie_Ecclestone] Bernie Ecclestone
+              a#mwB2Q.mw-redirect[href=//it.wikipedia.org/wiki/Formula_One_Management] Formula One Management
+          p#mwB2U
+            a#mwB2Y[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+            a#mwB2c[href=//it.wikipedia.org/wiki/Parigi] Parigi
+          p#mwB2g
+            a#mwB2k[href=//it.wikipedia.org/wiki/Formula_One_Constructors_Association] Formula One Constructors Association
+            a#mwB2o[href=//it.wikipedia.org/wiki/Guerra_FISA-FOCA] celebre disputa
+            a#mwB2s.mw-redirect[href=//it.wikipedia.org/wiki/Fédération_Internationale_du_Sport_Automobile] Fédération Internationale du Sport Automobile
+            a#mwB2w[href=//it.wikipedia.org/wiki/Jean-Marie_Balestre] Jean-Marie Balestre
+            a#mwB20[href=//it.wikipedia.org/wiki/Enzo_Ferrari] Enzo Ferrari
+            a#mwB24[href=//it.wikipedia.org/wiki/Patto_della_Concordia] Patto della Concordia
+          figure#mwB28.mw-default-size
+          p#mwB3M
+            a#mwB3Q[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwB3U[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+            a#mwB3Y[href=//it.wikipedia.org/wiki/Tyrrell] Tyrrell
+            a#mwB3c[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwB3g[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+            a#mwB3k[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Ferrari
+            a#mwB3o[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+            sup#cite_ref-130.mw-ref
+              a#mwB3s[href=#cite_note-130] [130]
+            a#mwB38[href=//it.wikipedia.org/wiki/Grand_Prix_Manufacturers_Association] Grand Prix Manufacturers Association
+            i#mwB4A
+              a#mwB4E[href=//it.wikipedia.org/wiki/Memorandum] memorandum
+            a#mwB4I[href=//it.wikipedia.org/wiki/Gran_Premio_di_Spagna_2006] Gran Premio di Spagna 2006
+            sup#cite_ref-131.mw-ref
+              a#mwB4M[href=#cite_note-131] [131]
+            sup#cite_ref-132.mw-ref
+              a#mwB4c[href=#cite_note-132] [132]
+          p#mwB4w
+            a#mwB40[href=//it.wikipedia.org/wiki/Leo_Kirch] Leo Kirch
+            a#mwB44[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_calcio] campionato mondiale di calcio
+            a#mwB48[href=//it.wikipedia.org/wiki/CVC_Capital_Partners] CVC Capital Partners
+            a#mwB5A[href=//it.wikipedia.org/wiki/MotoGP] MotoGP
+            i#mwB5E
+              a#mwB5I[href=//it.wikipedia.org/wiki/The_Economist] The Economist
+            sup#cite_ref-133.mw-ref
+              a#mwB5M[href=#cite_note-133] [133]
+            i#mwB5c
+              a#mwB5g[href=//it.wikipedia.org/wiki/Financial_Times] Financial Times
+            sup#cite_ref-134.mw-ref
+              a#mwB5k[href=#cite_note-134] [134]
+            sup#cite_ref-135.mw-ref
+              a#mwB50[href=#cite_note-135] [135]
+          p#mwB6E
+            a#mwB6I[href=//it.wikipedia.org/wiki/Liberty_Media] Liberty Media
+            a#mwB6M[href=//it.wikipedia.org/wiki/Dollaro_statunitense] dollari
+            a#mwB6Q[href=//it.wikipedia.org/wiki/Ginevra] Ginevra
+            a#mwB6U[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+            a#mwB6Y[href=//it.wikipedia.org/wiki/Chase_Carey] Chase Carey
+            a#mwB6c[href=//it.wikipedia.org/wiki/Bernie_Ecclestone] Bernie Ecclestone
+            a#mwB6g[href=//it.wikipedia.org/wiki/Ross_Brawn] Ross Brawn
+            a#mwB6o[href=//it.wikipedia.org/wiki/Stefano_Domenicali] Stefano Domenicali
+            sup#cite_ref-136.mw-ref
+              a#mwB6s[href=#cite_note-136] [136]
+        section#mwB68
+          section#mwB7A
+            div#mwB7I.hatnote
+              a[href=//it.wikipedia.org/wiki/Formula_1_e_la_televisione] Formula 1 e la televisione
+            p#mwB7M
+              a#mwB7Q[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_calcio] Mondiali di calcio
+              a#mwB7U[href=//it.wikipedia.org/wiki/Giochi_olimpici] Olimpiadi
+              a#mwB7Y[href=//it.wikipedia.org/wiki/UEFA_Champions_League] UEFA Champions League
+              sup#cite_ref-137.mw-ref
+                a#mwB7c[href=#cite_note-137] [137]
+              a#mwB7s[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2006] stagione 2006
+              sup#cite_ref-138.mw-ref
+                a#mwB7w[href=#cite_note-138] [138]
+              a#mwB8A[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_2001] stagione 2001
+              sup#cite_ref-139.mw-ref
+                a#mwB8E[href=#cite_note-139] [139]
+            figure#mwB8U.mw-default-size
+              figcaption#mwB8g
+                a#mwB8k[href=//it.wikipedia.org/wiki/SPEED_Channel] SPEED Channel
+                a#mwB8o.new[href=//it.wikipedia.org/wiki/Bob_Varsha?action=edit&redlink=1] Bob Varsha
+                a#mwB8s[href=//it.wikipedia.org/wiki/David_Hobbs] David Hobbs
+                a#mwB8w[href=//it.wikipedia.org/wiki/Indianapolis_Motor_Speedway] Indianapolis
+                a#mwB80[href=//it.wikipedia.org/wiki/Gran_Premio_degli_Stati_Uniti_d'America_2005] Gran Premio degli Stati Uniti d'America 2005
+            p#mwB84
+              a#mwB88[href=//it.wikipedia.org/wiki/RTL_Group] RTL
+              a#mwB9A.mw-redirect[href=//it.wikipedia.org/wiki/British_Broadcasting_Corporation] British Broadcasting Corporation
+              a#mwB9E.mw-redirect[href=//it.wikipedia.org/wiki/The_Sports_Network] The Sports Network
+              a#mwB9I[href=//it.wikipedia.org/wiki/NBC_Sports] NBC Sports
+              a#mwB9M.mw-redirect[href=//it.wikipedia.org/wiki/Network_Ten] Network Ten
+              a#mwB9Q.new[href=//it.wikipedia.org/wiki/One_(rete_televisiva_australiana)?action=edit&redlink=1] One
+              a#mwB9U[href=//it.wikipedia.org/wiki/Italia] Italia
+              a#mwB9Y[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1995] 1996
+              a#mwB9c.mw-redirect[href=//it.wikipedia.org/wiki/RAI] RAI
+              a#mwB9g[href=//it.wikipedia.org/wiki/Telemontecarlo] TMC Tele Monte Carlo
+              a#mwB9k[href=//it.wikipedia.org/wiki/LA7] LA7
+              a#mwB9o[href=//it.wikipedia.org/wiki/Fininvest] Fininvest
+              a#mwB9s[href=//it.wikipedia.org/wiki/Mario_Poltronieri] Mario Poltronieri
+              a#mwB9w[href=//it.wikipedia.org/wiki/Ezio_Zermiani] Ezio Zermiani
+              a#mwB90[href=//it.wikipedia.org/wiki/Fininvest] Fininvest
+              a#mwB94[href=//it.wikipedia.org/wiki/Italia_1] Italia 1
+              a#mwB98.mw-redirect[href=//it.wikipedia.org/wiki/Andrea_De_Adamich] Andrea De Adamich
+              a#mwB-A[href=//it.wikipedia.org/wiki/Guido_Schittone] Guido Schittone
+              a#mwB-E[href=//it.wikipedia.org/wiki/Gianfranco_Mazzoni] Gianfranco Mazzoni
+              a#mwB-I[href=//it.wikipedia.org/wiki/René_Arnoux] René Arnoux
+              a#mwB-M[href=//it.wikipedia.org/wiki/Ivan_Capelli] Ivan Capelli
+              a#mwB-Q[href=//it.wikipedia.org/wiki/Sky_Italia] Sky
+              a#mwB-U[href=//it.wikipedia.org/wiki/Gran_Premio_d'Italia] Gran Premio d'Italia
+              a#mwB-Y[href=//it.wikipedia.org/wiki/Campionato_europeo_maschile_di_calcio_2008] campionato d'Europa 2008
+            figure#mwB-c.mw-default-size
+              figcaption#mwB-o
+                a#mwB-s[href=//it.wikipedia.org/wiki/Ivan_Capelli] Ivan Capelli
+                a#mwB-w[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1_1991] 1991
+                a#mwB-0[href=//it.wikipedia.org/wiki/March_Engineering#La_Leyton_House] Leyton House
+            p#mwB-4
+              a#mwB-8[href=//it.wikipedia.org/wiki/Al_Jazeera] Al Jazeera
+              a#mwB_A[href=//it.wikipedia.org/wiki/Emirati_Arabi_Uniti] Emirati Arabi Uniti
+            p#mwB_E
+              a#mwB_U[href=//it.wikipedia.org/wiki/Tele+] Tele+
+            p#mwB_Y
+              a#mwB_c.mw-redirect[href=//it.wikipedia.org/wiki/RAI_Radiotelevisione_Italiana] RAI
+              a#mwB_g[href=//it.wikipedia.org/wiki/TV3_(Catalogna)] TV3
+              a#mwB_k[href=//it.wikipedia.org/wiki/Sky_Deutschland] Sky Deutschland
+              a#mwB_o.new[href=//it.wikipedia.org/wiki/F1_Digital+?action=edit&redlink=1] F1 Digital+
+            p#mwB_s
+              sup#cite_ref-140.mw-ref
+                a#mwB_w[href=#cite_note-140] [140]
+              sup#cite_ref-141.mw-ref
+                a#mwCAA[href=#cite_note-141] [141]
+              a#mwCAQ[href=//it.wikipedia.org/wiki/Sky_Sport] Sky Sport
+              sup#cite_ref-142.mw-ref
+                a#mwCAU[href=#cite_note-142] [142]
+          section#mwCAk
+            div#mwCAs.hatnote
+              a[href=//it.wikipedia.org/wiki/F1_eSports] F1 eSports
+            p#mwCAw
+              a#mwCA0[href=//it.wikipedia.org/wiki/Codemasters] Codemasters
+              a#mwCA4.mw-redirect[href=//it.wikipedia.org/wiki/ESports] eSports
+        section#mwCA8
+          div#mwCBE.hatnote
+            a[href=//it.wikipedia.org/wiki/Colori_nazionali_nelle_corse_automobilistiche] Colori nazionali nelle corse automobilistiche
+            a[href=//it.wikipedia.org/wiki/Livree_degli_sponsor_in_Formula_1] Livree degli sponsor in Formula 1
+          p#mwCBI
+            a#mwCBM[href=//it.wikipedia.org/wiki/Sponsor] sponsor
+            a#mwCBQ[href=//it.wikipedia.org/wiki/Colori_nazionali_nelle_corse_automobilistiche] colori ufficiali nazionali
+            a#mwCBU[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+            a#mwCBY[href=//it.wikipedia.org/wiki/Rosso_corsa] rosso
+            a#mwCBc[href=//it.wikipedia.org/wiki/Italia] italiane
+            a#mwCBg[href=//it.wikipedia.org/wiki/Verde_da_corsa_britannico] verde
+            a#mwCBk[href=//it.wikipedia.org/wiki/Regno_Unito] britanniche
+            a#mwCBo[href=//it.wikipedia.org/wiki/Giallo] giallo
+            a#mwCBs[href=//it.wikipedia.org/wiki/Belgio] belghe
+            a#mwCBw[href=//it.wikipedia.org/wiki/Blu_di_Francia] blu
+            a#mwCB0[href=//it.wikipedia.org/wiki/Francia] francesi
+            a#mwCB4[href=//it.wikipedia.org/wiki/Bianco] bianco
+            a#mwCB8[href=//it.wikipedia.org/wiki/Frecce_d'argento] argento
+            a#mwCCA[href=//it.wikipedia.org/wiki/Germania] tedesche
+          figure#mwCCE.mw-default-size
+            figcaption#mwCCQ
+              a#mwCCU[href=//it.wikipedia.org/wiki/Lotus_49] Lotus 49B
+              a#mwCCY.mw-redirect[href=//it.wikipedia.org/wiki/Gold_Leaf] Gold Leaf
+              a#mwCCc[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] FIA
+              a#mwCCg[href=//it.wikipedia.org/wiki/Sponsor] sponsorizzazione
+          p#mwCCk
+            a#mwCCo[href=//it.wikipedia.org/wiki/Team_Lotus] Lotus
+            a#mwCCs[href=//it.wikipedia.org/wiki/Livree_degli_sponsor_in_Formula_1] livrea sponsorizzata
+            a#mwCC0.mw-redirect[href=//it.wikipedia.org/wiki/John_Player_&_Sons] John Player & Sons
+            sup#cite_ref-143.mw-ref
+              a#mwCC4[href=#cite_note-143] [143]
+          p#mwCDI
+            a#mwCDM[href=//it.wikipedia.org/wiki/Gran_Premio_del_Belgio] Gran Premio del Belgio
+            a#mwCDQ[href=//it.wikipedia.org/wiki/Williams_F1] Williams
+            a#mwCDU[href=//it.wikipedia.org/wiki/McLaren] McLaren
+            a#mwCDY[href=//it.wikipedia.org/wiki/West_(sigarette)] West
+            a#mwCDc[href=//it.wikipedia.org/wiki/Renault_F1] Renault
+            a#mwCDg[href=//it.wikipedia.org/wiki/Japan_Tobacco] Japan Tobacco
+            a#mwCDk[href=//it.wikipedia.org/wiki/British_American_Tobacco] British American Tobacco
+            a#mwCDo[href=//it.wikipedia.org/wiki/British_American_Racing] BAR
+          p#mwCDs
+            a#mwCDw[href=//it.wikipedia.org/wiki/Philip_Morris_International] Philip Morris International
+            a#mwCD0[href=//it.wikipedia.org/wiki/Prodotti_del_tabacco] prodotti del tabacco
+            a#mwCD8[href=//it.wikipedia.org/wiki/Pubblicità_indiretta] pubblicità indiretta
+            sup#cite_ref-144.mw-ref
+              a#mwCEA[href=#cite_note-144] [144]
+            sup#cite_ref-145.mw-ref
+              a#mwCEQ[href=#cite_note-145] [145]
+          p#mwCEg
+            sup#cite_ref-146.mw-ref
+              a#mwCEk[href=#cite_note-146] [146]
+            sup#cite_ref-147.mw-ref
+              a#mwCE0[href=#cite_note-147] [147]
+            sup#cite_ref-148.mw-ref
+              a#mwCFE[href=#cite_note-148] [148]
+            sup#cite_ref-149.mw-ref
+              a#mwCFU[href=#cite_note-149] [149]
+            sup#cite_ref-150.mw-ref
+              a#mwCFk[href=#cite_note-150] [150]
+          p#mwCF0
+            a#mwCF4[href=//it.wikipedia.org/wiki/UBS] UBS
+            a#mwCF8[href=//it.wikipedia.org/wiki/Svizzera] svizzero
+            sup#cite_ref-151.mw-ref
+              a#mwCGA[href=#cite_note-151] [151]
+            sup#cite_ref-152.mw-ref
+              a#mwCGQ[href=#cite_note-152] [152]
+          figure#mwCGg.mw-default-size
+            figcaption#mwCGs
+              a#mwCGw[href=//it.wikipedia.org/wiki/Scuderia_Ferrari] Scuderia Ferrari
+              a#mwCG0[href=//it.wikipedia.org/wiki/Rosso_corsa] rosso corsa
+          p#mwCG4
+            a#mwCG8.mw-redirect[href=//it.wikipedia.org/wiki/Andrea_De_Adamich] Andrea De Adamich
+            a#mwCHA[href=//it.wikipedia.org/wiki/Vittorio_Brambilla] Vittorio Brambilla
+            a#mwCHE[href=//it.wikipedia.org/wiki/March_Engineering] March
+            a#mwCHI[href=//it.wikipedia.org/wiki/Osella_Corse] Osella
+            a#mwCHM[href=//it.wikipedia.org/wiki/Coloni_(automobilismo)] Coloni
+            a#mwCHQ[href=//it.wikipedia.org/wiki/Andrea_Moda_Formula] Andrea Moda Formula
+            a#mwCHU[href=//it.wikipedia.org/wiki/Roberto_Moreno] Roberto Moreno
+            a#mwCHY[href=//it.wikipedia.org/wiki/James_Hunt] James Hunt
+            a#mwCHc[href=//it.wikipedia.org/wiki/Hesketh_Racing] Hesketh
+            a#mwCHg[href=//it.wikipedia.org/wiki/Gran_Premio_d'Olanda_1975] Gran Premio d'Olanda 1975
+          p#mwCHk
+            a#mwCHo[href=//it.wikipedia.org/wiki/Emerson_Fittipaldi] Emerson Fittipaldi
+            a#mwCHs[href=//it.wikipedia.org/wiki/Fittipaldi_Automotive] Copersucar
+            a#mwCHw[href=//it.wikipedia.org/wiki/Niki_Lauda] Niki Lauda
+            a#mwCH0[href=//it.wikipedia.org/wiki/Parmalat] Parmalat
+          p#mwCH4
+            sup#cite_ref-153.mw-ref
+              a#mwCH8[href=#cite_note-153] [153]
+        section#mwCIM
+          ul#mwCIQ.gallery
+            li#mwCIU.gallerybox
+              div#mwCIY.thumb
+                span#mwCIc
+            li#mwCIs.gallerybox
+              div#mwCIw.thumb
+                span#mwCI0
+            li#mwCJE.gallerybox
+              div#mwCJI.thumb
+                span#mwCJM
+              div#mwCJY.gallerytext
+                sup#cite_ref-154.mw-ref
+                  a#mwCJc[href=#cite_note-154] [154]
+            li#mwCJs.gallerybox
+              div#mwCJw.thumb
+                span#mwCJ0
+            li#mwCKE.gallerybox
+              div#mwCKI.thumb
+                span#mwCKM
+        section#mwCKc
+          div#mwCKg.mw-references-wrap
+            ol#mwCKk.mw-references
+              li#cite_note-1
+                span#mwCKo.mw-cite-backlink
+              li#cite_note-2
+                span#mwCK0.mw-cite-backlink
+                span#mw-reference-text-cite_note-2.mw-reference-text
+                  cite#mwCLA.citation
+                    a#mwCLM.external[href=https://gallica.bnf.fr/ark:/12148/bd6t5100156g/f2.item.zoom] L'Équipe : le stade, l'air, la route
+              li#cite_note-3
+                span#mwCLg.mw-cite-backlink
+                span#mw-reference-text-cite_note-3.mw-reference-text
+                  cite#mwCLs.citation
+                    a#mwCLw.external Bernie Ecclestone removed as Liberty Media completes $8bn takeover
+              li#cite_note-4
+                span#mwCMQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-4.mw-reference-text
+                  cite#mwCMc.citation
+                    a#mwCMg.external Liberty Media Corporation Completes Acquisition of Formula 1
+              li#cite_note-5
+                span#mwCM4.mw-cite-backlink
+              li#cite_note-:1-6
+                span#mwCNQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-:1-6.mw-reference-text
+                  cite#mwCNc.citation
+                    a#mwCNg.external Michael Schumacher surclasse ses rivaux et dépasse Juan Manuel Fangio
+              li#cite_note-7
+                span#mwCN4.mw-cite-backlink
+                span#mw-reference-text-cite_note-7.mw-reference-text
+                  cite#mwCOE.citation
+                    a#mwCOI.external Remembering F1's first world championship race 70 years on
+                    span#mwCOQ
+                      a#mwCOU.new[href=//it.wikipedia.org/wiki/Motorsport.com?action=edit&redlink=1] Motorsport.com
+              li#cite_note-8
+                span#mwCOk.mw-cite-backlink
+                span#mw-reference-text-cite_note-8.mw-reference-text
+                  cite#mwCOw.citation
+                    a#mwCO0.external Facts you may not know about Silverstone Circuit and its place on the F1 calendar
+              li#cite_note-9
+                span#mwCPM.mw-cite-backlink
+                span#mw-reference-text-cite_note-9.mw-reference-text
+                  cite#mwCPY.citation
+                    a#mwCPc.external Hamilton still on track to greatness
+                    span#mwCPk
+                      a#mwCPo[href=//it.wikipedia.org/wiki/The_Independent] The Independent
+              li#cite_note-10
+                span#mwCP4.mw-cite-backlink
+                span#mw-reference-text-cite_note-10.mw-reference-text
+                  cite#mwCQE.citation
+                    a#mwCQQ.external In Numbers: How Verstappen compares to other F1 greats at this stage of his career
+              li#cite_note-11
+                span#mwCQw.mw-cite-backlink
+                span#mw-reference-text-cite_note-11.mw-reference-text
+                  cite#mwCQ8.citation
+                    a#mwCRA.external Decade seasons 1950–1959
+              li#cite_note-12
+                span#mwCRY.mw-cite-backlink
+              li#cite_note-13
+                span#mwCR4.mw-cite-backlink
+                span#mw-reference-text-cite_note-13.mw-reference-text
+                  cite#mwCSE.citation
+                    a#mwCSQ.external Matters of moment, January 1956
+              li#cite_note-14
+                span#mwCSg.mw-cite-backlink
+              li#cite_note-15
+                span#mwCS4.mw-cite-backlink
+              li#cite_note-16
+                span#mwCTU.mw-cite-backlink
+                span#mw-reference-text-cite_note-16.mw-reference-text
+                  cite#mwCTg.citation
+                    a#mwCTk.external[href=https://archive.org/details/enzoferrariunero0000turr] Enzo Ferrari
+                    a#mwCTw.external[href=https://archive.org/details/enzoferrariunero0000turr/page/n184] 175
+              li#cite_note-17
+                span#mwCT0.mw-cite-backlink
+              li#cite_note-18
+                span#mwCUM.mw-cite-backlink
+              li#cite_note-19
+                span#mwCUk.mw-cite-backlink
+                span#mw-reference-text-cite_note-19.mw-reference-text
+                  cite#mwCUw.citation
+                    a#mwCU0.external Sponsorship, the big business behind F1
+              li#cite_note-guardian280397-20
+                span#mwCVI.mw-cite-backlink
+              li#cite_note-mrformula-21
+                span#mwCVg.mw-cite-backlink
+                span#mw-reference-text-cite_note-mrformula-21.mw-reference-text
+                  cite#mwCVs.citation
+                    a#mwCVw.external Mr Formula One
+              li#cite_note-22
+                span#mwCWI.mw-cite-backlink
+              li#cite_note-23
+                span#mwCWk.mw-cite-backlink
+              li#cite_note-24
+                span#mwCW8.mw-cite-backlink
+                span#mw-reference-text-cite_note-24.mw-reference-text
+                  cite#mwCXI.citation
+                    a#mwCXM.external The FISA-FOCA War | Allinsport
+              li#cite_note-25
+                span#mwCXo.mw-cite-backlink
+                span#mw-reference-text-cite_note-25.mw-reference-text
+                  cite#mwCX0.citation
+                    a#mwCYA.external Active suspension
+              li#cite_note-26
+                span#mwCYY.mw-cite-backlink
+              li#cite_note-27
+                span#mwCYw.mw-cite-backlink
+                span#mw-reference-text-cite_note-27.mw-reference-text
+                  cite#mwCY8.citation
+                    a#mwCZI[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwCZQ[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-28
+                span#mwCZU.mw-cite-backlink
+                span#mw-reference-text-cite_note-28.mw-reference-text
+                  cite#mwCZg.citation
+                    a#mwCZs[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwCZ0[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-29
+                span#mwCZ4.mw-cite-backlink
+                span#mw-reference-text-cite_note-29.mw-reference-text
+                  cite#mwCaE.citation
+                    a#mwCaQ[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwCaY[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-30
+                span#mwCac.mw-cite-backlink
+              li#cite_note-31
+                span#mwCao.mw-cite-backlink
+                span#mw-reference-text-cite_note-31.mw-reference-text
+                  cite#mwCa0.citation
+                    a#mwCa4.external Who owns what in F1 these days?
+              li#cite_note-32
+                span#mwCbQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-32.mw-reference-text
+                  cite#mwCbc.citation
+                    a#mwCbo[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwCbw[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-MarshallDeaths2000s-33
+                span#mwCb0.mw-cite-backlink
+                span#mw-reference-text-cite_note-MarshallDeaths2000s-33.mw-reference-text
+                  cite#mwCcA.citation
+                    a#mwCcE.external F1's pressing safety question
+              li#cite_note-34
+                span#mwCcc.mw-cite-backlink
+                span#mw-reference-text-cite_note-34.mw-reference-text
+                  cite#mwCco.citation
+                    a#mwCc0[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwCc8[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-35
+                span#mwCdA.mw-cite-backlink
+                span#mw-reference-text-cite_note-35.mw-reference-text
+                  cite#mwCdM.citation
+                    a#mwCdQ.external Eddie Jordan: l'era dei privati si è conclusa
+              li#cite_note-36
+                span#mwCdk.mw-cite-backlink
+                span#mw-reference-text-cite_note-36.mw-reference-text
+                  cite#mwCdw.citation
+                    a#mwCd0.external Schumacher makes history
+              li#cite_note-37
+                span#mwCeM.mw-cite-backlink
+                span#mw-reference-text-cite_note-37.mw-reference-text
+                  cite#mwCeY.citation
+                    a#mwCec.external[href=http://news.bbc.co.uk/sport1/hi/motorsport/formula_one/2141834.stm] Schumacher riscrive la storia
+                    small#mwCes
+                      a#mwCew.external archiviato
+              li#cite_note-regolamento-38
+                span#mwCe0.mw-cite-backlink
+                  a#mwCe4[href=#cite_ref-regolamento_38-0] Salta a:
+                span#mw-reference-text-cite_note-regolamento-38.mw-reference-text
+                  cite#mwCfI.citation
+                    a#mwCfM.external[href=http://www.formula1.com/insight/rulesandregs/13/995.html] Regolamento Sportivo FIA: cambiamenti per la stagione 2006
+                    small#mwCfY
+                      a#mwCfc.external archiviato
+              li#cite_note-39
+                span#mwCfg.mw-cite-backlink
+                span#mw-reference-text-cite_note-39.mw-reference-text
+                  cite#mwCfs.citation
+                    a#mwCfw.external FIA Rules & Regulations Sporting Regulations: 2006 season changes
+              li#cite_note-40
+                span#mwCgI.mw-cite-backlink
+                span#mw-reference-text-cite_note-40.mw-reference-text
+                  cite#mwCgU.citation
+                    a#mwCgg.external The incredible origin story of the Mercedes F1 era
+              li#cite_note-41
+                span#mwCg4.mw-cite-backlink
+                span#mw-reference-text-cite_note-41.mw-reference-text
+                  cite#mwChE.citation
+                    a#mwChI.external[href=https://sport.sky.it/formula-1/2022/01/01/f1-2022-novita-regolamento] Formula 1, Mondiale 2022: cosa cambia nel regolamento? Le 5 novità principali
+                    small#mwChY
+                      a#mwChc.external archiviato
+              li#cite_note-42
+                span#mwChg.mw-cite-backlink
+                span#mw-reference-text-cite_note-42.mw-reference-text
+                  cite#mwChs.citation
+                    a#mwCh4.external This Formula 1 Season Was All Max Verstappen and Red Bull
+                    a#mwCiE[href=//it.wikipedia.org/wiki/ISSN] ISSN
+                    span#mwCiM.noprint
+                      span#mwCiU
+                        a#mwCiY.external[href=http://worldcat.org/issn/0362-4331&lang=it] WC
+                      span#mwCig
+                        a#mwCik.external[href=https://acnpsearch.unibo.it/search?issn=0362-4331] ACNP
+              li#cite_note-43
+                span#mwCi0.mw-cite-backlink
+                span#mw-reference-text-cite_note-43.mw-reference-text
+                  cite#mwCjA.citation
+                    a#mwCjM.external The F1 records Verstappen and Red Bull broke in 2022
+              li#cite_note-44
+                span#mwCjk.mw-cite-backlink
+                span#mw-reference-text-cite_note-44.mw-reference-text
+                  cite#mwCjw.citation
+                    a#mwCj8.external For Red Bull and Max Verstappen, 2023 Was a Dominant Year
+                    a#mwCkI[href=//it.wikipedia.org/wiki/ISSN] ISSN
+                    span#mwCkQ.noprint
+                      span#mwCkY
+                        a#mwCkc.external[href=http://worldcat.org/issn/0362-4331&lang=it] WC
+                      span#mwCkk
+                        a#mwCko.external[href=https://acnpsearch.unibo.it/search?issn=0362-4331] ACNP
+              li#cite_note-45
+                span#mwCk4.mw-cite-backlink
+                span#mw-reference-text-cite_note-45.mw-reference-text
+                  cite#mwClE.citation
+                    a#mwClQ.external Why Red Bull's RB19 is one of the most dominant F1 cars ever
+              li#cite_note-46
+                span#mwClo.mw-cite-backlink
+                span#mw-reference-text-cite_note-46.mw-reference-text
+                  cite#mwCl0.citation
+                    a#mwCl4.external Jérôme d'Ambrosio and Virgin‽
+              li#cite_note-47
+                span#mwCmQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-47.mw-reference-text
+                  cite#mwCmc.citation
+                    a#mwCmg.external Klien signed as HRT Friday driver
+              li#cite_note-AppL-48
+                span#mwCm4.mw-cite-backlink
+                span#mw-reference-text-cite_note-AppL-48.mw-reference-text
+                  cite#mwCnE.citation
+                    a#mwCnI.external Appendix L to the International Sporting Code
+                    span#mwCnY
+                      a#mwCnc.mw-redirect[href=//it.wikipedia.org/wiki/Fédération_Internationale_de_l'Automobile] Fédération Internationale de l'Automobile
+              li#cite_note-49
+                span#mwCns.mw-cite-backlink
+                span#mw-reference-text-cite_note-49.mw-reference-text
+                  cite#mwCn4.citation
+                    a#mwCn8.external Inside an F1 team's driving simulator
+              li#cite_note-rFPro-50
+                span#mwCoU.mw-cite-backlink
+                span#mw-reference-text-cite_note-rFPro-50.mw-reference-text
+                  cite#mwCog.citation
+                    a#mwCok.external[href=https://web.archive.org/web/20141004173929/http://articles.sae.org/12760/] Taking the lag out of dynamics simulation
+              li#cite_note-51
+                span#mwCo8.mw-cite-backlink
+                span#mw-reference-text-cite_note-51.mw-reference-text
+                  cite#mwCpI.citation
+                    a#mwCpM.external Ferrari Changed His Simulator Software
+              li#cite_note-rfProMars-52
+                span#mwCpk.mw-cite-backlink
+                span#mw-reference-text-cite_note-rfProMars-52.mw-reference-text
+                  cite#mwCpw.citation
+                    a#mwCp0.external rFactor: Full Steam Ahead!
+              li#cite_note-rFProISI-53
+                span#mwCqM.mw-cite-backlink
+                span#mw-reference-text-cite_note-rFProISI-53.mw-reference-text
+                  cite#mwCqY.citation
+                    a#mwCqc.external History of the Image Space Inc. Software Engine
+              li#cite_note-54
+                span#mwCq0.mw-cite-backlink
+                span#mw-reference-text-cite_note-54.mw-reference-text
+                  cite#mwCrA.citation
+                    a#mwCrE.external Number 17 to be retired in Bianchi's honour
+              li#cite_note-55
+                span#mwCrc.mw-cite-backlink
+                span#mw-reference-text-cite_note-55.mw-reference-text
+                  cite#mwCro.citation
+                    a#mwCrs.external Formula 1's governing body confirm drivers' numbers
+              li#cite_note-:0-56
+                span#mwCsE.mw-cite-backlink
+                span#mw-reference-text-cite_note-:0-56.mw-reference-text
+                  cite#mwCsQ.citation
+                    a#mwCsc.external Quick Guide to Formula One Constructors
+              li#cite_note-57
+                span#mwCs0.mw-cite-backlink
+                span#mw-reference-text-cite_note-57.mw-reference-text
+                  cite#mwCtA.citation
+                    a#mwCtM.external 1983 Constructor Standings
+              li#cite_note-58
+                span#mwCtk.mw-cite-backlink
+                span#mw-reference-text-cite_note-58.mw-reference-text
+                  cite#mwCtw.citation
+                    a#mwCt8.external[href=https://oadoi.org/10.1177%2F0001839219899606] Tie Dissolution in Market Networks: A Theory of Vicarious Performance Feedback
+                    a#mwCuU[href=//it.wikipedia.org/wiki/Digital_object_identifier] DOI
+                    a#mwCuY.external[href=https://dx.doi.org/10.1177%2F0001839219899606] 10.1177/0001839219899606
+                    a#mwCuc[href=//it.wikipedia.org/wiki/ISSN] ISSN
+                    span#mwCuk.noprint
+                      span#mwCus
+                        a#mwCuw.external[href=http://worldcat.org/issn/0001-8392&lang=it] WC
+                      span#mwCu4
+                        a#mwCu8.external[href=https://acnpsearch.unibo.it/search?issn=0001-8392] ACNP
+              li#cite_note-59
+                span#mwCvA.mw-cite-backlink
+                span#mw-reference-text-cite_note-59.mw-reference-text
+                  cite#mwCvM.citation
+                    a#mwCvQ.external Poachers turned gamekeepers: how the FOCA became the new FIA Part 1: Introduction and timeline
+                    a#mwCvk[href=//it.wikipedia.org/wiki/Autosport] Autosport
+              li#cite_note-60
+                span#mwCv0.mw-cite-backlink
+                span#mw-reference-text-cite_note-60.mw-reference-text
+                  cite#mwCwA.citation
+                    a#mwCwM.external The F1 Car Weight Rule That Cost Leclerc And Gasly 2025 Chinese GP Results
+              li#cite_note-61
+                span#mwCwk.mw-cite-backlink
+                span#mw-reference-text-cite_note-61.mw-reference-text
+                  cite#mwCww.citation
+                    a#mwCw0.external Tyres
+              li#cite_note-62
+                span#mwCxM.mw-cite-backlink
+                span#mw-reference-text-cite_note-62.mw-reference-text
+                  cite#mwCxY.citation
+                    a#mwCxc.external[href=http://www.f1technical.net/f1db/cars/921] Scheda tecnica della Toyota TF107
+                    small#mwCxo
+                      a#mwCxs.external archiviato
+              li#cite_note-63
+                span#mwCxw.mw-cite-backlink
+                span#mw-reference-text-cite_note-63.mw-reference-text
+                  cite#mwCx8.citation
+                    a#mwCyA.external F1 regulations: Gearboxes
+              li#cite_note-64
+                span#mwCyY.mw-cite-backlink
+                span#mw-reference-text-cite_note-64.mw-reference-text
+                  cite#mwCyk.citation
+                    a#mwCyo.external F1 regulations: Power unit and ERS
+              li#cite_note-65
+                span#mwCzA.mw-cite-backlink
+              li#cite_note-66
+                span#mwCzY.mw-cite-backlink
+                span#mw-reference-text-cite_note-66.mw-reference-text
+                  cite#mwCzk.citation
+                    a#mwCzo.external Ecclestone vuole un calendario con 20 gare annuali
+              li#cite_note-67
+                span#mwCz8.mw-cite-backlink
+                span#mw-reference-text-cite_note-67.mw-reference-text
+                  cite#mwC0I.citation
+                    a#mwC0M.external Calendario Formula 1 2018, 21 gare e torna la Francia
+                    small#mwC0Y
+                      a#mwC0c.external archiviato
+              li#cite_note-68
+                span#mwC0g.mw-cite-backlink
+                span#mw-reference-text-cite_note-68.mw-reference-text
+                  cite#mwC0s.citation
+                    a#mwC0w.external Calendario 2021: 23 gare senza piano-B
+                    small#mwC08
+                      a#mwC1A.external archiviato
+              li#cite_note-69
+                span#mwC1E.mw-cite-backlink
+                span#mw-reference-text-cite_note-69.mw-reference-text
+                  cite#mwC1Q.citation
+                    a#mwC1U.external[href=https://sport.sky.it/formula-1/2023/05/17/f1-gp-imola-maltempo] F1, a Imola non si correrà per il maltempo: annullato il GP dell'Emilia Romagna
+                    small#mwC1k
+                      a#mwC1o.external archiviato
+              li#cite_note-70
+                span#mwC1s.mw-cite-backlink
+                span#mw-reference-text-cite_note-70.mw-reference-text
+                  cite#mwC14.citation
+                    a#mwC18.external F1 | Calendario 2024: 24 GP, due gare in Italia e torna la Cina
+                    small#mwC2M
+                      a#mwC2Q.external archiviato
+              li#cite_note-71
+                span#mwC2U.mw-cite-backlink
+                span#mw-reference-text-cite_note-71.mw-reference-text
+                  cite#mwC2g.citation
+                    a#mwC2k.external Il calendario della Formula 1 2025, tutte le date e i GP del mondiale di F1: cambia la gara inaugurale
+              li#cite_note-72
+                span#mwC20.mw-cite-backlink
+                span#mw-reference-text-cite_note-72.mw-reference-text
+                  cite#mwC3A.citation
+                    a#mwC3E.external[href=https://web.archive.org/web/20070227105027/http://www.forix.com/8w/roc83.html] The last of the non-championship races
+              li#cite_note-GPofA-73
+                span#mwC3c.mw-cite-backlink
+                  a#mwC3g[href=#cite_ref-GPofA_73-0] Salta a:
+                span#mw-reference-text-cite_note-GPofA-73.mw-reference-text
+                  cite#mwC3w.citation
+                    a#mwC30.external[href=https://www.bbc.co.uk/sport/0/formula1/15440153] New Jersey to host Grand Prix of America in 2013
+                    small#mwC4A
+                      a#mwC4E.external archiviato
+              li#cite_note-NJ_delay-74
+                span#mwC4I.mw-cite-backlink
+                span#mw-reference-text-cite_note-NJ_delay-74.mw-reference-text
+                  cite#mwC4U.citation
+                    a#mwC4Y.external[href=http://www.autosport.com/news/report.php/id/103529] New Jersey Grand Prix to be postponed until 2014
+                    small#mwC4o
+                      a#mwC4s.external archiviato
+              li#cite_note-Autosport_10-25-75
+                span#mwC4w.mw-cite-backlink
+                span#mw-reference-text-cite_note-Autosport_10-25-75.mw-reference-text
+                  cite#mwC48.citation
+                    a#mwC5A.external New Jersey confirms F1 grand prix from the 2013 season
+                    span#mwC5I
+                      a#mwC5M[href=//it.wikipedia.org/wiki/Autosport] Autosport.com
+              li#cite_note-FIA_Calendar-76
+                span#mwC5c.mw-cite-backlink
+                span#mw-reference-text-cite_note-FIA_Calendar-76.mw-reference-text
+                  cite#mwC5o.citation
+                    a#mwC50.external[href=http://www.fia.com/news/world-motor-sport-council-2] World Motor Sport Council
+                    small#mwC6E
+                      a#mwC6I.external archiviato
+              li#cite_note-77
+                span#mwC6M.mw-cite-backlink
+                span#mw-reference-text-cite_note-77.mw-reference-text
+                  cite#mwC6Y.citation
+                    a#mwC6c.external F1, cancellato il GP del Vietnam a causa del Covid-19
+                    small#mwC6s
+                      a#mwC6w.external archiviato
+              li#cite_note-formulapassion.it-78
+                span#mwC60.mw-cite-backlink
+                  a#mwC64[href=#cite_ref-formulapassion.it_78-0] Salta a:
+                span#mw-reference-text-cite_note-formulapassion.it-78.mw-reference-text
+                  cite#mwC7I.citation
+                    a#mwC7M.external Zandvoort, è ufficiale: GP cancellato
+                    small#mwC7c
+                      a#mwC7g.external archiviato
+              li#cite_note-79
+                span#mwC7k.mw-cite-backlink
+                span#mw-reference-text-cite_note-79.mw-reference-text
+                  cite#mwC7w.citation
+                    a#mwC70.external Calendario 2021: niente Vietnam, si apre uno spazio
+                    small#mwC8E
+                      a#mwC8I.external archiviato
+              li#cite_note-80
+                span#mwC8M.mw-cite-backlink
+                span#mw-reference-text-cite_note-80.mw-reference-text
+                  cite#mwC8Y.citation
+                    a#mwC8c.external[href=https://www.f1web.it/?p=10585] La Formula 1 globalizzata arriva a Delhi. Le fasi dell’espansione dal 1950
+              li#cite_note-81
+                span#mwC8s.mw-cite-backlink
+                span#mw-reference-text-cite_note-81.mw-reference-text
+                  cite#mwC84.citation
+                    a#mwC88.external Dov'è la prossima gara? In Messico
+              li#cite_note-82
+                span#mwC9Q.mw-cite-backlink
+                span#mw-reference-text-cite_note-82.mw-reference-text
+                  cite#mwC9c.citation
+                    a#mwC9g.external F1: confermata la prima parte del calendario 2020. C'è Monza
+                    small#mwC9w
+                      a#mwC90.external archiviato
+              li#cite_note-83
+                span#mwC94.mw-cite-backlink
+                span#mw-reference-text-cite_note-83.mw-reference-text
+                  cite#mwC-E.citation
+                    a#mwC-I.external[href=https://sport.sky.it/formula-1/2020/08/25/f1-calendario-mondiale-2020-nuovi-gp] Formula 1, quattro nuovi GP nel Mondiale 2020: si chiude il 13 dicembre ad Abu Dhabi
+                    small#mwC-Y
+                      a#mwC-c.external archiviato
+              li#cite_note-84
+                span#mwC-g.mw-cite-backlink
+                span#mw-reference-text-cite_note-84.mw-reference-text
+                  cite#mwC-s.citation
+                    a#mwC-4.external Qatar to join F1 calendar in 2021, as country signs additional 10-year deal from 2023
+                    small#mwC_I
+                      a#mwC_M.external archiviato
+              li#cite_note-85
+                span#mwC_Q.mw-cite-backlink
+                span#mw-reference-text-cite_note-85.mw-reference-text
+                  cite#mwC_c.citation
+                    a#mwC_g.external Ufficiale: F1 in Arabia Saudita nel 2021
+                    small#mwC_w
+                      a#mwC_0.external archiviato
+              li#cite_note-86
+                span#mwC_4.mw-cite-backlink
+                span#mw-reference-text-cite_note-86.mw-reference-text
+                  cite#mwDAE.citation
+                    a#mwDAI.external Ufficializzato il calendario 2022
+                    small#mwDAY
+                      a#mwDAc.external archiviato
+              li#cite_note-87
+                span#mwDAg.mw-cite-backlink
+                span#mw-reference-text-cite_note-87.mw-reference-text
+                  cite#mwDAs.citation
+                    a#mwDAw.external[href=https://sport.sky.it/formula-1/2022/03/31/f1-circuito-gp-las-vegas] F1, torna il GP di Las Vegas nel 2023: dove si correrà e come sarà il circuito
+                    small#mwDBA
+                      a#mwDBE.external archiviato
+              li#cite_note-88
+                span#mwDBI.mw-cite-backlink
+                span#mw-reference-text-cite_note-88.mw-reference-text
+                  cite#mwDBU.citation
+                    a#mwDBY.external Ufficiale: la F1 torna a Madrid
+                    small#mwDBo
+                      a#mwDBs.external archiviato
+              li#cite_note-89
+                span#mwDBw.mw-cite-backlink
+                span#mw-reference-text-cite_note-89.mw-reference-text
+                  cite#mwDB8.citation
+                    a#mwDCA.external Sporting regulations: Points
+              li#cite_note-90
+                span#mwDCY.mw-cite-backlink
+                span#mw-reference-text-cite_note-90.mw-reference-text
+                  cite#mwDCk.citation
+                    a#mwDCo.external How a 40-year-old rule turned F1 on its head at Spa
+              li#cite_note-91
+                span#mwDDA.mw-cite-backlink
+                span#mw-reference-text-cite_note-91.mw-reference-text
+                  cite#mwDDM.citation
+                    a#mwDDY.external F1 scraps fastest lap point from 2025
+              li#cite_note-92
+                span#mwDDo.mw-cite-backlink
+                span#mw-reference-text-cite_note-92.mw-reference-text
+                  cite#mwDD0.citation
+                    a#mwDD4.external Ufficiale: tre Sprint nel 2022
+                    small#mwDEI
+                      a#mwDEM.external archiviato
+              li#cite_note-93
+                span#mwDEQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-93.mw-reference-text
+                  cite#mwDEc.citation
+                    a#mwDEg.external Le novità F1 2014, dai numeri ai costi
+              li#cite_note-94
+                span#mwDE4.mw-cite-backlink
+                span#mw-reference-text-cite_note-94.mw-reference-text
+                  cite#mwDFE.citation
+                    a#mwDFI.external La FIA ha ritirato il numero 17 di Jules Bianchi
+              li#cite_note-95
+                span#mwDFg.mw-cite-backlink
+                span#mw-reference-text-cite_note-95.mw-reference-text
+                  cite#mwDFs.citation
+                    a#mwDF4.external F1 - La FIA annonce confirme quelques changements de règles
+              li#cite_note-CF1Champs-96
+                span#mwDGI.mw-cite-backlink
+                span#mw-reference-text-cite_note-CF1Champs-96.mw-reference-text
+                  cite#mwDGU.citation
+                    a#mwDGY.external[href=https://web.archive.org/web/20200705152152/http://chicanef1.com/alldchmps.pl] Drivers' Championships
+              li#cite_note-97
+                span#mwDGw.mw-cite-backlink
+                span#mw-reference-text-cite_note-97.mw-reference-text
+                  cite#mwDG8.citation
+                    a#mwDHA.external[href=https://web.archive.org/web/20160414125607/http://8w.forix.com/6thgear/wins.html] World Championship Grand Prix wins
+              li#cite_note-98
+                span#mwDHY.mw-cite-backlink
+                span#mw-reference-text-cite_note-98.mw-reference-text
+                  cite#mwDHk.citation
+                    a#mwDHo.external Alonso si consola con il record, con asterisco, di punti
+                    small#mwDH4
+                      a#mwDH8.external archiviato
+              li#cite_note-99
+                span#mwDIA.mw-cite-backlink
+                span#mw-reference-text-cite_note-99.mw-reference-text
+                  cite#mwDIM.citation
+                    a#mwDIQ.external Indy 2005, il giorno della vergogna
+                    small#mwDIg
+                      a#mwDIk.external archiviato
+              li#cite_note-100
+                span#mwDIo.mw-cite-backlink
+                span#mw-reference-text-cite_note-100.mw-reference-text
+                  cite#mwDI0.citation
+                    a#mwDI4.external Vergogna F1: Verstappen vince il GP del Belgio mai corso!
+              li#cite_note-101
+                span#mwDJE.mw-cite-backlink
+                span#mw-reference-text-cite_note-101.mw-reference-text
+                  cite#mwDJQ.citation
+                    a#mwDJc.external[href=http://www.statsf1.com/en/statistiques/gp/temps/leplus.aspx] Time - The most
+                    small#mwDJs
+                      a#mwDJw.external archiviato
+              li#cite_note-102
+                span#mwDJ0.mw-cite-backlink
+                span#mw-reference-text-cite_note-102.mw-reference-text
+                  cite#mwDKA.citation
+                    a#mwDKE.external Start of the race
+              li#cite_note-103
+                span#mwDKk.mw-cite-backlink
+                span#mw-reference-text-cite_note-103.mw-reference-text
+                  cite#mwDKw.citation
+                    a#mwDK0.external Race distance
+              li#cite_note-104
+                span#mwDLM.mw-cite-backlink
+                span#mw-reference-text-cite_note-104.mw-reference-text
+                  cite#mwDLY.citation
+                    a#mwDLc.external Refueling
+              li#cite_note-105
+                span#mwDL0.mw-cite-backlink
+                span#mw-reference-text-cite_note-105.mw-reference-text
+                  cite#mwDMA.citation
+                    a#mwDME.external Tyres
+              li#cite_note-Qual-106
+                span#mwDMc.mw-cite-backlink
+                span#mw-reference-text-cite_note-Qual-106.mw-reference-text
+                  cite#mwDMo.citation
+                    a#mwDMs.external Sporting regulations: Practice and qualifying
+              li#cite_note-DriveChang-107
+                span#mwDNE.mw-cite-backlink
+                span#mw-reference-text-cite_note-DriveChang-107.mw-reference-text
+                  cite#mwDNQ.citation
+                    a#mwDNU.external Driver changes and additional drivers
+              li#cite_note-108
+                span#mwDNs.mw-cite-backlink
+                span#mw-reference-text-cite_note-108.mw-reference-text
+                  cite#mwDN4.citation
+                    a#mwDN8.external Pirelli announce tyre choices for remaining races
+                    a#mwDOI[href=//it.wikipedia.org/wiki/Formula_One_Group] Formula One Group
+              li#cite_note-109
+                span#mwDOY.mw-cite-backlink
+                span#mw-reference-text-cite_note-109.mw-reference-text
+                  cite#mwDOk.citation
+                    a#mwDOo.external F1 Pirelli: le modifiche apportate alle gomme 2019 spiegate da Mario Isola
+                    small#mwDO4
+                      a#mwDO8.external archiviato
+              li#cite_note-110
+                span#mwDPA.mw-cite-backlink
+                span#mw-reference-text-cite_note-110.mw-reference-text
+                  cite#mwDPM.citation
+                    a#mwDPQ.external Cinque sorpassi che hanno fatto la storia della Formula 1
+              li#cite_note-111
+                span#mwDPg.mw-cite-backlink
+                span#mw-reference-text-cite_note-111.mw-reference-text
+                  cite#mwDPs.citation
+                    a#mwDPw.external Alain Prost e Ayrton Senna, la storia di una grande rivalità sfociata in profonda amicizia
+              li#cite_note-112
+                span#mwDQA.mw-cite-backlink
+                span#mw-reference-text-cite_note-112.mw-reference-text
+                  cite#mwDQM.citation
+                    a#mwDQQ.external Luglio '79, Digione: il momento in cui scoppiò la febbre Villeneuve
+              li#cite_note-113
+                span#mwDQg.mw-cite-backlink
+                span#mw-reference-text-cite_note-113.mw-reference-text
+                  cite#mwDQs.citation
+                    a#mwDQw.external 25, 1953 French GP: Hawthorn sees off Fangio in 'Race of the Century'
+              li#cite_note-114
+                span#mwDRE.mw-cite-backlink
+                span#mw-reference-text-cite_note-114.mw-reference-text
+                  cite#mwDRQ.citation
+                    a#mwDRU.external[href=https://www.eurosport.it/geoblocking.shtml] Eurosport is not available in your region
+              li#cite_note-115
+                span#mwDRk.mw-cite-backlink
+                span#mw-reference-text-cite_note-115.mw-reference-text
+                  cite#mwDRw.citation
+                    a#mwDR0.external I sorpassi nel finale che hanno reso epica la Formula 1
+              li#cite_note-ESPN-116
+                span#mwDSE.mw-cite-backlink
+                span#mw-reference-text-cite_note-ESPN-116.mw-reference-text
+                  cite#mwDSQ.citation
+                    a#mwDSU.external Deaths in Formula One
+                    span#mwDSc
+                      a#mwDSg.new[href=//it.wikipedia.org/wiki/BT_Sport_ESPN?action=edit&redlink=1] ESPN UK
+              li#cite_note-117
+                span#mwDSw.mw-cite-backlink
+                span#mw-reference-text-cite_note-117.mw-reference-text
+                  cite#mwDS8.citation
+                    a#mwDTA.external Schlesser dies in experimental Honda at Rouen
+              li#cite_note-118
+                span#mwDTU.mw-cite-backlink
+                span#mw-reference-text-cite_note-118.mw-reference-text
+                  cite#mwDTg.citation
+                    a#mwDTk.external F1 | Conclusa l’indagine FIA sull’incidente di Grosjean in Bahrain
+                    small#mwDT0
+                      a#mwDT4.external archiviato
+              li#cite_note-119
+                span#mwDT8.mw-cite-backlink
+                span#mw-reference-text-cite_note-119.mw-reference-text
+                  cite#mwDUI.citation
+                    a#mwDUM.external Formula 1's greatest drivers. Number 12: Gilles Villeneuve
+              li#cite_note-120
+                span#mwDUg.mw-cite-backlink
+                span#mw-reference-text-cite_note-120.mw-reference-text
+                  cite#mwDUs.citation
+                    a#mwDUw.external A death that shocked the world
+              li#cite_note-Bianchi-121
+                span#mwDVE.mw-cite-backlink
+                span#mw-reference-text-cite_note-Bianchi-121.mw-reference-text
+                  cite#mwDVQ.citation
+                    a#mwDVU.external Jules Bianchi dies at age 25, his family confirms
+                    span#mwDVc
+                      a#mwDVg[href=//it.wikipedia.org/wiki/NBC_Sports] NBC Sports
+              li#cite_note-122
+                span#mwDVs.mw-cite-backlink
+              li#cite_note-123
+                span#mwDWE.mw-cite-backlink
+                span#mw-reference-text-cite_note-123.mw-reference-text
+                  cite#mwDWQ.citation
+                    a#mwDWU.external Comunicato Stampa Ufficiale FIA - Il Gran Premio d'Austria del 2002
+              li#cite_note-Morlidge-124
+                span#mwDWo.mw-cite-backlink
+                  a#mwDWs[href=#cite_ref-Morlidge_124-0] Salta a:
+                span#mw-reference-text-cite_note-Morlidge-124.mw-reference-text
+                  cite#mwDW8.citation
+                    a#mwDXI.external Fernando Alonso, Lewis Hamilton and the Hungarian GP pit-stop that ended a McLaren relationship
+                    small#mwDXY
+                      a#mwDXc.external archiviato
+              li#cite_note-Vana-125
+                span#mwDXg.mw-cite-backlink
+                  a#mwDXk[href=#cite_ref-Vana_125-0] Salta a:
+                span#mw-reference-text-cite_note-Vana-125.mw-reference-text
+                  cite#mwDX0.citation
+                    a#mwDX4.external Ex meccanico McLaren rivela: “Nel 2007 Alonso aveva ragione, Dennis tifava per Hamilton”
+                    small#mwDYI
+                      a#mwDYM.external archiviato
+              li#cite_note-Alonso-126
+                span#mwDYQ.mw-cite-backlink
+                  a#mwDYU[href=#cite_ref-Alonso_126-0] Salta a:
+                span#mw-reference-text-cite_note-Alonso-126.mw-reference-text
+                  cite#mwDYk.citation
+                    a#mwDYo.external Furia Alonso sulla McLaren
+              li#cite_note-127
+                span#mwDY8.mw-cite-backlink
+                span#mw-reference-text-cite_note-127.mw-reference-text
+                  cite#mwDZI.citation
+                    a#mwDZM.external Ferrari assolta, ma cambiano le regole
+                    small#mwDZY
+                      a#mwDZc.external archiviato
+              li#cite_note-128
+                span#mwDZg.mw-cite-backlink
+              li#cite_note-129
+                span#mwDZ4.mw-cite-backlink
+                span#mw-reference-text-cite_note-129.mw-reference-text
+                  cite#mwDaE.citation
+                    a#mwDaI.external McLaren condannata per la Spy-story
+                    small#mwDaU
+                      a#mwDaY.external archiviato
+              li#cite_note-130
+                span#mwDac.mw-cite-backlink
+                span#mw-reference-text-cite_note-130.mw-reference-text
+                  cite#mwDao.citation
+                    a#mwDas.external[href=http://www.grandprix.com/ns/ns14265.html] Oggi è il gran giorno della GPWC!
+                    small#mwDa4
+                      a#mwDa8.external archiviato
+              li#cite_note-131
+                span#mwDbA.mw-cite-backlink
+                span#mw-reference-text-cite_note-131.mw-reference-text
+                  cite#mwDbM.citation
+                    a#mwDbQ.external La firma di Ecclestone conclude la minaccia di scissione
+              li#cite_note-132
+                span#mwDbk.mw-cite-backlink
+                span#mw-reference-text-cite_note-132.mw-reference-text
+                  cite#mwDbw.citation
+                    a#mwDb0.external La FIA crea il FOMAC, nuovo comitato dei Costruttori
+              li#cite_note-133
+                span#mwDcI.mw-cite-backlink
+                span#mw-reference-text-cite_note-133.mw-reference-text
+                  cite#mwDcU.citation
+                    a#mwDcY.external[href=https://www.economist.com/displaystory.cfm?story_id=3127517] Chicane pericolosa in F1: dispute legali e commerciali fanno temere per il futuro dei gran premi
+                    small#mwDck
+                      a#mwDco.external archiviato
+              li#cite_note-134
+                span#mwDcs.mw-cite-backlink
+                span#mw-reference-text-cite_note-134.mw-reference-text
+                  cite#mwDc4.citation
+                    a#mwDc8.external Il caso che può decidere il futuro della Formula 1
+              li#cite_note-135
+                span#mwDdQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-135.mw-reference-text
+                  cite#mwDdc.citation
+                    a#mwDdg.external F1nvestimenti: La via successiva
+              li#cite_note-136
+                span#mwDd0.mw-cite-backlink
+                span#mw-reference-text-cite_note-136.mw-reference-text
+                  cite#mwDeA.citation
+                    a#mwDeM.external[href=https://www.fia.com/news/fia-announces-world-motor-sport-council-decisions-20] FIA Announces World Motor Sport Council decisions
+                    small#mwDec
+                      a#mwDeg.external archiviato
+              li#cite_note-137
+                span#mwDek.mw-cite-backlink
+                span#mw-reference-text-cite_note-137.mw-reference-text
+                  cite#mwDew.citation
+                    a#mwDe0.external La F1 è il terzo evento sportivo globale televisivo
+              li#cite_note-138
+                span#mwDfI.mw-cite-backlink
+                span#mw-reference-text-cite_note-138.mw-reference-text
+                  cite#mwDfU.citation
+                    a#mwDfY.external La F1 si conferma uno degli eventi televisivi più seguiti: elenco ufficiale telespettatori della stagione 2006
+              li#cite_note-139
+                span#mwDfs.mw-cite-backlink
+                span#mw-reference-text-cite_note-139.mw-reference-text
+                  cite#mwDf4.citation
+                    a#mwDf8.external[href=http://news.bbc.co.uk/sport2/hi/motorsport/formula_one/1842217.stm] Abbandonano presenze conosciute e costanti nella F1
+                    small#mwDgI
+                      a#mwDgM.external archiviato
+              li#cite_note-140
+                span#mwDgQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-140.mw-reference-text
+                  cite#mwDgc.citation
+                    a#mwDgg.external Arriva in F1 la rivoluzione nelle riprese televisive
+              li#cite_note-141
+                span#mwDg0.mw-cite-backlink
+                span#mw-reference-text-cite_note-141.mw-reference-text
+                  cite#mwDhA.citation
+                    a#mwDhE.external[href=http://www.f1fanatic.co.uk/2007/03/08/f1-set-for-hd-tv-coverage/] La F1 è pronta per le riprese tv ad alta definizione in anamorfico
+                    small#mwDhQ
+                      a#mwDhU.external archiviato
+              li#cite_note-142
+                span#mwDhY.mw-cite-backlink
+                span#mw-reference-text-cite_note-142.mw-reference-text
+                  cite#mwDhk.citation
+                    a#mwDho.external Formula 1, Sky acquisisce i diritti televisivi fino al 2009 e ritornerà a inizio 2013
+              li#cite_note-143
+                span#mwDh8.mw-cite-backlink
+                span#mw-reference-text-cite_note-143.mw-reference-text
+                  cite#mwDiI.citation
+                    a#mwDiU[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                    a#mwDic[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+              li#cite_note-144
+                span#mwDig.mw-cite-backlink
+                span#mw-reference-text-cite_note-144.mw-reference-text
+                  cite#mwDis.citation
+                    a#mwDiw.external Ufficiale: Ferrari senza loghi Mission Winnow per GP Australia
+                    small#mwDjA
+                      a#mwDjE.external archiviato
+              li#cite_note-145
+                span#mwDjI.mw-cite-backlink
+                span#mw-reference-text-cite_note-145.mw-reference-text
+                  cite#mwDjU.citation
+                    a#mwDjY.external McLaren come la Ferrari: in Australia non comparirà lo sponsor A Better Tomorrow
+              li#cite_note-146
+                span#mwDjw.mw-cite-backlink
+                span#mw-reference-text-cite_note-146.mw-reference-text
+                  cite#mwDj8.citation
+                    a#mwDkI.external Drake launches Sauber's new era as they unveil rebrand
+              li#cite_note-147
+                span#mwDkg.mw-cite-backlink
+                span#mw-reference-text-cite_note-147.mw-reference-text
+                  cite#mwDks.citation
+                    a#mwDk4.external New name, new goals: Stake bids to stop its F1 slide
+              li#cite_note-148
+                span#mwDlQ.mw-cite-backlink
+                span#mw-reference-text-cite_note-148.mw-reference-text
+                  cite#mwDlc.citation
+                    a#mwDlg.external Formula 1 announces new multi-year partnership with Hot Wheels
+              li#cite_note-149
+                span#mwDl0.mw-cite-backlink
+                span#mw-reference-text-cite_note-149.mw-reference-text
+                  cite#mwDmA.citation
+                    a#mwDmE.external We're Putting Play in Pole Position! The LEGO Group and Formula 1® To Go Full Throttle On New Brand Partnership
+              li#cite_note-150
+                span#mwDmU.mw-cite-backlink
+                span#mw-reference-text-cite_note-150.mw-reference-text
+                  cite#mwDmg.citation
+                    a#mwDmk.external New McLaren MP4/4 Ayrton Senna Lego Set Is the Coolest We've Seen in a While
+              li#cite_note-151
+                span#mwDm0.mw-cite-backlink
+                span#mw-reference-text-cite_note-151.mw-reference-text
+                  cite#mwDnA.citation
+                    a#mwDnE.external UBS sponsor della Formula 1
+              li#cite_note-152
+                span#mwDnc.mw-cite-backlink
+                span#mw-reference-text-cite_note-152.mw-reference-text
+                  cite#mwDno.citation
+                    a#mwDns.external Global Partner of Formula 1
+              li#cite_note-153
+                span#mwDoE.mw-cite-backlink
+                span#mw-reference-text-cite_note-153.mw-reference-text
+                  cite#mwDoQ.citation
+                    a#mwDoU.external[href=https://www.f1web.it/?p=12030/] La Formula 1 è più povera: perde il 41% dei ricavi in tre anni
+              li#cite_note-154
+                span#mwDok.mw-cite-backlink
+                span#mw-reference-text-cite_note-154.mw-reference-text
+                  cite#mwDow.citation
+                    a#mwDo0.external L'attesa è finita: ecco il nuovo logo della Formula 1
+                    small#mwDpE
+                      a#mwDpI.external archiviato
+        section#mwDpM
+          ul#mwDpY
+            li#mwDpc
+              cite#mwDpg.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7212-267-8] 88-7212-267-8
+            li#mwDpk
+              cite#mwDpo.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-217-1] 88-7911-217-1
+            li#mwDps
+              cite#mwDpw.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8089-864-7] 88-8089-864-7
+            li#mwDp0
+              cite#mwDp4.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8219-394-2] 88-8219-394-2
+            li#mwDp8
+              cite#mwDqA.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8058-584-3] 88-8058-584-3
+            li#mwDqE
+              cite#mwDqI.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-88519-10-6] 88-88519-10-6
+            li#mwDqM
+              cite#mwDqQ.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8490-329-7] 88-8490-329-7
+            li#mwDqU
+              cite#mwDqY.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8490-670-9] 88-8490-670-9
+            li#mwDqc
+              cite#mwDqg.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-318-6] 88-7911-318-6
+            li#mwDqk
+              cite#mwDqo.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-88269-15-0] 88-88269-15-0
+            li#mwDqs
+              cite#mwDqw.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7624-846-3] 88-7624-846-3
+            li#mwDq0
+              cite#mwDq4.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-426-3] 88-7911-426-3
+            li#mwDq8
+              cite#mwDrA.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-8391-210-1] 88-8391-210-1
+            li#mwDrE
+              cite#mwDrI.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/88-7911-402-6] 88-7911-402-6
+            li#mwDrM
+              cite#mwDrQ.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/978-88-7911-497-4] 978-88-7911-497-4
+          ul#mwDrc
+            li#mwDrg
+              cite#mwDro.citation
+                a.external Federazione Internazionale dell'Automobile
+            li#mwDrs
+              cite#mwDr0.citation
+                a.external Federazione Internazionale dell'Automobile
+            li#mwDr4
+              cite#mwDsA.citation
+                a.external[href=http://www.formula1.com/insight/] The Official Formula 1 Website
+            li#mwDsc
+              cite#mwDsg.citation
+                a.external[href=https://archive.org/details/formulaonecomple0000jone] Formula One: The Complete Stats and Records of Grand Prix Racing
+            li#mwDss
+              cite#mwDsw.citation
+                a.external[href=https://archive.org/details/grandprixwhoswho0000smal] Grand Prix Who's Who (3rd edition)
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/1-902007-46-8] 1-902007-46-8
+            li#mwDs0
+              cite#mwDs4.citation
+                a.external[href=https://archive.org/details/formulaonegrandp0000jone] The Official ITV Sport Guide: Formula One Grand Prix 2003. Con prefazione di Martin Brundle
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/1-84222-813-7] 1-84222-813-7
+            li#mwDs8
+              cite#mwDtA.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/0-7603-1688-0] 0-7603-1688-0
+            li#mwDtE
+              cite#mwDtI.citation
+                a.external[href=https://archive.org/details/internationalmot0000high] The international motor racing guide
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/1-893618-20-X] 1-893618-20-X
+            li#mwDtM
+              cite#mwDtQ.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/1-84442-508-8] 1-84442-508-8
+            li#mwDtU
+              cite#mwDtY.citation
+                a.external[href=https://archive.org/details/grandprixdataboo0000hayh] Grand Prix Data Book (4th edition)
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/1-84425-223-X] 1-84425-223-X
+            li#mwDtc
+              cite#mwDtg.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/2-84707-123-7] 2-84707-123-7
+          ul#mwDts
+            li#mwDt4
+              cite#mwDt8.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/2-09-286450-5] 2-09-286450-5
+            li#mwDuA
+              cite#mwDuE.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/2-84707-035-4] 2-84707-035-4
+            li#mwDuI
+              cite#mwDuM.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/2-916186-02-6] 2-916186-02-6
+            li#mwDuQ
+              cite#mwDuU.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/2-916186-03-4] 2-916186-03-4
+          ul#mwDug
+            li#mwDuk
+              cite#mwDuo.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-613-01035-6] 3-613-01035-6
+            li#mwDus
+              cite#mwDuw.citation
+                a.external[href=https://archive.org/details/dasformel1lexiko0000grun] Das Formel-1-Lexikon
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-612-26353-6] 3-612-26353-6
+            li#mwDu0
+              cite#mwDu4.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-89365-615-4] 3-89365-615-4
+            li#mwDu8
+              cite#mwDvA.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-89748-277-0] 3-89748-277-0
+            li#mwDvE
+              cite#mwDvI.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-352-00638-5] 3-352-00638-5
+            li#mwDvM
+              cite#mwDvQ.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-9501566-0-7] 3-9501566-0-7
+            li#mwDvU
+              cite#mwDvY.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/3-9522779-6-7] 3-9522779-6-7
+          ul#mwDvk
+            li#mwDvo
+              cite#mwDvs.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/951-26-3775-8] 951-26-3775-8
+            li#mwDvw
+              cite#mwDv0.citation
+                a[href=//it.wikipedia.org/wiki/ISBN] ISBN
+                a[href=//it.wikipedia.org/wiki/Speciale:RicercaISBN/951-566-082-3] 951-566-082-3
+        section#mwDv4
+          div#mwDv8.colonne
+            ul
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] Campionato mondiale di Formula 1
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_piloti_di_Formula_1] Campionato mondiale piloti di Formula 1
+              a[href=//it.wikipedia.org/wiki/Campionato_mondiale_costruttori_di_Formula_1] Campionato mondiale costruttori di Formula 1
+              a[href=//it.wikipedia.org/wiki/Statistiche_di_Formula_1] Statistiche di Formula 1
+              a[href=//it.wikipedia.org/wiki/Lista_dei_Gran_Premi_di_Formula_1] Lista dei Gran Premi di Formula 1
+              a[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Formula_One_Team_Association] Formula One Team Association
+              a[href=//it.wikipedia.org/wiki/Fioravanti_LF1] Fioravanti LF1
+              a[href=//it.wikipedia.org/wiki/Guerra_FISA-FOCA] Guerra FISA-FOCA
+              a[href=//it.wikipedia.org/wiki/Undercut_(automobilismo)] Undercut (automobilismo)
+            ul
+              a[href=//it.wikipedia.org/wiki/Federazione_Internazionale_dell'Automobile] Federazione Internazionale dell'Automobile
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Formula_One_Management] Formula One Management
+              a[href=//it.wikipedia.org/wiki/Grand_Prix_Manufacturers_Association] Grand Prix Manufacturers Association
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Grand_Prix_World_Championship] Grand Prix World Championship
+            ul
+              a[href=//it.wikipedia.org/wiki/Formula_Grand_Prix] Formula Grand Prix
+            ul
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Indy_Racing_League] Indy Racing League
+              a.new[href=//it.wikipedia.org/wiki/Car_Peace?action=edit&redlink=1] Car Peace
+              a[href=//it.wikipedia.org/wiki/NASCAR] NASCAR
+            ul
+              a[href=//it.wikipedia.org/wiki/Formula_2] Formula 2
+              a[href=//it.wikipedia.org/wiki/Formula_3000] Formula 3000
+              a.mw-redirect[href=//it.wikipedia.org/wiki/GP2] GP2
+              a[href=//it.wikipedia.org/wiki/A1_Grand_Prix] A1 Grand Prix
+              a[href=//it.wikipedia.org/wiki/Formula_3] Formula 3
+              a[href=//it.wikipedia.org/wiki/Formula_Junior] Formula Junior
+              a[href=//it.wikipedia.org/wiki/World_Series_by_Renault] World Series by Renault
+            ul
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Formula_Nippon] Formula Nippon
+        section#mwDwA
+          ul
+            a.extiw[href=https://it.wikiquote.org/wiki/] Wikiquote
+            a.extiw[href=https://it.wikiquote.org/wiki/Formula%201] Formula 1
+            a.extiw[href=https://it.wikinews.org/wiki/] Wikinotizie
+            a.extiw[href=https://it.wikinews.org/wiki/Categoria:Formula%201] Formula 1
+            a.external[href=https://commons.wikimedia.org/wiki/?uselang=it] Wikimedia Commons
+            a.external[href=https://commons.wikimedia.org/wiki/Category:Formula_One?uselang=it] Formula 1
+        section#mwDwE
+          ul#mwDwI
+            a.external[href=https://www.formula1.com] Sito ufficiale
+            a.external[href=https://www.youtube.com/channel/UCB_qr75-ydFVKSF9Dmo6izg] FORMULA 1
+            a[href=//it.wikipedia.org/wiki/YouTube] YouTube
+            cite#CITEREFTreccani.it_formula-1.citation
+              a.external[href=https://www.treccani.it/enciclopedia/formula-1] Formula 1
+              a[href=//it.wikipedia.org/wiki/Istituto_dell'Enciclopedia_Italiana] Istituto dell'Enciclopedia Italiana
+            cite#CITEREFTreccani.it_2001.citation
+              a.external[href=https://www.treccani.it/enciclopedia/formula-1_(Il-Libro-dell'Anno)] Formula 1
+              a[href=//it.wikipedia.org/wiki/Istituto_dell'Enciclopedia_Italiana] Istituto dell'Enciclopedia Italiana
+            cite#CITEREFBritannica.com.citation
+              a.external[href=https://www.britannica.com/sports/Formula-One-automobile-racing] Formula One
+              a[href=//it.wikipedia.org/wiki/Enciclopedia_Britannica] Enciclopedia Britannica
+            cite#CITEREFOpen_Library_Subjects.citation
+              a.external[href=https://openlibrary.org/subjects/formula_1] Opere riguardanti Formula 1
+              a.mw-redirect[href=//it.wikipedia.org/wiki/Open_Library] Open Library
+              a[href=//it.wikipedia.org/wiki/Internet_Archive] Internet Archive
+            a.external Formula 1
+            a[href=//it.wikipedia.org/wiki/IMDb] IMDb
+            li#mwDwU
+              cite#mwDwY.citation
+                a.external Sito ufficiale della Federazione Internazionale dell'Automobile
+          table#navbox-Classi_di_vetture_da_competizione.navbox
+            button.mw-collapsible-toggle[type=button] mostra
+            a[href=//it.wikipedia.org/wiki/Template:Classi_di_vetture_da_competizione] V
+            a[href=//it.wikipedia.org/wiki/Discussioni_template:Classi_di_vetture_da_competizione] D
+            a.external M
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+            table.subnavbox
+          table#navbox-Campionato_mondiale_di_Formula_1.navbox
+            button.mw-collapsible-toggle[type=button] mostra
+            a[href=//it.wikipedia.org/wiki/Template:Campionato_mondiale_di_Formula_1] V
+            a.new D
+            a.external M
+            a[href=//it.wikipedia.org/wiki/Campionato_mondiale_di_Formula_1] Edizioni del campionato mondiale di Formula 1
+          table.CdA
+            a[href=//it.wikipedia.org/wiki/Aiuto:Controllo_di_autorità] Controllo di autorità
+            a[href=//it.wikipedia.org/wiki/Virtual_International_Authority_File] VIAF
+            a.external[href=https://viaf.org/viaf/245922962] 245922962
+            a[href=//it.wikipedia.org/wiki/Library_of_Congress_Control_Number] LCCN
+            a.external[href=http://id.loc.gov/authorities/names/nb2012002495] nb2012002495
+            a[href=//it.wikipedia.org/wiki/Gemeinsame_Normdatei] GND
+            a.external[href=https://d-nb.info/gnd/4267570-4] 4267570-4
+            a[href=//it.wikipedia.org/wiki/Biblioteca_nazionale_di_Francia] BNF
+            a.external[href=https://catalogue.bnf.fr/ark:/12148/cb12002946q] cb12002946q
+            a.external[href=https://data.bnf.fr/ark:/12148/cb12002946q] (data)
+            a[href=//it.wikipedia.org/wiki/Biblioteca_della_Dieta_nazionale_del_Giappone] NDL
+            a.external[href=https://id.ndl.go.jp/auth/ndlna/00960053] 00960053
+          div#mwDwo.noprint
+            a[href=//it.wikipedia.org/wiki/Portale:Automobilismo] Portale Automobilismo
+            a[href=//it.wikipedia.org/wiki/Portale:Formula_1] Portale Formula 1
+      div#catlinks.catlinks
+        div#mw-normal-catlinks.mw-normal-catlinks
+          a[href=/wiki/Categoria:Categorie] Categoria
+          ul
+            a[href=/wiki/Categoria:Formula_1] Formula 1
+  footer#footer.mw-footer
+    ul#footer-info
+      li#footer-info-renderedwith
+        a.extiw[href=https://www.mediawiki.org/wiki/Special:MyLanguage/Parsoid] Parsoid
+      li#footer-info-copyright
+        a.external[href=https://creativecommons.org/licenses/by-sa/4.0/deed.it] licenza Creative Commons Attribuzione-Condividi allo stesso modo
+        a.external[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use/it] condizioni d'uso
+    ul#footer-places
+      li#footer-places-privacy
+        a Informativa sulla privacy
+      li#footer-places-about
+        a[href=/wiki/Wikipedia:Sala_stampa/Wikipedia] Informazioni su Wikipedia
+      li#footer-places-disclaimers
+        a[href=/wiki/Wikipedia:Avvertenze_generali] Avvertenze
+      li#footer-places-legal-safety-contacts
+        a Contatti legali e di sicurezza
+      li#footer-places-wm-codeofconduct
+        a Codice di condotta
+      li#footer-places-developers
+        a[href=https://developer.wikimedia.org] Sviluppatori
+      li#footer-places-statslink
+        a[href=https://stats.wikimedia.org/#/it.wikipedia.org] Statistiche
+      li#footer-places-cookiestatement
+        a[href=https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Cookie_statement] Dichiarazione sui cookie
+      li#footer-places-mobileview
+        a.noprint[href=//it.wikipedia.org/w/index.php?title=Formula_1&mobileaction=toggle_view_mobile] Versione mobile
+    ul#footer-icons.noprint
+      li#footer-copyrightico
+      li#footer-poweredbyico
+
+To interact, invoke 'execute_web_action' with:
+- tag: the HTML tag (e.g. 'a', 'button', 'input')
+- text: the visible text of the element
+- attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
+For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
+For 'goto' provide the URL.
+Call 'done' ONLY when the entire objective is complete.
+
+Operating rules:
+- If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
+- Do not repeat actions already present in history.

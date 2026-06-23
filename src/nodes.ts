@@ -1,12 +1,18 @@
 import type { Page } from "playwright";
 import type { AgentState } from "./types.js";
 import { HumanMessage } from "@langchain/core/messages";
-import { appendFile, mkdir } from "node:fs/promises";
-import path from "node:path";
-import { setTimeout as sleep } from "node:timers/promises";
-import { extractSimplifiedDOMWithRetry, parseDomElements } from "./ast.js";
-import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement, } from "./domains.js";
-import { resolveLocator } from "./locators.js";
+import { extractSimplifiedDOMWithRetry, buildCompactAstForPrompt, parseDomAst } from "./ast.js";
+import {
+    extractObjectiveDomains,
+    findNextTargetDomain,
+    getDomainFromUrl,
+    domainsMatch,
+    upsertDomainStatus,
+    tryMarkCompletedDomain,
+    isConsentLikeElement,
+    isYoutubeResultLikeElement,
+} from "./domains.js";
+import { resolveLocatorWithFallback } from "./locators.js";
 import {
     incrementIterationCounter,
     estimateInputTokens,
@@ -17,123 +23,72 @@ import {
 
 let currentPage: Page;
 
-async function logLlmInput(payload: Record<string, unknown>): Promise<void> {
-    const logDir = path.join(process.cwd(), "logs");
-    const logFile = path.join(logDir, "llm-input.jsonl");
-
-    try {
-        await mkdir(logDir, { recursive: true });
-        await appendFile(logFile, `${JSON.stringify(payload)}\n`, "utf8");
-    } catch (error: any) {
-        console.warn(`[Decide] Impossibile salvare input LLM su file: ${error?.message ?? error}`);
-    }
-}
-
-async function logAstToFile(ast: string, iteration: number): Promise<void> {
-    const astDir = path.join(process.cwd(), "logs", "ast");
-    const ts = new Date().toISOString().replace(/:/g, "-").replace(/\./g, "-");
-    const filePath = path.join(astDir, `ast-${ts}-iter-${iteration}.txt`);
-
-    try {
-        await mkdir(astDir, { recursive: true });
-        await appendFile(filePath, ast, "utf8");
-    } catch (error: any) {
-        console.warn(`[Decide] Impossibile salvare AST su file: ${error?.message ?? error}`);
-    }
-}
-
 export function setPageForNodes(page: Page): void {
     currentPage = page;
 }
 
 export async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
-    await sleep(500);
     console.log("-> [Observe] Analisi del DOM corrente...");
     await Promise.race([
         currentPage.waitForLoadState("load"),
         new Promise(resolve => setTimeout(resolve, 3000))
     ]);
     const currentUrl = currentPage.url();
-    const result = await extractSimplifiedDOMWithRetry(currentPage);
+    const domAst = await extractSimplifiedDOMWithRetry(currentPage);
 
-    return { currentUrl, domAst: result.tree, domElements: JSON.stringify(result.elements) };
+    return { currentUrl, domAst };
 }
 
 export async function decideNode(
     state: AgentState,
     llmWithTools: any
 ): Promise<Partial<AgentState>> {
-    await sleep(500);
     console.log("-> [Decide] L'LLM sta scegliendo il tool da invocare...");
 
     const objectiveDomains = extractObjectiveDomains(state.objective);
     const nextTargetDomain = findNextTargetDomain(objectiveDomains, state.completedDomains);
 
     if (objectiveDomains.length > 0 && nextTargetDomain === null) {
-        console.log("[Decide] Tutti i domini dell'obiettivo visitati — l'LLM deciderà se proseguire o chiamare done.");
+        console.log("[Decide] Tutti i domini dell'obiettivo risultano completati.");
+        return { isFinished: true, lastToolCall: null };
     }
 
     const historyBlock = state.actionHistory.length > 0
-        ? `\nActions already executed (DO NOT repeat):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
+        ? `\nAzioni già eseguite (NON ripetere queste):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
         : '';
 
     const sequenceBlock = objectiveDomains.length > 0
-        ? `\nObjective domains in order: ${objectiveDomains.join(" -> ")}\nCompleted domains: ${state.completedDomains.length > 0 ? state.completedDomains.join(", ") : "none"}\nNext target domain: ${nextTargetDomain ?? "none"}\n`
+        ? `\nDomini obiettivo in ordine: ${objectiveDomains.join(" -> ")}\nDomini completati: ${state.completedDomains.length > 0 ? state.completedDomains.join(", ") : "nessuno"}\nProssimo dominio target: ${nextTargetDomain ?? "nessuno"}\n`
         : "";
 
-    const progressBlock = state.progress
-        ? `\n📋 YOUR PROGRESS CHECKPOINT (what you wrote last time):\n${state.progress}\n`
-        : "";
+    const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
 
-    console.log("--- DOM TREE (che vede l'LLM) ---\n" + state.domAst + "\n--- END TREE ---");
+    const prompt = `Sei un agente di automazione web autonomo.
+        Il tuo obiettivo finale è: ${state.objective}
+        Ti trovi attualmente all'URL: ${state.currentUrl}
+        ${historyBlock}
+        ${sequenceBlock}
+        Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
+        ${compactAstForPrompt}
 
-    const prompt = `You are an autonomous web automation agent.
-Your final objective is: ${state.objective}
-You are currently at URL: ${state.currentUrl}
-${historyBlock}
-${sequenceBlock}
-${progressBlock}
-Here is the DOM tree of the page (indented = hierarchy, tag#id.class[attrs] text):
-${state.domAst}
-
-To interact, invoke 'execute_web_action' with:
-- tag: the HTML tag (e.g. 'a', 'button', 'input')
-- text: the visible text of the element
-- attrs: key identifying attributes (e.g. {"href": "/wiki/Ferrari", "placeholder": "Cerca"})
-For 'click', 'fill', 'select' you MUST provide tag + enough info to locate the element.
-For 'goto' provide the URL.
-Call 'done' ONLY when the entire objective is complete.`;
-
+Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
+    
     const reinforcedPrompt = `${prompt}
 
-Operating rules:
-- If you are not on the correct page yet, or the current URL is empty/not relevant, immediately use action='goto'.
-- Do not repeat actions already present in history.`;
-
+Regole operative:
+- Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
+- Non ripetere azioni gia' presenti nello storico.`;
+    
     const sequenceRule = nextTargetDomain
-        ? `\n- Use action='goto' only toward the next target domain: ${nextTargetDomain}. Do not return to already completed domains.`
+        ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
         : "";
 
     const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
 
     incrementIterationCounter();
     const estimatedInputTokens = estimateInputTokens(finalPrompt);
-    const llmMessages = [new HumanMessage(finalPrompt)];
-
-    await logLlmInput({
-        timestamp: new Date().toISOString(),
-        iteration: llmIterationCounter,
-        currentUrl: state.currentUrl,
-        objective: state.objective,
-        messages: llmMessages.map((msg) => ({
-            role: "user",
-            content: typeof msg.content === "string" ? msg.content : JSON.stringify(msg.content)
-        }))
-    });
-
-    await logAstToFile(finalPrompt, llmIterationCounter);
-
-    const response = await llmWithTools.invoke(llmMessages);
+    
+    const response = await llmWithTools.invoke([new HumanMessage(finalPrompt)]);
     const reportedInputTokens = getReportedInputTokens(response);
     recordIterationTokens(estimatedInputTokens, reportedInputTokens, llmIterationCounter);
 
@@ -142,8 +97,7 @@ Operating rules:
         const toolCall = toolCalls[0];
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
-            const progress = toolCall.args?.progress || state.progress;
-            return { lastToolCall: toolCall.args, noToolCallStreak: 0, progress };
+            return { lastToolCall: toolCall.args, noToolCallStreak: 0 };
         }
     }
 
@@ -157,7 +111,6 @@ Operating rules:
 }
 
 export async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
-    await sleep(500);
     if (state.isFinished) {
         return { isFinished: true, lastToolCall: null };
     }
@@ -167,7 +120,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         return { isFinished: true, lastToolCall: null };
     }
 
-    console.log(`-> [Execute] Azione: ${decision.action} su <${decision.tag ?? '?'}> "${decision.text ?? ''}" (${decision.reasoning})`);
+    console.log(`-> [Execute] Azione: ${decision.action} su ID: ${decision.agentId ?? 'N/A'} (Motivazione: ${decision.reasoning})`);
 
     if (decision.action === 'done') {
         return { isFinished: true, lastToolCall: null };
@@ -217,59 +170,56 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     let updatedCompletedDomains = state.completedDomains;
 
     try {
-        const locator = decision.tag
-            ? await resolveLocator(decision.tag, decision.text, decision.attrs)
-            : null;
-
         switch (decision.action) {
-            case 'click': {
-                if (!locator) throw new Error("Azione 'click' richiede tag.");
+            case 'click':
+                if (!decision.agentId) throw new Error("Azione 'click' richiede agentId.");
+                {
+                    const clickTarget = parseDomAst(state.domAst).find((el) => el.agentId === decision.agentId);
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.click();
 
-                const elements = parseDomElements(state.domElements);
-                const clickTarget = elements.find((el) =>
-                    el.tagName === decision.tag &&
-                    el.text === decision.text
-                );
+                    const domain = getDomainFromUrl(currentPage.url());
+                    const consentClick = isConsentLikeElement(clickTarget);
+                    const resultLikeClick = domain.includes("youtube.")
+                        ? isYoutubeResultLikeElement(clickTarget) && !consentClick
+                        : !consentClick;
 
-                await locator.waitFor({ state: "attached", timeout: 5000 });
-                await locator.click();
-
-                const domain = getDomainFromUrl(currentPage.url());
-                const consentClick = isConsentLikeElement(clickTarget);
-                const resultLikeClick = domain.includes("youtube.")
-                    ? isYoutubeResultLikeElement(clickTarget) && !consentClick
-                    : !consentClick;
-
-                updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
-                    ...prev,
-                    clicked: true,
-                    clickedResult: prev.clickedResult || resultLikeClick,
-                    cookieHandled: prev.cookieHandled || consentClick
-                }));
-                updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
+                    updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                        ...prev,
+                        clicked: true,
+                        clickedResult: prev.clickedResult || resultLikeClick,
+                        cookieHandled: prev.cookieHandled || consentClick
+                    }));
+                    updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
+                }
                 break;
-            }
-            case 'fill': {
-                if (!locator) throw new Error("Azione 'fill' richiede tag.");
-                await locator.waitFor({ state: "attached", timeout: 5000 });
-                await locator.fill(decision.value || "");
+            case 'fill':
+                if (!decision.agentId) throw new Error("Azione 'fill' richiede agentId.");
+                {
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.fill(decision.value || "");
 
-                const domain = getDomainFromUrl(currentPage.url());
-                updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
-                    ...prev,
-                    filled: true
-                }));
+                    const domain = getDomainFromUrl(currentPage.url());
+                    updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                        ...prev,
+                        filled: true
+                    }));
+                }
                 break;
-            }
-            case 'select': {
-                if (!locator) throw new Error("Azione 'select' richiede tag.");
-                await locator.waitFor({ state: "attached", timeout: 5000 });
-                await locator.selectOption(decision.value || "");
+            case 'select':
+                if (!decision.agentId) throw new Error("Azione 'select' richiede agentId.");
+                {
+                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    await locator.waitFor({ state: "attached", timeout: 5000 });
+                    await locator.selectOption(decision.value || "");
+                }
                 break;
-            }
             case 'enter':
-                if (locator) {
+                if (decision.agentId) {
                     try {
+                        const locator = await resolveLocatorWithFallback(state, decision.agentId);
                         await locator.focus({ timeout: 2000 });
                     } catch {
                         // elemento non più trovabile, il focus è già sul campo giusto
@@ -293,7 +243,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         console.error(`Errore durante l'interazione sul browser: ${e.message}`);
     }
 
-    const historyEntry = `${decision.action} su <${decision.tag ?? '?'}> "${decision.text ?? ''}"${decision.value ? ` valore="${decision.value}"` : ''}${decision.url ? ` verso ${decision.url}` : ''}`;
+    const historyEntry = `${decision.action}${decision.agentId ? ` su ${decision.agentId}` : ''}${decision.value ? ` con valore "${decision.value}"` : ''}${decision.url ? ` verso ${decision.url}` : ''}`;
     return {
         isFinished: false,
         lastToolCall: null,
