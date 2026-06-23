@@ -9,34 +9,6 @@ import type { LLM_TYPES } from "./types.js";
 export function getLLM(provider: LLM_TYPES): BaseChatModel {
     switch (provider) {
         case 'openai':
-<<<<<<< HEAD
-=======
-            return new ChatOpenAI({
-                model: "gpt-4o",
-                temperature: 0
-            });
-        case 'anthropic':
-            return new ChatAnthropic({
-                model: "claude-3-5-sonnet-20240620",
-                temperature: 0
-            });
-        case 'google':
-            return new ChatGoogleGenerativeAI({
-                model: "gemma-4-31b-it",
-                temperature: 0
-            });
-        case 'ollama':
-            return new ChatOllama({
-                baseUrl: "http://localhost:11434",
-                model: "gemma4:31b-cloud",
-                temperature: 0 
-            });
-            // TESTED OLLAMA MODELS:
-            // gemma4:31b-cloud
-            // gemma4:e2b
-            // qwen3:1.7b
-        case 'lmstudio':
->>>>>>> 9afb263 (code refactor => divided index.ts into single files, each file's function or content is explained in the README.ts)
             return new ChatOpenAI({
                 model: "gpt-4o",
                 temperature: 0
