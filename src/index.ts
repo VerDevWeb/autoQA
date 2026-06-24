@@ -3,7 +3,8 @@ import { chromium } from "playwright";
 import type { Browser, Page } from "playwright";
 import * as dotenv from "dotenv";
 import { getLLM } from "./modelController.js";
-import { AgentStateDef, webActionSchema } from "./types.js";
+import { AgentStateDef } from "./types.js";
+import { allTools } from "./tools/tools.js";
 import { observeNode, decideNode, executeNode, setPageForNodes } from "./nodes.js";
 import { setPageInstance } from "./locators.js";
 import { startNetworkCapture } from "./networkCapture.js";
@@ -30,11 +31,7 @@ if (typeof baseLlm.bindTools !== "function") {
     throw new Error(`Il provider selezionato non supporta nativamente il tool calling.`);
 }
 
-const llmWithTools = baseLlm.bindTools([{
-    name: "execute_web_action",
-    description: "Esegue un'azione sulla pagina web basandosi sugli ID dell'AST fornito.",
-    schema: webActionSchema
-}]);
+const llmWithTools = baseLlm.bindTools(allTools);
 
 // Graph is built here
 const workflow = new StateGraph(AgentStateDef)

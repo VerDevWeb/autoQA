@@ -132,21 +132,21 @@ export async function decideNode(
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
-    Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
+    Analizza l'AST e invoca il PROSSIMO tool disponibile per avanzare verso l'obiettivo.`;
         
     const reinforcedPrompt = `${prompt}
 
     Regole operative:
-    - Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
+    - Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito il tool 'goto' con un URL completo (https://...).
     - Non ripetere azioni gia' presenti nello storico.
-    - Se l'obiettivo dice "aspetta X secondi" usa SUBITO action='wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
+    - Se l'obiettivo dice "aspetta X secondi" usa SUBITO il tool 'wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
     - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
-    - Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
-    - Usa action='check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
-    - Usa action='send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
+    - Ogni volta che chiami un tool, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
+    - Usa il tool 'check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
+    - Usa il tool 'send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
         
     const sequenceRule = nextTargetDomain
-        ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
+        ? `\n- Usa il tool 'goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
         : "";
 
     const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
@@ -168,7 +168,7 @@ export async function decideNode(
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
             const progress = toolCall.args?.progress;
-            const updates: any = { lastToolCall: toolCall.args, noToolCallStreak: 0, networkLog: "" };
+            const updates: any = { lastToolCall: { name: toolCall.name, args: toolCall.args }, noToolCallStreak: 0, networkLog: "" };
             if (progress) updates.tasks = progress;
             return updates;
         }
@@ -193,13 +193,13 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         return { isFinished: true, lastToolCall: null };
     }
 
-    console.log(`-> [Execute] Azione: ${decision.action} su ID: ${decision.agentId ?? 'N/A'} (Motivazione: ${decision.reasoning})`);
+    console.log(`-> [Execute] Azione: ${decision.name} su ID: ${decision.args?.agentId ?? 'N/A'} (Motivazione: ${decision.args?.reasoning})`);
 
-    if (decision.action === 'done') {
+    if (decision.name === 'done') {
         return { isFinished: true, lastToolCall: null };
     }
 
-    if (decision.action === 'check_network') {
+    if (decision.name === 'check_network') {
         // Anti-loop: se l'ultima azione era già check_network, blocca
         const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
         if (lastAction.includes("check_network")) {
@@ -208,14 +208,14 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         }
         const log = getNetworkLog();
         console.log(`-> [Execute] Richieste di rete registrate:\n${log}`);
-        const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.taskName);
+        const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.args?.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, networkLog: log, actionHistory: [...state.actionHistory, "check_network eseguito"] };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
         return updates;
     }
 
-    if (decision.action === 'send_email') {
-        const targetEmail = decision.to;
+    if (decision.name === 'send_email') {
+        const targetEmail = decision.args?.to;
         if (!targetEmail) {
             console.error("Azione 'send_email' senza destinatario.");
             return { isFinished: false, lastToolCall: null, networkLog: "" };
@@ -228,13 +228,13 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                 actionHistory: [...state.actionHistory, blocked]
             };
         }
-        const subject = decision.subject || `Report autoQA - ${new Date().toLocaleDateString('it-IT')}`;
+        const subject = decision.args?.subject || `Report autoQA - ${new Date().toLocaleDateString('it-IT')}`;
         const historySummary = state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n');
-        const body = decision.body || `Resoconto dell'agente:\n\nObiettivo: ${state.objective}\n\nAzioni eseguite:\n${historySummary}\n\nChecklist:\n${state.tasks || "nessuna"}`;
+        const body = decision.args?.body || `Resoconto dell'agente:\n\nObiettivo: ${state.objective}\n\nAzioni eseguite:\n${historySummary}\n\nChecklist:\n${state.tasks || "nessuna"}`;
         try {
             const result = await sendEmail(targetEmail, subject, body);
             console.log(`-> [Execute] ${result}`);
-            const updatedTasks = autoMarkTask(state.tasks, ["email", "invia", "report", "send"], decision.taskName);
+            const updatedTasks = autoMarkTask(state.tasks, ["email", "invia", "report", "send"], decision.args?.taskName);
             const updates: any = { isFinished: false, lastToolCall: null, networkLog: "" };
             if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
             updates.actionHistory = [...state.actionHistory, `send_email a ${targetEmail}`];
@@ -245,8 +245,8 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         }
     }
 
-    if (decision.action === 'goto') {
-        const targetUrl = decision.url || decision.value;
+    if (decision.name === 'goto') {
+        const targetUrl = decision.args?.url;
         if (!targetUrl) {
             console.error("Azione 'goto' senza URL.");
             return { isFinished: false, lastToolCall: null };
@@ -310,18 +310,18 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             console.error(`Errore durante la navigazione verso ${targetUrl}: ${e.message}`);
         }
 
-        const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "vai su", "goto", "apri"], decision.taskName);
+        const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "vai su", "goto", "apri"], decision.args?.taskName);
         const gotoUpdates: any = { isFinished: false, lastToolCall: null, objective: stripGotoFromObjective(state.objective, targetUrl) };
         if (gotoUpdatedTasks !== state.tasks) gotoUpdates.tasks = gotoUpdatedTasks;
         return gotoUpdates;
     }
 
-    if (decision.action === 'wait') {
-        const seconds = decision.seconds ?? 5;
+    if (decision.name === 'wait') {
+        const seconds = decision.args?.seconds ?? 5;
         console.log(`-> [Execute] Attesa di ${seconds} secondi...`);
         await new Promise(resolve => setTimeout(resolve, seconds * 1000));
         console.log(`-> [Execute] Attesa completata.`);
-        const updatedTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"], decision.taskName);
+        const updatedTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"], decision.args?.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, objective: stripWaitFromObjective(state.objective) };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
         return updates;
@@ -331,12 +331,12 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     let updatedCompletedDomains = state.completedDomains;
 
     try {
-        switch (decision.action) {
+        switch (decision.name) {
             case 'click':
-                if (!decision.agentId) throw new Error("Azione 'click' richiede agentId.");
+                if (!decision.args?.agentId) throw new Error("Azione 'click' richiede agentId.");
                 {
-                    const clickTarget = parseDomAst(state.domAst).find((el) => el.agentId === decision.agentId);
-                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    const clickTarget = parseDomAst(state.domAst).find((el) => el.agentId === decision.args!.agentId);
+                    const locator = await resolveLocatorWithFallback(state, decision.args!.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
                     await locator.click();
 
@@ -356,11 +356,11 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                 }
                 break;
             case 'fill':
-                if (!decision.agentId) throw new Error("Azione 'fill' richiede agentId.");
+                if (!decision.args?.agentId) throw new Error("Azione 'fill' richiede agentId.");
                 {
-                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    const locator = await resolveLocatorWithFallback(state, decision.args!.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
-                    await locator.fill(decision.value || "");
+                    await locator.fill(decision.args?.value || "");
 
                     const domain = getDomainFromUrl(currentPage.url());
                     updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
@@ -370,17 +370,17 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                 }
                 break;
             case 'select':
-                if (!decision.agentId) throw new Error("Azione 'select' richiede agentId.");
+                if (!decision.args?.agentId) throw new Error("Azione 'select' richiede agentId.");
                 {
-                    const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                    const locator = await resolveLocatorWithFallback(state, decision.args!.agentId);
                     await locator.waitFor({ state: "attached", timeout: 5000 });
-                    await locator.selectOption(decision.value || "");
+                    await locator.selectOption(decision.args?.value || "");
                 }
                 break;
             case 'enter':
-                if (decision.agentId) {
+                if (decision.args?.agentId) {
                     try {
-                        const locator = await resolveLocatorWithFallback(state, decision.agentId);
+                        const locator = await resolveLocatorWithFallback(state, decision.args!.agentId);
                         await locator.focus({ timeout: 2000 });
                     } catch {
                         // elemento non più trovabile, il focus è già sul campo giusto
@@ -404,7 +404,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         console.error(`Errore durante l'interazione sul browser: ${e.message}`);
     }
 
-    const historyEntry = `${decision.action}${decision.agentId ? ` su ${decision.agentId}` : ''}${decision.value ? ` con valore "${decision.value}"` : ''}${decision.url ? ` verso ${decision.url}` : ''}`;
+    const historyEntry = `${decision.name}${decision.args?.agentId ? ` su ${decision.args?.agentId}` : ''}${decision.args?.value ? ` con valore "${decision.args?.value}"` : ''}${decision.args?.url ? ` verso ${decision.args?.url}` : ''}`;
     return {
         isFinished: false,
         lastToolCall: null,
