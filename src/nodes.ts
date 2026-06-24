@@ -2,30 +2,9 @@ import type { Page } from "playwright";
 import type { AgentState } from "./types.js";
 import { HumanMessage } from "@langchain/core/messages";
 import { extractSimplifiedDOMWithRetry, buildCompactAstForPrompt, parseDomAst } from "./ast.js";
-import {
-    extractObjectiveDomains,
-    findNextTargetDomain,
-    getDomainFromUrl,
-    domainsMatch,
-    upsertDomainStatus,
-    tryMarkCompletedDomain,
-    isConsentLikeElement,
-    isYoutubeResultLikeElement,
-} from "./domains.js";
+import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "./domains.js";
 import { resolveLocatorWithFallback } from "./locators.js";
-import {
-    incrementIterationCounter,
-    estimateInputTokens,
-    getReportedInputTokens,
-    recordIterationTokens,
-    llmIterationCounter,
-} from "./tokens.js";
-
-
-
-
-
-
+import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
 
 let currentPage: Page;
 
