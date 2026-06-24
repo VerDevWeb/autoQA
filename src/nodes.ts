@@ -6,6 +6,7 @@ import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domain
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
 import { getNetworkLog } from "./networkCapture.js";
+import { getConsoleLog, clearConsoleLog } from "./consoleCapture.js";
 import { isAllowedEmail, sendEmail } from "./email.js";
 
 // Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
@@ -100,7 +101,7 @@ export async function decideNode(
 
     if (objectiveDomains.length > 0 && nextTargetDomain === null) {
         console.log("[Decide] Tutti i domini dell'obiettivo risultano completati.");
-        return { isFinished: true, lastToolCall: null, networkLog: "" };
+        return { isFinished: true, lastToolCall: null, networkLog: "", consoleLogs: "" };
     }
 
     const historyBlock = state.actionHistory.length > 0
@@ -122,6 +123,10 @@ export async function decideNode(
         ? `\nRegistro delle ultime richieste di rete:\n${state.networkLog}\n`
         : "";
 
+    const consoleBlock = state.consoleLogs
+        ? `\nMessaggi dalla console del browser (log, errori, warning):\n${state.consoleLogs}\n`
+        : "";
+
     const prompt = `Sei un agente di automazione web autonomo.
         Il tuo obiettivo finale è: ${state.objective}
         Ti trovi attualmente all'URL: ${state.currentUrl}
@@ -129,6 +134,7 @@ export async function decideNode(
         ${sequenceBlock}
         ${tasksBlock}
         ${networkBlock}
+        ${consoleBlock}
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
@@ -143,6 +149,7 @@ export async function decideNode(
     - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
     - Ogni volta che chiami un tool, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
     - Usa il tool 'check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
+    - I messaggi nella console del browser (💬 LOG, ⚠️ WARN, ❌ ERROR) ti aiutano a capire se la pagina ha generato errori o conferme. Se vedi errori in console, potresti dover correggere qualcosa.
     - Usa il tool 'send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
         
     const sequenceRule = nextTargetDomain
@@ -168,7 +175,9 @@ export async function decideNode(
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
             const progress = toolCall.args?.progress;
-            const updates: any = { lastToolCall: { name: toolCall.name, args: toolCall.args }, noToolCallStreak: 0, networkLog: "" };
+            const consoleLog = getConsoleLog();
+            clearConsoleLog();
+            const updates: any = { lastToolCall: { name: toolCall.name, args: toolCall.args }, noToolCallStreak: 0, networkLog: "", consoleLogs: consoleLog };
             if (progress) updates.tasks = progress;
             return updates;
         }
@@ -177,10 +186,10 @@ export async function decideNode(
     const nextNoToolCallStreak = state.noToolCallStreak + 1;
     console.warn(`L'LLM non ha invocato tool (tentativo ${nextNoToolCallStreak}/3).`);
     if (nextNoToolCallStreak >= 3) {
-        return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "" };
+        return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "", consoleLogs: "" };
     }
 
-    return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "" };
+    return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "", consoleLogs: "" };
 }
 
 export async function executeNode(state: AgentState): Promise<Partial<AgentState>> {

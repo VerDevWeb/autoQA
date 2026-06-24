@@ -8,6 +8,7 @@ import { allTools } from "./tools/tools.js";
 import { observeNode, decideNode, executeNode, setPageForNodes } from "./nodes.js";
 import { setPageInstance } from "./locators.js";
 import { startNetworkCapture } from "./networkCapture.js";
+import { startConsoleCapture } from "./consoleCapture.js";
 import { logSessionTokenSummary } from "./tokens.js";
 
 dotenv.config();
@@ -59,6 +60,7 @@ async function run() {
         setPageInstance(page);
         setPageForNodes(page);
         startNetworkCapture(page);
+        startConsoleCapture(page);
 
         await page.goto("about:blank");
 
@@ -73,6 +75,7 @@ async function run() {
             noToolCallStreak: 0,
             isFinished: false,
             tasks: "",
+            consoleLogs: "",
             networkLog: ""
         };
 
