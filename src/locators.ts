@@ -8,6 +8,12 @@ export function setPageInstance(page: Page): void {
     currentPage = page;
 }
 
+/*
+    This function resolves an agent element id
+
+    Pipeline:
+    executeNode calls the resolveLocatorWithFallback giving to it the current agent state and the agent element id in order to convert this into real html attributes that are related to the element 
+*/
 export async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
     const primary = currentPage.locator(`[data-agent-id="${agentId}"]`);
     if (await primary.count() > 0) {

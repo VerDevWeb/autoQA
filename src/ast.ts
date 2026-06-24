@@ -1,7 +1,9 @@
 import type { Page } from "playwright";
 import type { AstElement } from "./types.js";
 
-// --- ESTRAZIONE AST AD ALTA FEDELTÀ ---
+/*
+    This function extract simplified DOM with all necessary information for the agent in order to "see" the page and have the necessary context to execute actions on the page such as clicks
+*/
 export async function extractSimplifiedDOM(page: Page): Promise<string> {
     return await page.evaluate(() => {
         let counter = 0;

@@ -3,10 +3,18 @@ import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatOllama } from "@langchain/ollama";
 import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
-import type { LLM_TYPES } from "./types.js";
+import type { LLM_PROVIDERS } from "./types.js";
 
-// --- 1. CONFIGURAZIONE PROVIDER LLM ---
-export function getLLM(provider: LLM_TYPES): BaseChatModel {
+
+/*
+    THIS FILE HANDLES THE LLM PROVIDER TO CHOSE FOR RUNNING THE AGENT
+
+    this is made possbile thanks to the getLLM method that let's you:
+    - select the LLMProvider (chose one from LLM_PROVIDERS) that the agent's brain will use
+    - select the LLM (LLM's APIs codename) that the agent's brain will use
+*/
+
+export function getLLM(provider: LLM_PROVIDERS): BaseChatModel {
     switch (provider) {
         case 'openai':
             return new ChatOpenAI({

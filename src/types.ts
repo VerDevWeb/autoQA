@@ -1,18 +1,27 @@
 import { Annotation } from "@langchain/langgraph";
 import { z } from "zod";
 
-export type LLM_TYPES = 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmstudio';
+// All supported LLM Providers
+export type LLM_PROVIDERS = 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmstudio';
 
-// --- DEFINIZIONI SCHEMA ZOD ---
+
+// Definition of the tools that the agent can call
 export const webActionSchema = z.object({
-    action: z.enum(["click", "fill", "select", "enter", "goto", "done"]).describe("L'azione da eseguire sul browser. Usa 'enter' per premere Invio e 'goto' per navigare a un URL."),
-    agentId: z.string().optional().describe("L'ID dell'elemento target (es. 'agent-el-12'). Non serve per 'done' e 'goto'. Per 'enter' e' opzionale se l'elemento e' gia' in focus."),
-    value: z.string().optional().describe("Il valore da inserire (per 'fill') o da selezionare (per 'select')."),
-    url: z.string().url().optional().describe("URL di destinazione da usare quando action='goto'."),
-    reasoning: z.string().describe("La spiegazione logica dietro a questa specifica azione.")
-}).describe("Esegue un'azione guidata sulla pagina web corrente sulla base dell'AST analizzato.");
+    action: z.enum(["click", "fill", "select", "enter", "goto", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter and 'goto' to navigate to a URL."),
+    agentId: z.string().optional().describe("The target element ID (e.g. 'agent-el-12'). Not required for 'done' and 'goto'. For 'enter', it is optional if the element is already focused."),
+    value: z.string().optional().describe("The value to input (for 'fill') or select (for 'select')."),
+    url: z.string().url().optional().describe("Destination URL to use when action='goto'."),
+    reasoning: z.string().describe("The logical explanation behind this specific action.")
+}).describe("Executes a guided action on the current web page based on the analyzed AST.");
 
-// --- DEFINIZIONI TIPI ---
+// --- Types definition ---
+// DomainStatus tracks the progress of key actions for a single domain/site.
+// In this project, it records whether the following steps have already occurred:
+// 1. filled: a field was filled.
+// 2. submitted: an input/form was submitted (e.g. Enter/form submit).
+// 3. clicked: a relevant click action was performed.
+// 4. clickedResult: a useful search/result item was clicked.
+// 5. cookieHandled: the cookie banner was handled.
 export type DomainStatus = {
     filled: boolean;
     submitted: boolean;

@@ -1,4 +1,10 @@
-// --- GESTIONE TOKEN E LOGGING ---
+/*
+    This file handles token logging in order to track the token consumed by the LLM chosen in real time
+
+    This can be obviusly also used to make predictions on AI Token Bills
+    
+    But the real advantage is that we can see the patterns that make the agent consumes so that we can maybe give more detailed instructions to the agent in order to consume less tokens
+*/
 export let llmIterationCounter = 0;
 export let totalEstimatedInputTokens = 0;
 export let totalReportedInputTokens = 0;

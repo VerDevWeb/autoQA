@@ -10,10 +10,19 @@ import { logSessionTokenSummary } from "./tokens.js";
 
 dotenv.config();
 
-// --- CONSTANTI ---
+/*
+    Here is set the agent objective that will be divided in tasks in order to execute them one at a time
+
+    LANGUAGE: You can use whatever language you like, usually English prompts give better results because LLM are mostly trained in English language
+*/
 const OBJECTIVE = "Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato";
 
-// --- SETUP LLM ---
+/*
+    Here I chose the provider I want
+
+    If you chose LLM Frontier providers such as Anthropic, Google, OpenAI, or LM Studio make sure to put your api key into the .env file!
+    LM Studio searches for OPENAI_API_KEY exactly as OpenAI because of the fact that LM Studio exposes an OpenAI compatible API server, so an API key is required in order to handle requests to his enpoints correctly
+*/
 const baseLlm = getLLM('ollama');
 
 if (typeof baseLlm.bindTools !== "function") {
@@ -26,7 +35,7 @@ const llmWithTools = baseLlm.bindTools([{
     schema: webActionSchema
 }]);
 
-// --- COSTRUZIONE GRAFO ---
+// Graph is built here
 const workflow = new StateGraph(AgentStateDef)
     .addNode("observe", observeNode)
     .addNode("decide", (state) => decideNode(state, llmWithTools))
