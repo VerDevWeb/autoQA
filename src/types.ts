@@ -7,11 +7,14 @@ export type LLM_PROVIDERS = 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmst
 
 // Definition of the tools that the agent can call
 export const webActionSchema = z.object({
-    action: z.enum(["click", "fill", "select", "enter", "goto", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter and 'goto' to navigate to a URL."),
+    action: z.enum(["click", "fill", "select", "enter", "goto", "wait", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter, 'goto' to navigate to a URL, and 'wait' to pause for a given number of seconds."),
     agentId: z.string().optional().describe("The target element ID (e.g. 'agent-el-12'). Not required for 'done' and 'goto'. For 'enter', it is optional if the element is already focused."),
     value: z.string().optional().describe("The value to input (for 'fill') or select (for 'select')."),
     url: z.string().url().optional().describe("Destination URL to use when action='goto'."),
-    reasoning: z.string().describe("The logical explanation behind this specific action.")
+    seconds: z.number().positive().optional().describe("Number of seconds to wait when action='wait'."),
+    reasoning: z.string().describe("The logical explanation behind this specific action."),
+    taskName: z.string().optional().describe("Il NOME ESATTO del task in checklist che questa azione completa (es. 'Attendere 10 secondi'). Copia la riga dalla checklist senza la checkbox."),
+    progress: z.string().optional().describe("Task checklist aggiornata. Formato:\n- [x] task completato\n- [ ] task da fare\nUsa questo campo per tracciare cosa hai fatto e cosa manca.")
 }).describe("Executes a guided action on the current web page based on the analyzed AST.");
 
 // --- Types definition ---
@@ -50,6 +53,7 @@ export const AgentStateDef = Annotation.Root({
     domainStatus: Annotation<Record<string, DomainStatus>>({ reducer: (x, y) => y ?? x, default: () => ({}) }),
     noToolCallStreak: Annotation<number>({ reducer: (x, y) => y ?? x, default: () => 0 }),
     isFinished: Annotation<boolean>({ reducer: (x, y) => y ?? x, default: () => false }),
+    tasks: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
 });
 
 export type AgentState = typeof AgentStateDef.State;

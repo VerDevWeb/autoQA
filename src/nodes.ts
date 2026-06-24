@@ -6,6 +6,60 @@ import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domain
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
 
+// Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
+function extractWaitSeconds(objective: string): number | null {
+    const match = objective.match(/(?:aspetta|attendi|wait)\s*(\d+)\s*(?:secondi?|seconds?|sec)/i);
+    return match ? parseInt(match[1] ?? "", 10) || null : null;
+}
+
+// Rimuove la parte "Vai su URL" dall'obiettivo
+function stripGotoFromObjective(objective: string, url: string): string {
+    const urlPattern = escapeRegex(url);
+    const gotoRegex = new RegExp(`(?:vai\\s*(?:su|a)?\\s*)?${urlPattern}[.,]?\\s*`, 'gi');
+    return objective.replace(gotoRegex, "").replace(/\s+,/g, ",").replace(/,\s*,/g, ",").trim();
+}
+
+// Rimuove "aspetta X secondi" dall'obiettivo
+function stripWaitFromObjective(objective: string): string {
+    return objective.replace(/(?:aspetta|attendi|wait)\s*\d+\s*(?:secondi?|seconds?|sec)[.,]?\s*/gi, "")
+        .replace(/\s+,/g, ",").replace(/,\s*,/g, ",").trim();
+}
+
+function escapeRegex(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Cerca una linea nella checklist che contiene taskName (se fornito) o una delle keyword e la segna [x]
+function autoMarkTask(tasks: string, keywords: string[], taskName?: string): string {
+    if (!tasks) return tasks;
+    const lines = tasks.split('\n');
+    let found = false;
+    const updated = lines.map(line => {
+        if (found) return line;
+        const isUnchecked = line.match(/-\s*\[\s*\]/);
+        if (!isUnchecked) return line;
+        const lower = line.toLowerCase();
+        // Se taskName è fornito, match esatto su quella stringa
+        if (taskName) {
+            if (lower.includes(taskName.toLowerCase())) {
+                found = true;
+                console.log(`[Task] Auto-marcato [x] (match esatto): ${line.trim()}`);
+                return line.replace(/-\s*\[\s*\]/, '- [x]');
+            }
+            return line;
+        }
+        // Altrimenti match per keyword
+        const match = keywords.some(kw => lower.includes(kw));
+        if (match) {
+            found = true;
+            console.log(`[Task] Auto-marcato [x]: ${line.trim()}`);
+            return line.replace(/-\s*\[\s*\]/, '- [x]');
+        }
+        return line;
+    });
+    return updated.join('\n');
+}
+
 let currentPage: Page;
 
 export function setPageForNodes(page: Page): void {
@@ -57,11 +111,17 @@ export async function decideNode(
 
     const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
 
+    // Task checklist
+    const tasksBlock = state.tasks
+        ? `\nLa tua checklist task (segna [x] sui completati via 'progress'):\n${state.tasks}\n`
+        : `\nNon hai ancora una checklist. CREALA ORA nel campo 'progress' del tool call, in formato:\n- [ ] task 1\n- [ ] task 2\n- [ ] task 3\n...\n`;
+
     const prompt = `Sei un agente di automazione web autonomo.
         Il tuo obiettivo finale è: ${state.objective}
         Ti trovi attualmente all'URL: ${state.currentUrl}
         ${historyBlock}
         ${sequenceBlock}
+        ${tasksBlock}
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
@@ -71,13 +131,20 @@ Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSI
 
 Regole operative:
 - Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
-- Non ripetere azioni gia' presenti nello storico.`;
+- Non ripetere azioni gia' presenti nello storico.
+- Se l'obiettivo dice "aspetta X secondi" usa SUBITO action='wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
+- NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
+- Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".`;
     
     const sequenceRule = nextTargetDomain
         ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
         : "";
 
     const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
+
+    console.log("=== PROMPT INVIATO ALL'LLM ===");
+    console.log(finalPrompt);
+    console.log("=== FINE PROMPT ===");
 
     incrementIterationCounter();
     const estimatedInputTokens = estimateInputTokens(finalPrompt);
@@ -91,7 +158,10 @@ Regole operative:
         const toolCall = toolCalls[0];
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
-            return { lastToolCall: toolCall.args, noToolCallStreak: 0 };
+            const progress = toolCall.args?.progress;
+            const updates: any = { lastToolCall: toolCall.args, noToolCallStreak: 0 };
+            if (progress) updates.tasks = progress;
+            return updates;
         }
     }
 
@@ -127,6 +197,34 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             return { isFinished: false, lastToolCall: null };
         }
 
+        // Anti-loop: se lo stesso identico URL e' gia' stato navigato, blocca e auto-esegue l'attesa se richiesta
+        const alreadyNavigated = state.actionHistory.some(h => h.includes(`verso ${targetUrl}`));
+        if (alreadyNavigated) {
+            const waitSeconds = extractWaitSeconds(state.objective);
+            const waitAlreadyDone = state.actionHistory.some(h => h.includes("wait") || h.includes("attesa"));
+            if (waitSeconds && !waitAlreadyDone) {
+                console.log(`[AutoWait] Rilevato loop goto, auto-attesa di ${waitSeconds} secondi...`);
+                await new Promise(resolve => setTimeout(resolve, waitSeconds * 1000));
+                console.log("[AutoWait] Attesa completata, proseguo.");
+                const autoWaitTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"]);
+                const autoWaitUpdates: any = {
+                    isFinished: false,
+                    lastToolCall: null,
+                    actionHistory: [...state.actionHistory, `auto-attesa ${waitSeconds}s eseguita dopo goto loop`],
+                    objective: stripWaitFromObjective(state.objective)
+                };
+                if (autoWaitTasks !== state.tasks) autoWaitUpdates.tasks = autoWaitTasks;
+                return autoWaitUpdates;
+            }
+            const blocked = `goto ignorato: ${targetUrl} gia' navigato prima (loop evitato)`;
+            console.warn(`[GuardRail] ${blocked}`);
+            return {
+                isFinished: false,
+                lastToolCall: null,
+                actionHistory: [...state.actionHistory, blocked]
+            };
+        }
+
         const objectiveDomains = extractObjectiveDomains(state.objective);
         const nextTargetDomain = findNextTargetDomain(objectiveDomains, state.completedDomains);
         const targetDomain = getDomainFromUrl(targetUrl);
@@ -157,7 +255,21 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             console.error(`Errore durante la navigazione verso ${targetUrl}: ${e.message}`);
         }
 
-        return { isFinished: false, lastToolCall: null };
+        const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "vai su", "goto", "apri"], decision.taskName);
+        const gotoUpdates: any = { isFinished: false, lastToolCall: null, objective: stripGotoFromObjective(state.objective, targetUrl) };
+        if (gotoUpdatedTasks !== state.tasks) gotoUpdates.tasks = gotoUpdatedTasks;
+        return gotoUpdates;
+    }
+
+    if (decision.action === 'wait') {
+        const seconds = decision.seconds ?? 5;
+        console.log(`-> [Execute] Attesa di ${seconds} secondi...`);
+        await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+        console.log(`-> [Execute] Attesa completata.`);
+        const updatedTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"], decision.taskName);
+        const updates: any = { isFinished: false, lastToolCall: null, objective: stripWaitFromObjective(state.objective) };
+        if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
+        return updates;
     }
 
     let updatedDomainStatus = state.domainStatus;

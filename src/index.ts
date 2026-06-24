@@ -15,7 +15,7 @@ dotenv.config();
 
     LANGUAGE: You can use whatever language you like, usually English prompts give better results because LLM are mostly trained in English language
 */
-const OBJECTIVE = "Vai su it.wikipedia.org, poi digita 'Reggio Emilia' nella barra di ricerca ed esegui la ricerca premendo Invio. Poi vai su youtube.com, cerca video sull'ai e clicca sul primo risultato";
+const OBJECTIVE = "";
 
 /*
     Here I chose the provider I want

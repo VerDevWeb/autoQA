@@ -8,7 +8,7 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
     return await page.evaluate(() => {
         let counter = 0;
         const elements: any[] = [];
-        const selector = 'a, button, input, select, textarea, [role="button"], [onclick], [cursor="pointer"]';
+        const selector = 'a, button, input, select, textarea, details, summary, label, dialog, [role="button"], [role="listbox"], [role="option"], [role="menuitem"], [role="combobox"], [role="tab"], [role="link"], [onclick], [cursor="pointer"], [contenteditable], [tabindex]:not([tabindex="-1"])';
         const interactables = document.querySelectorAll(selector);
 
         const bodyText = document.body?.innerText || '';
