@@ -5,7 +5,7 @@ import { extractSimplifiedDOMWithRetry, buildCompactAstForPrompt, parseDomAst } 
 import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "./domains.js";
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
-import { getNetworkLog, clearNetworkLog } from "./networkCapture.js";
+import { getNetworkLog } from "./networkCapture.js";
 
 // Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
 function extractWaitSeconds(objective: string): number | null {
@@ -99,7 +99,7 @@ export async function decideNode(
 
     if (objectiveDomains.length > 0 && nextTargetDomain === null) {
         console.log("[Decide] Tutti i domini dell'obiettivo risultano completati.");
-        return { isFinished: true, lastToolCall: null };
+        return { isFinished: true, lastToolCall: null, networkLog: "" };
     }
 
     const historyBlock = state.actionHistory.length > 0
@@ -166,7 +166,7 @@ Regole operative:
         if (toolCall) {
             console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
             const progress = toolCall.args?.progress;
-            const updates: any = { lastToolCall: toolCall.args, noToolCallStreak: 0 };
+            const updates: any = { lastToolCall: toolCall.args, noToolCallStreak: 0, networkLog: "" };
             if (progress) updates.tasks = progress;
             return updates;
         }
@@ -175,10 +175,10 @@ Regole operative:
     const nextNoToolCallStreak = state.noToolCallStreak + 1;
     console.warn(`L'LLM non ha invocato tool (tentativo ${nextNoToolCallStreak}/3).`);
     if (nextNoToolCallStreak >= 3) {
-        return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak };
+        return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "" };
     }
 
-    return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak };
+    return { isFinished: false, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "" };
 }
 
 export async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
@@ -199,7 +199,6 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
 
     if (decision.action === 'check_network') {
         const log = getNetworkLog();
-        clearNetworkLog();
         console.log(`-> [Execute] Richieste di rete registrate:\n${log}`);
         const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, networkLog: log };
