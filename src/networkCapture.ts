@@ -28,7 +28,7 @@ export function startNetworkCapture(page: Page): void {
         if (method === 'OPTIONS') return;
 
         addEntry({
-            url: truncateUrl(url, 200),
+            url: truncateUrl(url),
             method,
             status: response.status(),
             statusText: response.statusText(),
@@ -44,7 +44,7 @@ export function startNetworkCapture(page: Page): void {
         if (!relevantTypes.includes(resourceType)) return;
 
         addEntry({
-            url: truncateUrl(request.url(), 200),
+            url: truncateUrl(request.url()),
             method: request.method(),
             status: null,
             statusText: '',
@@ -55,7 +55,7 @@ export function startNetworkCapture(page: Page): void {
     });
 }
 
-function truncateUrl(url: string, max: number): string {
+function truncateUrl(url: string, max: number = 600): string {
     return url.length > max ? url.slice(0, max) + '...' : url;
 }
 

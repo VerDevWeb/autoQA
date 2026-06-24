@@ -198,10 +198,16 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     }
 
     if (decision.action === 'check_network') {
+        // Anti-loop: se l'ultima azione era già check_network, blocca
+        const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
+        if (lastAction.includes("check_network")) {
+            console.warn(`[GuardRail] check_network già chiamato, ignorato (loop evitato).`);
+            return { isFinished: false, lastToolCall: null, networkLog: "" };
+        }
         const log = getNetworkLog();
         console.log(`-> [Execute] Richieste di rete registrate:\n${log}`);
         const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.taskName);
-        const updates: any = { isFinished: false, lastToolCall: null, networkLog: log };
+        const updates: any = { isFinished: false, lastToolCall: null, networkLog: log, actionHistory: [...state.actionHistory, "check_network eseguito"] };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
         return updates;
     }
