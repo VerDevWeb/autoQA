@@ -32,7 +32,7 @@ function escapeRegex(value: string): string {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// Cerca una linea nella checklist che contiene taskName (se fornito) o una delle keyword e la segna [x]
+// Find a line in the checklist that matches taskName (if provided) or one of the keywords and mark it [x]
 function autoMarkTask(tasks: string, keywords: string[], taskName?: string): string {
     if (!tasks) return tasks;
     const lines = tasks.split('\n');
@@ -79,7 +79,7 @@ export function setPageForNodes(page: Page): void {
 
 
 export async function observeNode(state: AgentState): Promise<Partial<AgentState>> {
-    console.log("-> [Observe] Analisi del DOM corrente...");
+    console.log("-> [Observe] Analyzing current DOM...");
     await Promise.race([
         currentPage.waitForLoadState("load"),
         new Promise(resolve => setTimeout(resolve, 3000))
@@ -94,74 +94,115 @@ export async function decideNode(
     state: AgentState,
     llmWithTools: any
 ): Promise<Partial<AgentState>> {
-    console.log("-> [Decide] L'LLM sta scegliendo il tool da invocare...");
+    console.log("-> [Decide] LLM is selecting the next tool...");
 
     const objectiveDomains = extractObjectiveDomains(state.objective);
     const nextTargetDomain = findNextTargetDomain(objectiveDomains, state.completedDomains);
 
     if (objectiveDomains.length > 0 && nextTargetDomain === null) {
-        console.log("[Decide] Tutti i domini dell'obiettivo risultano completati.");
+        console.log("[Decide] All objective domains are completed.");
         return { isFinished: true, lastToolCall: null, networkLog: "", consoleLogs: "" };
     }
 
     const historyBlock = state.actionHistory.length > 0
-        ? `\nAzioni già eseguite (NON ripetere queste):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
+        ? `\nActions already executed (DO NOT repeat these):\n${state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n`
         : '';
 
     const sequenceBlock = objectiveDomains.length > 0
-        ? `\nDomini obiettivo in ordine: ${objectiveDomains.join(" -> ")}\nDomini completati: ${state.completedDomains.length > 0 ? state.completedDomains.join(", ") : "nessuno"}\nProssimo dominio target: ${nextTargetDomain ?? "nessuno"}\n`
+        ? `\nTarget domains in order: ${objectiveDomains.join(" -> ")}\nCompleted domains: ${state.completedDomains.length > 0 ? state.completedDomains.join(", ") : "none"}\nNext target domain: ${nextTargetDomain ?? "none"}\n`
         : "";
 
     const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
 
     // Task checklist
     const tasksBlock = state.tasks
-        ? `\nLa tua checklist task (segna [x] sui completati via 'progress'):\n${state.tasks}\n`
-        : `\nNon hai ancora una checklist. CREALA ORA nel campo 'progress' del tool call, in formato:\n- [ ] task 1\n- [ ] task 2\n- [ ] task 3\n...\n`;
+        ? `\nYour task checklist (mark [x] completed items via 'progress'):\n${state.tasks}\n`
+        : `\nYou don't have a checklist yet. CREATE ONE NOW in the 'progress' field of your first tool call, in format:\n- [ ] task 1\n- [ ] task 2\n- [ ] task 3\n...\n`;
 
     const networkBlock = state.networkLog
-        ? `\nRegistro delle ultime richieste di rete:\n${state.networkLog}\n`
+        ? `\nRecent network request log:\n${state.networkLog}\n`
         : "";
 
     const consoleBlock = state.consoleLogs
-        ? `\nMessaggi dalla console del browser (log, errori, warning):\n${state.consoleLogs}\n`
+        ? `\nBrowser console messages (logs, errors, warnings):\n${state.consoleLogs}\n`
         : "";
 
-    const prompt = `Sei un agente di automazione web autonomo.
-        Il tuo obiettivo finale è: ${state.objective}
-        Ti trovi attualmente all'URL: ${state.currentUrl}
-        ${historyBlock}
-        ${sequenceBlock}
-        ${tasksBlock}
-        ${networkBlock}
-        ${consoleBlock}
-        Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
-        ${compactAstForPrompt}
+    const prompt = `You are an autonomous web automation agent.
+Your final objective is: ${state.objective}
+You are currently at URL: ${state.currentUrl}
+${historyBlock}
+${sequenceBlock}
+${tasksBlock}
+${networkBlock}
+${consoleBlock}
+Here is the COMPACT AST of interactive elements (format: agentId|tag|text|attributes):
+${compactAstForPrompt}
 
-    Analizza l'AST e invoca il PROSSIMO tool disponibile per avanzare verso l'obiettivo.`;
-        
+Analyze the AST and invoke the NEXT available tool to progress toward the objective.`;
+
     const reinforcedPrompt = `${prompt}
 
-    Regole operative:
-    - Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito il tool 'goto' con un URL completo (https://...).
-    - Non ripetere azioni gia' presenti nello storico.
-    - Se l'obiettivo dice "aspetta X secondi" usa SUBITO il tool 'wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
-    - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
-    - Ogni volta che chiami un tool, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
-    - Se devi compilare un form ma l'obiettivo non ti dice esattamente cosa scrivere, INVENTATI dati realistici (nome, email, telefono, indirizzo, descrizione, ecc.). Un test deve avere dati sensati, non lasciare campi vuoti.
-    - Usa il tool 'check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
-    - I messaggi nella console del browser (LOG, WARN, ERROR) ti aiutano a capire se la pagina ha generato errori o conferme. Se vedi errori in console, potresti dover correggere qualcosa.
-    - Usa il tool 'send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
-        
+Operational rules:
+
+[TASK MANAGEMENT]
+- You MUST create a checklist in the 'progress' field on your FIRST tool call. Format:
+  - [ ] task 1
+  - [ ] task 2
+  - [ ] task 3
+- On EVERY tool call, include 'taskName' (exact line from checklist without checkbox) and the updated 'progress'.
+- Mark tasks as [x] via 'progress' ONLY when you have verified they are actually done.
+
+[NAVIGATION]
+- If the current URL is empty or irrelevant, use 'goto' immediately with a full URL (https://...).
+- Do NOT call 'goto' if you are already on the correct domain or if you already navigated to the same URL.
+- If the objective spans multiple domains, visit them in order and do NOT return to completed domains.
+
+[FORM FILLING]
+- When you encounter a form, identify ALL input/select/textarea fields in the AST.
+- For each field, determine its purpose from: tag type, 'n' (name), 'ph' (placeholder), 'aria' (aria-label), and surrounding text. These attributes tell you what the field expects.
+- Fill EVERY visible form field with realistic test data. Invent names, emails, phones, addresses, descriptions as needed.
+- Do NOT skip any field. If you are unsure what a field is for, use common sense from its name/placeholder/aria-label.
+- Submit the form only after ALL required fields are filled.
+
+[VERIFICATION & SELF-CORRECTION]
+- After every action, in the NEXT iteration, examine the current DOM and URL carefully.
+- Ask yourself: "Did my last action produce the expected result?" 
+- If the page, URL, or DOM did NOT change as expected, do NOT declare completion. Instead:
+  - If you tried to navigate but are still on the same page, retry 'goto' or look for obstacles (popups, cookie banners).
+  - If you tried to fill a field but the value is still empty, retry 'fill'.
+  - If you tried to click but nothing changed, try a different element or use 'enter'.
+- Only call 'done' when you have IRREFUTABLE EVIDENCE that every task is complete. Evidence includes:
+  - URL has changed to the expected page.
+  - The DOM shows confirmation messages, success indicators, or expected new content.
+  - Network/capture shows successful API responses (2xx).
+- If the page still shows the registration form / input form after you submitted, you are NOT done. Keep working.
+
+[NETWORK & CONSOLE]
+- Use 'check_network' to inspect API responses right after a submission. This tells you if the operation succeeded or failed.
+- Browser console messages (LOG, WARN, ERROR) help you detect page issues. If you see errors, investigate.
+
+[EMAIL]
+- Use 'send_email' with 'to' (from mailing list), 'subject', and 'body' to send a final report.
+
+[DECISION FRAMEWORK - ALWAYS FOLLOW THIS]
+Every time you receive the AST, go through this structured reasoning:
+1. GOAL: What is my current objective step? (from checklist)
+2. STATE: Where am I now? (URL + DOM content)
+3. VERIFY: Did my previous action succeed? Compare DOM/URL with what I expected.
+4. PLAN: What is the single next action that brings me closer to the goal?
+5. EXECUTE: Invoke the tool with full arguments.
+
+Never skip step 3. If verification fails, your plan must address the failure, not ignore it.`;
+
     const sequenceRule = nextTargetDomain
-        ? `\n- Usa il tool 'goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
+        ? `\n- If you use 'goto', go ONLY to: ${nextTargetDomain}. Do not return to completed domains.`
         : "";
 
     const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
 
-    console.log("=== PROMPT INVIATO ALL'LLM ===");
+    console.log("=== PROMPT SENT TO LLM ===");
     console.log(finalPrompt);
-    console.log("=== FINE PROMPT ===");
+    console.log("=== PROMPT END ===");
 
     incrementIterationCounter();
     const estimatedInputTokens = estimateInputTokens(finalPrompt);
@@ -174,7 +215,7 @@ export async function decideNode(
     if (toolCalls && toolCalls.length > 0) {
         const toolCall = toolCalls[0];
         if (toolCall) {
-            console.log(`Tool selezionato: ${toolCall.name} con argomenti:`, toolCall.args);
+            console.log(`Tool selected: ${toolCall.name} with args:`, toolCall.args);
             const progress = toolCall.args?.progress;
             const consoleLog = getConsoleLog();
             clearConsoleLog();
@@ -185,7 +226,7 @@ export async function decideNode(
     }
 
     const nextNoToolCallStreak = state.noToolCallStreak + 1;
-    console.warn(`L'LLM non ha invocato tool (tentativo ${nextNoToolCallStreak}/3).`);
+    console.warn(`LLM did not invoke a tool (attempt ${nextNoToolCallStreak}/3).`);
     if (nextNoToolCallStreak >= 3) {
         return { isFinished: true, lastToolCall: null, noToolCallStreak: nextNoToolCallStreak, networkLog: "", consoleLogs: "" };
     }
@@ -203,7 +244,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         return { isFinished: true, lastToolCall: null };
     }
 
-    console.log(`-> [Execute] Azione: ${decision.name} su ID: ${decision.args?.agentId ?? 'N/A'} (Motivazione: ${decision.args?.reasoning})`);
+    console.log(`-> [Execute] Action: ${decision.name} on ID: ${decision.args?.agentId ?? 'N/A'} (Reasoning: ${decision.args?.reasoning})`);
 
     if (decision.name === 'done') {
         return { isFinished: true, lastToolCall: null };
@@ -213,11 +254,11 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         // Anti-loop: se l'ultima azione era già check_network, blocca
         const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
         if (lastAction.includes("check_network")) {
-            console.warn(`[GuardRail] check_network già chiamato, ignorato (loop evitato).`);
+            console.warn(`[GuardRail] check_network already called, skipped (loop avoided).`);
             return { isFinished: false, lastToolCall: null, networkLog: "" };
         }
         const log = getNetworkLog();
-        console.log(`-> [Execute] Richieste di rete registrate:\n${log}`);
+        console.log(`-> [Execute] Network requests logged:\n${log}`);
         const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.args?.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, networkLog: log, actionHistory: [...state.actionHistory, "check_network eseguito"] };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
@@ -227,11 +268,11 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     if (decision.name === 'send_email') {
         const targetEmail = decision.args?.to;
         if (!targetEmail) {
-            console.error("Azione 'send_email' senza destinatario.");
+            console.error("'send_email' action without recipient.");
             return { isFinished: false, lastToolCall: null, networkLog: "" };
         }
         if (!isAllowedEmail(targetEmail)) {
-            const blocked = `send_email bloccato: ${targetEmail} non è nella mailing list`;
+            const blocked = `send_email blocked: ${targetEmail} is not in the mailing list`;
             console.warn(`[GuardRail] ${blocked}`);
             return {
                 isFinished: false, lastToolCall: null, networkLog: "",
@@ -250,7 +291,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             updates.actionHistory = [...state.actionHistory, `send_email a ${targetEmail}`];
             return updates;
         } catch (e: any) {
-            console.error(`Errore invio email: ${e.message}`);
+            console.error(`Email send error: ${e.message}`);
             return { isFinished: false, lastToolCall: null, networkLog: "" };
         }
     }
@@ -258,7 +299,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     if (decision.name === 'goto') {
         const targetUrl = decision.args?.url;
         if (!targetUrl) {
-            console.error("Azione 'goto' senza URL.");
+            console.error("'goto' action without URL.");
             return { isFinished: false, lastToolCall: null };
         }
 
@@ -281,7 +322,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                 if (autoWaitTasks !== state.tasks) autoWaitUpdates.tasks = autoWaitTasks;
                 return autoWaitUpdates;
             }
-            const blocked = `goto ignorato: ${targetUrl} gia' navigato prima (loop evitato)`;
+            const blocked = `goto skipped: ${targetUrl} already navigated (loop avoided)`;
             console.warn(`[GuardRail] ${blocked}`);
             return {
                 isFinished: false,
@@ -295,7 +336,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         const targetDomain = getDomainFromUrl(targetUrl);
 
         if (nextTargetDomain && targetDomain && !domainsMatch(targetDomain, nextTargetDomain)) {
-            const blocked = `goto bloccato verso ${targetDomain} (atteso: ${nextTargetDomain})`;
+            const blocked = `goto blocked to ${targetDomain} (expected: ${nextTargetDomain})`;
             console.warn(`[GuardRail] ${blocked}`);
             return {
                 isFinished: false,
@@ -305,7 +346,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         }
 
         if (targetDomain && state.completedDomains.some((d) => domainsMatch(d, targetDomain)) && nextTargetDomain) {
-            const blocked = `goto bloccato verso dominio già completato: ${targetDomain}`;
+            const blocked = `goto blocked to already completed domain: ${targetDomain}`;
             console.warn(`[GuardRail] ${blocked}`);
             return {
                 isFinished: false,
@@ -317,7 +358,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         try {
             await currentPage.goto(targetUrl);
         } catch (e: any) {
-            console.error(`Errore durante la navigazione verso ${targetUrl}: ${e.message}`);
+            console.error(`Navigation error to ${targetUrl}: ${e.message}`);
         }
 
         const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "vai su", "goto", "apri"], decision.args?.taskName);
@@ -328,9 +369,9 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
 
     if (decision.name === 'wait') {
         const seconds = decision.args?.seconds ?? 5;
-        console.log(`-> [Execute] Attesa di ${seconds} secondi...`);
+        console.log(`-> [Execute] Waiting ${seconds} seconds...`);
         await new Promise(resolve => setTimeout(resolve, seconds * 1000));
-        console.log(`-> [Execute] Attesa completata.`);
+        console.log(`-> [Execute] Wait complete.`);
         const updatedTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"], decision.args?.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, objective: stripWaitFromObjective(state.objective) };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
@@ -408,10 +449,10 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                 }
                 break;
             default:
-                console.log("Azione sconosciuta o non gestita.");
+                console.log("Unknown or unhandled action name.");
         }
     } catch (e: any) {
-        console.error(`Errore durante l'interazione sul browser: ${e.message}`);
+        console.error(`Browser interaction error: ${e.message}`);
     }
 
     const historyEntry = `${decision.name}${decision.args?.agentId ? ` su ${decision.args?.agentId}` : ''}${decision.args?.value ? ` con valore "${decision.args?.value}"` : ''}${decision.args?.url ? ` verso ${decision.args?.url}` : ''}`;
