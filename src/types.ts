@@ -7,11 +7,14 @@ export type LLM_PROVIDERS = 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmst
 
 // Definition of the tools that the agent can call
 export const webActionSchema = z.object({
-    action: z.enum(["click", "fill", "select", "enter", "goto", "wait", "check_network", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter, 'goto' to navigate to a URL, 'wait' to pause, and 'check_network' to inspect recent network requests/responses."),
+    action: z.enum(["click", "fill", "select", "enter", "goto", "wait", "check_network", "send_email", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter, 'goto' to navigate, 'wait' to pause, 'check_network' to inspect network requests, and 'send_email' to send a report email to an allowed recipient."),
     agentId: z.string().optional().describe("The target element ID (e.g. 'agent-el-12'). Not required for 'done' and 'goto'. For 'enter', it is optional if the element is already focused."),
     value: z.string().optional().describe("The value to input (for 'fill') or select (for 'select')."),
     url: z.string().url().optional().describe("Destination URL to use when action='goto'."),
     seconds: z.number().positive().optional().describe("Number of seconds to wait when action='wait'."),
+    to: z.string().email().optional().describe("Recipient email address (must be in the mailing list). Required when action='send_email'."),
+    subject: z.string().optional().describe("Email subject. Used when action='send_email'."),
+    body: z.string().optional().describe("Email body content. Used when action='send_email'."),
     reasoning: z.string().describe("The logical explanation behind this specific action."),
     taskName: z.string().optional().describe("Il NOME ESATTO del task in checklist che questa azione completa (es. 'Attendere 10 secondi'). Copia la riga dalla checklist senza la checkbox."),
     progress: z.string().optional().describe("Task checklist aggiornata. Formato:\n- [x] task completato\n- [ ] task da fare\nUsa questo campo per tracciare cosa hai fatto e cosa manca.")

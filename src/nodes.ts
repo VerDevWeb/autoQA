@@ -6,6 +6,7 @@ import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domain
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
 import { getNetworkLog } from "./networkCapture.js";
+import { isAllowedEmail, sendEmail } from "./mail.js";
 
 // Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
 function extractWaitSeconds(objective: string): number | null {
@@ -131,18 +132,19 @@ export async function decideNode(
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
-Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
-    
+    Analizza l'AST e invoca lo strumento 'execute_web_action' per decidere il PROSSIMO step non ancora eseguito.`;
+        
     const reinforcedPrompt = `${prompt}
 
-Regole operative:
-- Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
-- Non ripetere azioni gia' presenti nello storico.
-- Se l'obiettivo dice "aspetta X secondi" usa SUBITO action='wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
-- NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
-- Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
-- Usa action='check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.`;
-    
+    Regole operative:
+    - Se non sei ancora sulla pagina giusta o l'URL corrente e' vuoto/non pertinente, usa subito action='goto' con un URL completo (https://...).
+    - Non ripetere azioni gia' presenti nello storico.
+    - Se l'obiettivo dice "aspetta X secondi" usa SUBITO action='wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
+    - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
+    - Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
+    - Usa action='check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
+    - Usa action='send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
+        
     const sequenceRule = nextTargetDomain
         ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
         : "";
@@ -210,6 +212,37 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         const updates: any = { isFinished: false, lastToolCall: null, networkLog: log, actionHistory: [...state.actionHistory, "check_network eseguito"] };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
         return updates;
+    }
+
+    if (decision.action === 'send_email') {
+        const targetEmail = decision.to;
+        if (!targetEmail) {
+            console.error("Azione 'send_email' senza destinatario.");
+            return { isFinished: false, lastToolCall: null, networkLog: "" };
+        }
+        if (!isAllowedEmail(targetEmail)) {
+            const blocked = `send_email bloccato: ${targetEmail} non è nella mailing list`;
+            console.warn(`[GuardRail] ${blocked}`);
+            return {
+                isFinished: false, lastToolCall: null, networkLog: "",
+                actionHistory: [...state.actionHistory, blocked]
+            };
+        }
+        const subject = decision.subject || `Report autoQA - ${new Date().toLocaleDateString('it-IT')}`;
+        const historySummary = state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n');
+        const body = decision.body || `Resoconto dell'agente:\n\nObiettivo: ${state.objective}\n\nAzioni eseguite:\n${historySummary}\n\nChecklist:\n${state.tasks || "nessuna"}`;
+        try {
+            const result = await sendEmail(targetEmail, subject, body);
+            console.log(`-> [Execute] ${result}`);
+            const updatedTasks = autoMarkTask(state.tasks, ["email", "invia", "report", "send"], decision.taskName);
+            const updates: any = { isFinished: false, lastToolCall: null, networkLog: "" };
+            if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
+            updates.actionHistory = [...state.actionHistory, `send_email a ${targetEmail}`];
+            return updates;
+        } catch (e: any) {
+            console.error(`Errore invio email: ${e.message}`);
+            return { isFinished: false, lastToolCall: null, networkLog: "" };
+        }
     }
 
     if (decision.action === 'goto') {
