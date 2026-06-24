@@ -6,7 +6,7 @@ import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domain
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
 import { getNetworkLog } from "./networkCapture.js";
-import { isAllowedEmail, sendEmail } from "./mail.js";
+import { isAllowedEmail, sendEmail } from "./email.js";
 
 // Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
 function extractWaitSeconds(objective: string): number | null {

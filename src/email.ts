@@ -1,5 +1,10 @@
+
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import nodemailer from "nodemailer";
 import { MailtrapTransport } from "mailtrap";
+
 
 export const MAILING_LIST: string[] = [
     "verdev.web@gmail.com",
@@ -12,7 +17,7 @@ export function isAllowedEmail(email: string): boolean {
 
 export async function sendEmail(to: string, subject: string, body: string): Promise<string> {
     const mailtrapToken = process.env.MAILTRAP_TOKEN;
-    const from = process.env.MAIL_FROM || "";
+    const from = process.env.MAIL_FROM || "hello@verdevweb.com";
 
     // Mailtrap (API token)
     if (mailtrapToken) {
@@ -51,3 +56,4 @@ export async function sendEmail(to: string, subject: string, body: string): Prom
 
     return `Email inviata con successo a ${to}`;
 }
+
