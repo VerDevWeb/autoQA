@@ -135,7 +135,7 @@ ${sequenceBlock}
 ${tasksBlock}
 ${networkBlock}
 ${consoleBlock}
-Here is the COMPACT AST of interactive elements (format: agentId|tag|text|attributes):
+Here is the COMPACT AST of interactive elements (S-Expression format: (tag (@ key "val") label "text")):
 ${compactAstForPrompt}
 
 Analyze the AST and invoke the NEXT available tool to progress toward the objective.`;

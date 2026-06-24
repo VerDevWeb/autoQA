@@ -24,6 +24,7 @@ export type AstElement = {
     tagName: string;
     text: string;
     attributes: Record<string, string>;
+    label?: string;
 };
 
 
