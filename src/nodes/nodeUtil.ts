@@ -6,22 +6,22 @@ export function setPageForNodes(page: Page): void {
     currentPage = page;
 }
 
-// Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
+// Look for "wait X seconds" in the objective and return the seconds, or null
 export function extractWaitSeconds(objective: string): number | null {
-    const match = objective.match(/(?:aspetta|attendi|wait)\s*(\d+)\s*(?:secondi?|seconds?|sec)/i);
+    const match = objective.match(/wait\s*(\d+)\s*(?:seconds?|sec)/i);
     return match ? parseInt(match[1] ?? "", 10) || null : null;
 }
 
-// Rimuove la parte "Vai su URL" dall'obiettivo
+// Remove the "Go to URL" part from the objective
 export function stripGotoFromObjective(objective: string, url: string): string {
     const urlPattern = escapeRegex(url);
-    const gotoRegex = new RegExp(`(?:vai\\s*(?:su|a)?\\s*)?${urlPattern}[.,]?\\s*`, 'gi');
+    const gotoRegex = new RegExp(`(?:go\\s*(?:to)?\\s*)?${urlPattern}[.,]?\\s*`, 'gi');
     return objective.replace(gotoRegex, "").replace(/\s+,/g, ",").replace(/,\s*,/g, ",").trim();
 }
 
-// Rimuove "aspetta X secondi" dall'obiettivo
+// Remove "wait X seconds" from the objective
 export function stripWaitFromObjective(objective: string): string {
-    return objective.replace(/(?:aspetta|attendi|wait)\s*\d+\s*(?:secondi?|seconds?|sec)[.,]?\s*/gi, "")
+    return objective.replace(/wait\s*\d+\s*(?:seconds?|sec)[.,]?\s*/gi, "")
         .replace(/\s+,/g, ",").replace(/,\s*,/g, ",").trim();
 }
 
@@ -39,7 +39,7 @@ export function autoMarkTask(tasks: string, keywords: string[], taskName?: strin
         const isUnchecked = line.match(/-\s*\[\s*\]/);
         if (!isUnchecked) return line;
         const lower = line.toLowerCase();
-        // Se taskName è fornito, match esatto su quella stringa
+        // If taskName is provided, exact match on that string
         if (taskName) {
             if (lower.includes(taskName.toLowerCase())) {
                 found = true;
@@ -48,7 +48,7 @@ export function autoMarkTask(tasks: string, keywords: string[], taskName?: strin
             }
             return line;
         }
-        // Altrimenti match per keyword
+        // Otherwise match by keyword
         const match = keywords.some(kw => lower.includes(kw));
         if (match) {
             found = true;
@@ -86,7 +86,7 @@ export function actionKind(entry: string): string {
     if (lower.startsWith("enter")) return "enter";
     if (lower.startsWith("goto")) return "goto";
     if (lower.startsWith("check_network")) return "check_network";
-    if (lower.startsWith("wait") || lower.includes("attesa")) return "wait";
+    if (lower.startsWith("wait")) return "wait";
     return lower.split(" ")[0] || lower;
 }
 

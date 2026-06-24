@@ -1,13 +1,13 @@
 import type { DomainStatus, AstElement } from "./types.js";
 
-// --- FUNZIONI PER GESTIONE DOMINI ---
+// --- DOMAIN MANAGEMENT FUNCTIONS ---
 
-// Pulisce il nome del dominio: toglie "www." e mette in minuscolo
+// Strips "www." prefix and lowercases the domain
 export function normalizeDomain(domain: string): string {
     return domain.toLowerCase().replace(/^www\./, "").trim();
 }
 
-// Da un URL completo (es. "https://www.google.com/ciao") estrae solo il dominio (es. "google.com")
+// Extracts the domain from a full URL (e.g. "https://www.google.com/hello" -> "google.com")
 export function getDomainFromUrl(urlValue: string): string {
     try {
         return normalizeDomain(new URL(urlValue).hostname);
@@ -16,14 +16,14 @@ export function getDomainFromUrl(urlValue: string): string {
     }
 }
 
-// Controlla se due domini sono lo stesso (es. "www.google.com" e "google.com" matchano)
+// Checks if two domains are the same (e.g. "www.google.com" and "google.com" match)
 export function domainsMatch(left: string, right: string): boolean {
     const l = normalizeDomain(left);
     const r = normalizeDomain(right);
     return l === r || l.endsWith(`.${r}`) || r.endsWith(`.${l}`);
 }
 
-// Legge l'obiettivo (es. "vai su wikipedia.org e poi su youtube.com") e ne estrae i domini in ordine di apparizione
+// Parses the objective (e.g. "go to wikipedia.org then youtube.com") and extracts domains in order of appearance
 export function extractObjectiveDomains(objective: string): string[] {
     const text = objective.toLowerCase();
     const regex = /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g;
@@ -52,7 +52,7 @@ export function extractObjectiveDomains(objective: string): string[] {
     return orderedUnique;
 }
 
-// Dà il prossimo dominio da visitare (il primo nella lista che non è ancora stato completato)
+// Returns the next domain to visit (first in the list that hasn't been completed yet)
 export function findNextTargetDomain(objectiveDomains: string[], completedDomains: string[]): string | null {
     for (const objectiveDomain of objectiveDomains) {
         const isAlreadyCompleted = completedDomains.some((completed) => domainsMatch(completed, objectiveDomain));
@@ -63,15 +63,15 @@ export function findNextTargetDomain(objectiveDomains: string[], completedDomain
     return null;
 }
 
-// --- FUNZIONI PER TRACKING COMPLETAMENTO ---
+// --- COMPLETION TRACKING FUNCTIONS ---
 
-// Dice se un dominio ha finito le cose da fare, in base alle azioni registrate su quel dominio
-// Wikipedia basta che abbia fatto submit (cercato); YouTube vuole anche un click su un video; gli altri bastano submit o click generico
+// Determines whether a domain's tasks are done based on recorded actions on that domain
+// Wikipedia just needs submission (searched); YouTube also needs a video click; others just need submit or generic click
 export function isDomainComplete(domain: string, status: DomainStatus | undefined, objective: string): boolean {
     if (!status) return false;
     const objectiveLc = objective.toLowerCase();
     const isYoutube = domain.includes("youtube.");
-    const wantsClickResult = objectiveLc.includes("clicca") && objectiveLc.includes("risultat");
+    const wantsClickResult = objectiveLc.includes("click") && objectiveLc.includes("result");
 
     if (isYoutube && wantsClickResult) {
         return status.submitted && status.clickedResult;
@@ -84,20 +84,20 @@ export function isDomainComplete(domain: string, status: DomainStatus | undefine
     return status.submitted || status.clicked;
 }
 
-// Controlla se l'elemento cliccato è un banner cookie (dai testo e aria-label: "cookie", "accetta", "consent", ecc.)
+// Checks if a clicked element is a cookie consent banner (based on text and aria-label: "cookie", "accept", "consent", etc.)
 export function isConsentLikeElement(target: AstElement | undefined): boolean {
     if (!target) return false;
     const text = (target.text || "").toLowerCase();
     const aria = (target.attributes?.["aria-label"] || "").toLowerCase();
     const combined = `${text} ${aria}`;
     return combined.includes("cookie")
-        || combined.includes("consenso")
-        || combined.includes("accetta")
+        || combined.includes("consent")
+        || combined.includes("accept")
         || combined.includes("accept all")
         || combined.includes("consent");
 }
 
-// Controlla se l'elemento cliccato è un risultato video di YouTube (link /watch, classe video-title, ecc.)
+// Checks if a clicked element is a YouTube video result (/watch link, video-title class, etc.)
 export function isYoutubeResultLikeElement(target: AstElement | undefined): boolean {
     if (!target) return false;
     const href = (target.attributes?.href || "").toLowerCase();
@@ -113,7 +113,7 @@ export function isYoutubeResultLikeElement(target: AstElement | undefined): bool
     return false;
 }
 
-// Aggiorna lo stato di un dominio: se non esiste ancora, parte tutto su false, poi applica la modifica (es. "metti clicked = true")
+// Updates domain status: creates entry if missing (defaults to all false), then applies the updater (e.g. "set clicked = true")
 export function upsertDomainStatus(
     current: Record<string, DomainStatus>,
     domain: string,
@@ -133,7 +133,7 @@ export function upsertDomainStatus(
     };
 }
 
-// Se il dominio ha completato tutto (vedi isDomainComplete) e non è già nella lista, lo aggiunge ai completati
+// If the domain is complete (see isDomainComplete) and not already in the list, adds it to completed domains
 export function tryMarkCompletedDomain(
     objective: string,
     domain: string,

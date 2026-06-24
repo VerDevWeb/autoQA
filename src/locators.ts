@@ -79,5 +79,5 @@ export async function resolveLocatorWithFallback(state: AgentState, agentId: str
         }
     }
 
-    throw new Error(`Impossibile risolvere il locator per ${agentId} (ID non più valido e fallback testuale fallito).`);
+    throw new Error(`Unable to resolve locator for ${agentId} (ID no longer valid and text fallback failed).`);
 }

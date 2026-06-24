@@ -54,7 +54,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     }
 
     if (firstDecision.name === 'check_network') {
-        // Anti-loop: se l'ultima azione era già check_network, blocca
+        // Anti-loop: if the last action was already check_network, block
         const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
         if (lastAction.includes("check_network")) {
             console.warn(`[GuardRail] check_network already called, skipped (loop avoided).`);
@@ -106,20 +106,20 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             return { isFinished: false, lastToolCall: null };
         }
 
-        // Anti-loop: se lo stesso identico URL e' gia' stato navigato, blocca e auto-esegue l'attesa se richiesta
+        // Anti-loop: if the exact same URL was already navigated, block and auto-execute wait if needed
         const alreadyNavigated = state.actionHistory.some(h => h.includes(`verso ${targetUrl}`));
         if (alreadyNavigated) {
             const waitSeconds = extractWaitSeconds(state.objective);
-            const waitAlreadyDone = state.actionHistory.some(h => h.includes("wait") || h.includes("attesa"));
+            const waitAlreadyDone = state.actionHistory.some(h => h.includes("wait"));
             if (waitSeconds && !waitAlreadyDone) {
-                console.log(`[AutoWait] Rilevato loop goto, auto-attesa di ${waitSeconds} secondi...`);
+                console.log(`[AutoWait] Detected goto loop, auto-waiting ${waitSeconds} seconds...`);
                 await new Promise(resolve => setTimeout(resolve, waitSeconds * 1000));
-                console.log("[AutoWait] Attesa completata, proseguo.");
-                const autoWaitTasks = autoMarkTask(state.tasks, ["attend", "aspett", "wait", "second", "pausa"]);
+                console.log("[AutoWait] Wait completed, continuing.");
+                const autoWaitTasks = autoMarkTask(state.tasks, ["wait", "pause"]);
                 const autoWaitUpdates: any = {
                     isFinished: false,
                     lastToolCall: null,
-                    actionHistory: [...state.actionHistory, `auto-attesa ${waitSeconds}s eseguita dopo goto loop`],
+                    actionHistory: [...state.actionHistory, `auto-wait ${waitSeconds}s executed after goto loop`],
                     objective: stripWaitFromObjective(state.objective)
                 };
                 if (autoWaitTasks !== state.tasks) autoWaitUpdates.tasks = autoWaitTasks;
@@ -164,7 +164,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             console.error(`Navigation error to ${targetUrl}: ${e.message}`);
         }
 
-        const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "vai su", "goto", "apri"], firstDecision.args?.taskName);
+        const gotoUpdatedTasks = autoMarkTask(state.tasks, [targetUrl, "navig", "goto", "apri"], firstDecision.args?.taskName);
         const gotoUpdates: any = { isFinished: false, lastToolCall: null, objective: stripGotoFromObjective(state.objective, targetUrl) };
         if (gotoUpdatedTasks !== state.tasks) gotoUpdates.tasks = gotoUpdatedTasks;
         return gotoUpdates;
@@ -262,7 +262,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
                             await locator.focus({ timeout: 2000 });
                         } catch {
-                            // elemento non più trovabile, il focus è già sul campo giusto
+                            // element no longer findable, focus is already on the right field
                         }
                     }
                     await currentPage.keyboard.press('Enter');

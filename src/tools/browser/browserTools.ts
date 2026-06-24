@@ -1,12 +1,12 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from "zod";
 
-const reasoningField = z.string().describe("Spiegazione logica di questa azione.");
-const taskNameField = z.string().optional().describe("Nome ESATTO del task in checklist che questa azione completa (es. 'Attendere 10 secondi'). Copia dalla checklist senza checkbox.");
-const progressField = z.string().optional().describe("Task checklist aggiornata. Formato:\n- [x] task completato\n- [ ] task da fare\nUsa per tracciare cosa hai fatto e cosa manca.");
+const reasoningField = z.string().describe("Logical explanation for this action.");
+const taskNameField = z.string().optional().describe("EXACT name of the checklist task that this action completes (e.g. 'Wait 10 seconds'). Copy from checklist without checkbox.");
+const progressField = z.string().optional().describe("Updated task checklist. Format:\n- [x] completed task\n- [ ] task to do\nUse to track what you did and what remains.");
 
 const clickSchema = z.object({
-    agentId: z.string().describe("ID dell'elemento da cliccare (es. 'agent-el-12')."),
+    agentId: z.string().describe("ID of the element to click (e.g. 'agent-el-12')."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -14,7 +14,7 @@ const clickSchema = z.object({
 
 export const clickTool = new DynamicStructuredTool({
     name: "click",
-    description: "Clicca su un elemento interattivo della pagina identificato dal suo agentId.",
+    description: "Clicks an interactive element on the page identified by its agentId.",
     schema: clickSchema,
     func: async () => "ok",
 });
@@ -67,7 +67,7 @@ export const selectTool = new DynamicStructuredTool({
 });
 
 const enterSchema = z.object({
-    agentId: z.string().optional().describe("ID dell'elemento su cui premere Invio (opzionale se già focalizzato)."),
+    agentId: z.string().optional().describe("ID of the element to press Enter on (optional if already focused)."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -75,7 +75,7 @@ const enterSchema = z.object({
 
 export const enterTool = new DynamicStructuredTool({
     name: "enter",
-    description: "Simula la pressione del tasto Invio per inviare un form o confermare una ricerca.",
+    description: "Simulates pressing the Enter key to submit a form or confirm a search.",
     schema: enterSchema,
     func: async () => "ok",
 });
@@ -95,7 +95,7 @@ export const gotoTool = new DynamicStructuredTool({
 });
 
 const waitSchema = z.object({
-    seconds: z.number().positive().describe("Numero di secondi di attesa."),
+    seconds: z.number().positive().describe("Number of seconds to wait."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -103,7 +103,7 @@ const waitSchema = z.object({
 
 export const waitTool = new DynamicStructuredTool({
     name: "wait",
-    description: "Attende per un dato numero di secondi. Usalo quando l'obiettivo richiede un'attesa o quando devi aspettare caricamenti dinamici.",
+    description: "Waits for a given number of seconds. Use it when the objective requires a wait or when you need to wait for dynamic loading.",
     schema: waitSchema,
     func: async () => "ok",
 });
