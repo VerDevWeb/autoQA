@@ -5,11 +5,14 @@ import * as dotenv from "dotenv";
 import { getLLM } from "./modelController.js";
 import { AgentStateDef } from "./types.js";
 import { allTools } from "./tools/tools.js";
-import { observeNode, decideNode, executeNode, setPageForNodes } from "./nodes.js";
 import { setPageInstance } from "./locators.js";
 import { startNetworkCapture } from "./networkCapture.js";
 import { startConsoleCapture } from "./consoleCapture.js";
 import { logSessionTokenSummary } from "./tokens.js";
+import { decideNode } from "./nodes/decideNode.js";
+import { executeNode } from "./nodes/executeNode.js";
+import { setPageForNodes } from "./nodes/nodeUtil.js";
+import { observeNode } from "./nodes/observeNode.js";
 
 dotenv.config();
 

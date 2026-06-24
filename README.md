@@ -1,60 +1,19 @@
 # AutoQA
 Open source autonomous LLM agnostic and AST oriented QA web UI testing agent via browser.
 
----
+## First principles
 
-## 📁 Modules
+- **LLM AGNOSTIC**: you can chose your LLM provider: Ollama, Google, Anthropic, OpenAI, LM Studio
+- **GIT PROVIDER AGNOSTIC**: Chose where your code is hosted: GitHub, GitLab, Bitbucket, Gilab support also on premises instances
 
-| File | Purpose |
-|------|---------|
-| **[src/types.ts](src/types.ts)** | Type definitions and Zod schemas (AgentState, WebAction, DomainStatus) |
-| **[src/ast.ts](src/ast.ts)** | DOM AST extraction, conversion to compact LLM format |
-| **[src/domains.ts](src/domains.ts)** | Domain tracking, completion validation, cookie vs result detection |
-| **[src/tokens.ts](src/tokens.ts)** | LLM token counters, consumption estimation and logging |
-| **[src/locators.ts](src/locators.ts)** | Fuzzy DOM element resolution with text fallback |
-| **[src/nodes.ts](src/nodes.ts)** | LangGraph nodes (observe, decide, execute) |
-| **[src/index.ts](src/index.ts)** | Entry point, LLM setup and graph compilation |
-| **[src/modelController.ts](src/modelController.ts)** | Multi-provider LLM factory (openai, anthropic, google, ollama, lmstudio) |
+This makes autoQA suitable for enterprise environments where you may have restrictions on which LLM provider you can use and where your code is hosted due to NDA, DPA or other legal requirements.
 
 ---
 
-## Execution Flow
 
+HOW DOES THIS AGENT NODES WORK UNDER THE HOOD?
 ```
-index.ts (run)
-    ↓
-launch browser → register page instance
-    ↓
-[LangGraph Loop - recursionLimit: 100]
-    ↓
-observe ← extract compact AST from current DOM
-    ↓
-decide ← LLM analyzes AST and objective, chooses action toward target domain
-    ↓
-execute ← perform action on browser, update state (completed domains, history)
-    ↓
-check isFinished? → yes: END, no: loop
-    ↓
-finally: logSessionTokenSummary() and cleanup
+AGENT'S EYES            -   observeNode   - this node reads the page content and extract it for the decideNode
+AGENT'S BRAIN           -   decideNode    - this node handles the reasoning part where the LLM choses what tool it needs to invoke in order to complete the current task
+AGENT'S ARMS AND HANDS  -   executeNode   - this node calls the actual tools
 ```
-
----
-
-## Extension Points
-
-- **Change LLM provider**: Modify `getLLM('ollama')` in `index.ts`
-- **Add domains**: Automatically detected from `OBJECTIVE` string
-- **Customize actions**: Extend switch in `executeNode` (src/nodes.ts)
-- **Adjust AST compaction threshold**: Change `1200` in `ast.ts` `extractSimplifiedDOM`
-- **Adapt completion logic**: Modify `isDomainComplete()` in `domains.ts`
-
----
-
-## Implemented Optimizations
-
-- **Compact AST**: Reduces tokens ~60-70% vs raw JSON (format: agentId|tag|text|attributes)
-- **Fuzzy Fallback**: Avoids failures on dynamic DOM via text regex matching
-- **Domain Guard-Rails**: Prevents infinite loops between sites, enforces execution order
-- **Navigation Retry**: Handles "Execution context destroyed" on page transitions
-- **Real-Time Token Tracking**: Monitor LLM cost per iteration, debug performance
-
