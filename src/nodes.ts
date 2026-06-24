@@ -148,8 +148,9 @@ export async function decideNode(
     - Se l'obiettivo dice "aspetta X secondi" usa SUBITO il tool 'wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
     - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
     - Ogni volta che chiami un tool, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
+    - Se devi compilare un form ma l'obiettivo non ti dice esattamente cosa scrivere, INVENTATI dati realistici (nome, email, telefono, indirizzo, descrizione, ecc.). Un test deve avere dati sensati, non lasciare campi vuoti.
     - Usa il tool 'check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.
-    - I messaggi nella console del browser (💬 LOG, ⚠️ WARN, ❌ ERROR) ti aiutano a capire se la pagina ha generato errori o conferme. Se vedi errori in console, potresti dover correggere qualcosa.
+    - I messaggi nella console del browser (LOG, WARN, ERROR) ti aiutano a capire se la pagina ha generato errori o conferme. Se vedi errori in console, potresti dover correggere qualcosa.
     - Usa il tool 'send_email' con 'to' (email valida dalla mailing list), 'subject' e 'body' per inviare un report finale di ciò che hai fatto.`;
         
     const sequenceRule = nextTargetDomain
