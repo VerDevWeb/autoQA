@@ -8,6 +8,22 @@ export function setPageInstance(page: Page): void {
     currentPage = page;
 }
 
+async function pickFirstVisible(locator: Locator, maxCandidates = 6): Promise<Locator | null> {
+    const count = await locator.count();
+    const limit = Math.min(count, maxCandidates);
+    for (let i = 0; i < limit; i++) {
+        const candidate = locator.nth(i);
+        try {
+            if (await candidate.isVisible()) {
+                return candidate;
+            }
+        } catch {
+            // candidate became stale, continue
+        }
+    }
+    return null;
+}
+
 /*
     This function resolves an agent element id
 
@@ -17,7 +33,10 @@ export function setPageInstance(page: Page): void {
 export async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
     const primary = currentPage.locator(`[data-agent-id="${agentId}"]`);
     if (await primary.count() > 0) {
-        return primary.first();
+        const visiblePrimary = await pickFirstVisible(primary);
+        if (visiblePrimary) {
+            return visiblePrimary;
+        }
     }
 
     const astElements = parseDomAst(state.domAst);
@@ -31,7 +50,10 @@ export async function resolveLocatorWithFallback(state: AgentState, agentId: str
         const textRegex = new RegExp(escapeRegex(normalizedText), 'i');
         const byContains = currentPage.locator(target.tagName).filter({ hasText: textRegex });
         if (await byContains.count() > 0) {
-            return byContains.first();
+            const visibleByContains = await pickFirstVisible(byContains);
+            if (visibleByContains) {
+                return visibleByContains;
+            }
         }
     }
 
@@ -39,7 +61,10 @@ export async function resolveLocatorWithFallback(state: AgentState, agentId: str
     if (placeholder) {
         const byPlaceholder = currentPage.getByPlaceholder(placeholder, { exact: false });
         if (await byPlaceholder.count() > 0) {
-            return byPlaceholder.first();
+            const visibleByPlaceholder = await pickFirstVisible(byPlaceholder);
+            if (visibleByPlaceholder) {
+                return visibleByPlaceholder;
+            }
         }
     }
 
@@ -47,7 +72,10 @@ export async function resolveLocatorWithFallback(state: AgentState, agentId: str
     if (ariaLabel) {
         const byLabel = currentPage.getByLabel(ariaLabel, { exact: false });
         if (await byLabel.count() > 0) {
-            return byLabel.first();
+            const visibleByLabel = await pickFirstVisible(byLabel);
+            if (visibleByLabel) {
+                return visibleByLabel;
+            }
         }
     }
 

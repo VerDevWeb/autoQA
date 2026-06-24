@@ -25,6 +25,7 @@ export type AstElement = {
     text: string;
     attributes: Record<string, string>;
     label?: string;
+    ancestors?: string[];
 };
 
 

@@ -34,6 +34,23 @@ export const fillTool = new DynamicStructuredTool({
     func: async () => "ok",
 });
 
+const fillManySchema = z.object({
+    items: z.array(z.object({
+        agentId: z.string().describe("ID del campo da compilare (es. 'agent-el-12')."),
+        value: z.string().describe("Valore da inserire nel campo specificato."),
+    })).min(1).describe("Lista dei campi da compilare in un solo passaggio."),
+    reasoning: reasoningField,
+    taskName: taskNameField,
+    progress: progressField,
+});
+
+export const fillManyTool = new DynamicStructuredTool({
+    name: "fill_many",
+    description: "Compila piu campi input/textarea in un unico colpo. Ideale per form con molti campi.",
+    schema: fillManySchema,
+    func: async () => "ok",
+});
+
 const selectSchema = z.object({
     agentId: z.string().describe("ID dell'elemento select (es. 'agent-el-12')."),
     value: z.string().describe("Il valore/opzione da selezionare."),
@@ -108,6 +125,7 @@ export const checkNetworkTool = new DynamicStructuredTool({
 export const browserTools = [
     clickTool,
     fillTool,
+    fillManyTool,
     selectTool,
     enterTool,
     gotoTool,

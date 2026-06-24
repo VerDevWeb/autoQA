@@ -25,7 +25,23 @@ export function domainsMatch(left: string, right: string): boolean {
 
 // Legge l'obiettivo (es. "vai su wikipedia.org e poi su youtube.com") e ne estrae i domini in ordine di apparizione
 export function extractObjectiveDomains(objective: string): string[] {
-    const matches = objective.toLowerCase().match(/\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g) ?? [];
+    const text = objective.toLowerCase();
+    const regex = /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g;
+    const matches: string[] = [];
+    let m: RegExpExecArray | null;
+    while ((m = regex.exec(text)) !== null) {
+        const candidate = m[0];
+        if (!candidate) continue;
+
+        // Skip domains that are part of an email address (e.g. user@example.com).
+        const atPos = m.index - 1;
+        if (atPos >= 0 && text[atPos] === "@") {
+            continue;
+        }
+
+        matches.push(candidate);
+    }
+
     const orderedUnique: string[] = [];
     for (const match of matches) {
         const normalized = normalizeDomain(match);

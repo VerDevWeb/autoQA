@@ -9,7 +9,7 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
     return await page.evaluate(
         function (): string {
             let counter = 0;
-            const elements: { agentId: string; tagName: string; text: string; attributes: Record<string, string>; label: string }[] = [];
+            const elements: { agentId: string; tagName: string; text: string; attributes: Record<string, string>; label: string; ancestors: string[] }[] = [];
             const selector = 'a, button, input, select, textarea, details, summary, label, dialog, [role="button"], [role="listbox"], [role="option"], [role="menuitem"], [role="combobox"], [role="tab"], [role="link"], [onclick], [cursor="pointer"], [contenteditable], [tabindex]:not([tabindex="-1"])';
             const interactables = document.querySelectorAll(selector);
 
@@ -97,12 +97,48 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
                     }
                 }
 
+                // Build ancestor chain inline to avoid named helpers that may break in page.evaluate transpilation.
+                const ancestors: string[] = [];
+                let cur: Element | null = el.parentElement;
+                while (cur && cur.tagName !== "BODY" && cur.tagName !== "HTML") {
+                    const tag = cur.tagName.toLowerCase();
+                    const significant = ["form", "fieldset", "section", "article", "main", "nav", "aside", "dialog"].includes(tag)
+                        || (tag === "div" && Boolean(
+                            cur.getAttribute("id")
+                            || cur.getAttribute("class")
+                            || cur.getAttribute("role")
+                            || cur.getAttribute("aria-label")
+                        ));
+
+                    if (significant) {
+                        const id = cur.getAttribute("id");
+                        const cls = (cur.getAttribute("class") || "")
+                            .split(/\s+/)
+                            .map((x) => x.trim())
+                            .filter(Boolean)
+                            .slice(0, 2)
+                            .join(".");
+                        const role = cur.getAttribute("role") || "";
+                        const aria = cur.getAttribute("aria-label") || "";
+
+                        let token = tag;
+                        if (id) token += `#${id}`;
+                        if (cls) token += `.${cls}`;
+                        if (role) token += `[role=${role}]`;
+                        if (aria) token += `[aria-label=${aria.slice(0, 30)}]`;
+                        ancestors.unshift(token);
+                    }
+
+                    cur = cur.parentElement;
+                }
+
                 elements.push({
                     agentId: id,
                     tagName: el.tagName.toLowerCase(),
                     text: visualText,
                     attributes: attributes,
-                    label: label
+                    label: label,
+                    ancestors: ancestors.slice(-4)
                 });
             });
 
@@ -129,32 +165,30 @@ function escapeSExpr(value: string): string {
     return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/[\r\n]/g, " ");
 }
 
-function serializeAttr(attr: Record<string, string>): string {
-    const pairs: string[] = [];
-    for (const [k, v] of Object.entries(attr)) {
-        if (!v) continue;
-        const kc = k.toLowerCase();
-        // only keep semantically useful attributes
-        if (
-            kc === "id" ||
-            kc === "class" ||
-            kc === "type" ||
-            kc === "name" ||
-            kc === "role" ||
-            kc === "placeholder" ||
-            kc === "href" ||
-            kc === "src" ||
-            kc === "aria-label" ||
-            kc === "value" ||
-            kc === "tabindex" ||
-            kc.startsWith("data-") ||
-            kc.startsWith("aria-")
-        ) {
-            pairs.push(kc, `"${escapeSExpr(v.slice(0, 120))}"`);
-        }
+function serializeKeyAttrs(attr: Record<string, string>): string {
+    const keys = ["type", "name", "placeholder", "aria-label", "role", "value", "href", "src"];
+    const chunks: string[] = [];
+
+    for (const key of keys) {
+        const raw = attr[key];
+        if (!raw) continue;
+        const value = escapeSExpr(raw.slice(0, 80));
+        chunks.push(`${key}="${value}"`);
     }
-    if (pairs.length === 0) return "";
-    return ` (@ ${pairs.join(" ")})`;
+
+    return chunks.join(" ");
+}
+
+function compactTagWithIdentity(tagName: string, attr: Record<string, string>): string {
+    const id = attr.id ? `#${escapeSExpr(attr.id.slice(0, 60))}` : "";
+    const cls = (attr.class || "")
+        .split(/\s+/)
+        .map((x) => x.trim())
+        .filter(Boolean)
+        .slice(0, 2)
+        .join(".");
+    const clsPart = cls ? `.${escapeSExpr(cls)}` : "";
+    return `${tagName}${id}${clsPart}`;
 }
 
 export function buildCompactAstForPrompt(domAst: string): string {
@@ -163,21 +197,54 @@ export function buildCompactAstForPrompt(domAst: string): string {
         return "";
     }
 
-    return elements.map((el) => {
-        const tag = el.tagName || "div";
-        const txt = escapeSExpr(el.text || "").slice(0, 200);
-        const attrBlock = serializeAttr(el.attributes || {});
-        const label = el.label ? escapeSExpr(el.label).slice(0, 120) : "";
+    type TreeNode = {
+        token: string;
+        children: Map<string, TreeNode>;
+        leaves: string[];
+    };
 
-        const extras: string[] = [];
-        if (label) extras.push(`l="${label}"`);
-        const extrasBlock = extras.length > 0 ? ` ${extras.join(" ")}` : "";
+    const root: TreeNode = { token: "ROOT", children: new Map(), leaves: [] };
 
-        if (txt) {
-            return `(${tag}${attrBlock}${extrasBlock} "${txt}")`;
+    for (const el of elements) {
+        const chain = (el.ancestors || []).filter(Boolean).slice(0, 4);
+        let current = root;
+
+        for (const token of chain) {
+            if (!current.children.has(token)) {
+                current.children.set(token, { token, children: new Map(), leaves: [] });
+            }
+            const nextNode = current.children.get(token);
+            if (!nextNode) break;
+            current = nextNode;
         }
-        return `(${tag}${attrBlock}${extrasBlock})`;
-    }).join("\n");
+
+        const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {});
+        const attrs = serializeKeyAttrs(el.attributes || {});
+        const label = el.label ? ` label="${escapeSExpr(el.label).slice(0, 80)}"` : "";
+        const text = el.text ? ` text="${escapeSExpr(el.text).slice(0, 100)}"` : "";
+        const attrPart = attrs ? ` ${attrs}` : "";
+        const leaf = `${tag}${attrPart}${label}${text} [agentId=${el.agentId}]`;
+        current.leaves.push(leaf);
+    }
+
+    const lines: string[] = [];
+    const emit = (node: TreeNode, depth: number): void => {
+        if (node.token !== "ROOT") {
+            lines.push(`${"  ".repeat(depth)}${node.token}`);
+        }
+
+        const leafIndent = "  ".repeat(node.token === "ROOT" ? depth : depth + 1);
+        for (const leaf of node.leaves) {
+            lines.push(`${leafIndent}${leaf}`);
+        }
+
+        for (const child of node.children.values()) {
+            emit(child, node.token === "ROOT" ? depth : depth + 1);
+        }
+    };
+
+    emit(root, 0);
+    return lines.join("\n");
 }
 
 function isContextDestroyedError(error: unknown): boolean {
