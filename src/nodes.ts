@@ -63,6 +63,53 @@ function autoMarkTask(tasks: string, keywords: string[], taskName?: string): str
     return updated.join('\n');
 }
 
+function hasCriticalRiskSignals(consoleLogs: string, networkLog: string): boolean {
+    const text = `${consoleLogs || ""}\n${networkLog || ""}`.toLowerCase();
+    const criticalSignals = [
+        "captcha",
+        "account locked",
+        "too many requests",
+        "rate limit",
+        "unauthorized",
+        "forbidden",
+        "500",
+        "fatal",
+        "blocked",
+        "page, context or browser has been closed"
+    ];
+    return criticalSignals.some((s) => text.includes(s));
+}
+
+function actionKind(entry: string): string {
+    const lower = (entry || "").toLowerCase().trim();
+    if (!lower) return "";
+    if (lower.startsWith("click")) return "click";
+    if (lower.startsWith("fill")) return "fill";
+    if (lower.startsWith("select")) return "select";
+    if (lower.startsWith("enter")) return "enter";
+    if (lower.startsWith("goto")) return "goto";
+    if (lower.startsWith("check_network")) return "check_network";
+    if (lower.startsWith("wait") || lower.includes("attesa")) return "wait";
+    return lower.split(" ")[0] || lower;
+}
+
+function hasRepetitiveLoop(actionHistory: string[]): boolean {
+    if (!Array.isArray(actionHistory) || actionHistory.length < 4) return false;
+    const recent = actionHistory.slice(-6).map(actionKind).filter(Boolean);
+    if (recent.length < 4) return false;
+
+    const last4 = recent.slice(-4);
+    const unique = new Set(last4);
+    if (unique.size === 1) return true;
+
+    // ABAB style oscillation (e.g. click, fill, click, fill)
+    if (last4.length === 4 && last4[0] === last4[2] && last4[1] === last4[3]) {
+        return true;
+    }
+
+    return false;
+}
+
 let currentPage: Page;
 
 export function setPageForNodes(page: Page): void {
@@ -127,6 +174,13 @@ export async function decideNode(
         ? `\nBrowser console messages (logs, errors, warnings):\n${state.consoleLogs}\n`
         : "";
 
+    const criticalRiskDetected = hasCriticalRiskSignals(state.consoleLogs, state.networkLog);
+    const repetitiveLoopDetected = hasRepetitiveLoop(state.actionHistory);
+
+    const emergencyStopBlock = criticalRiskDetected && repetitiveLoopDetected
+        ? `\nEMERGENCY STOP CONDITION DETECTED:\n- Critical risk signals are present in network/console logs.\n- Recent iterations are repetitive without progress.\nYOU MUST call 'done' now with a clear reasoning describing the risk and loop condition sent via email tool.\n`
+        : "";
+
     const prompt = `You are an autonomous web automation agent.
 Your final objective is: ${state.objective}
 You are currently at URL: ${state.currentUrl}
@@ -135,6 +189,7 @@ ${sequenceBlock}
 ${tasksBlock}
 ${networkBlock}
 ${consoleBlock}
+${emergencyStopBlock}
 Here is the COMPACT AST of the page (indented tree with significant containers + interactive elements, including key HTML attributes, labels, innerText and agentId):
 ${compactAstForPrompt}
 
@@ -184,6 +239,11 @@ Operational rules:
 - Use 'check_network' to inspect API responses right after a submission. This tells you if the operation succeeded or failed.
 - Browser console messages (LOG, WARN, ERROR) help you detect page issues. If you see errors, investigate.
 
+[CRITICAL RISK STOP]
+- If you detect critical risk signals (captcha, account lock, repeated 4xx/5xx auth failures, rate limits, browser/context closed errors) and recent iterations are repeating the same actions without progress, call 'done' as an emergency stop.
+- In this emergency case, explain the risk and why continuing would be unsafe or useless.
+- Do NOT continue blind retries when this condition is met.
+
 [EMAIL]
 - Use 'send_email' with 'to' (from mailing list), 'subject', and 'body' to send a final report.
 
@@ -203,9 +263,11 @@ Never skip step 3. If verification fails, your plan must address the failure, no
 
     const finalPrompt = `${reinforcedPrompt}${sequenceRule}`;
 
+    /*
     console.log("=== PROMPT SENT TO LLM ===");
     console.log(finalPrompt);
     console.log("=== PROMPT END ===");
+    */
 
     incrementIterationCounter();
     const estimatedInputTokens = estimateInputTokens(finalPrompt);
@@ -271,6 +333,28 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     console.log(`-> [Execute] Actions: ${decisionCalls.map((d: any) => d.name).join(", ")}`);
 
     if (firstDecision.name === 'done') {
+        // Auto-send recap email to every allowed email address found in the objective
+        try {
+            const emailsInObjective = (state.objective.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g) ?? [])
+                .filter((e) => isAllowedEmail(e));
+            if (emailsInObjective.length > 0) {
+                const subject = `autoQA report - ${new Date().toLocaleDateString('it-IT')}`;
+                const historySummary = state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n');
+                const body = `Obiettivo: ${state.objective}\n\nAzioni eseguite:\n${historySummary || "nessuna"}\n\nChecklist:\n${state.tasks || "nessuna"}\n\nReasoning agente: ${firstDecision.args?.reasoning || "n/d"}`;
+                for (const recipient of emailsInObjective) {
+                    try {
+                        const result = await sendEmail(recipient, subject, body);
+                        console.log(`-> [Done] Resoconto inviato a ${recipient}: ${result}`);
+                    } catch (e: any) {
+                        console.error(`-> [Done] Errore invio email a ${recipient}: ${e.message}`);
+                    }
+                }
+            } else {
+                console.log("-> [Done] Nessuna email valida trovata nell'obiettivo, resoconto non inviato.");
+            }
+        } catch (e: any) {
+            console.error(`-> [Done] Impossibile inviare email di resoconto: ${e.message}`);
+        }
         return { isFinished: true, lastToolCall: null };
     }
 
