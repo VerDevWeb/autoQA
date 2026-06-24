@@ -5,6 +5,7 @@ import { extractSimplifiedDOMWithRetry, buildCompactAstForPrompt, parseDomAst } 
 import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "./domains.js";
 import { resolveLocatorWithFallback } from "./locators.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "./tokens.js";
+import { getNetworkLog, clearNetworkLog } from "./networkCapture.js";
 
 // Cerca "aspetta X secondi" nell'obiettivo e restituisce i secondi, oppure null
 function extractWaitSeconds(objective: string): number | null {
@@ -116,12 +117,17 @@ export async function decideNode(
         ? `\nLa tua checklist task (segna [x] sui completati via 'progress'):\n${state.tasks}\n`
         : `\nNon hai ancora una checklist. CREALA ORA nel campo 'progress' del tool call, in formato:\n- [ ] task 1\n- [ ] task 2\n- [ ] task 3\n...\n`;
 
+    const networkBlock = state.networkLog
+        ? `\nRegistro delle ultime richieste di rete:\n${state.networkLog}\n`
+        : "";
+
     const prompt = `Sei un agente di automazione web autonomo.
         Il tuo obiettivo finale è: ${state.objective}
         Ti trovi attualmente all'URL: ${state.currentUrl}
         ${historyBlock}
         ${sequenceBlock}
         ${tasksBlock}
+        ${networkBlock}
         Ecco l'AST COMPACT degli elementi interattivi (formato: agentId|tag|text|attributi):
         ${compactAstForPrompt}
 
@@ -134,7 +140,8 @@ Regole operative:
 - Non ripetere azioni gia' presenti nello storico.
 - Se l'obiettivo dice "aspetta X secondi" usa SUBITO action='wait' con seconds=X. L'unico modo per attendere e' chiamare questo tool.
 - NON chiamare 'goto' se sei gia' su quel dominio o se l'hai gia' chiamato prima per lo stesso URL. Se la pagina e' caricata, passa oltre.
-- Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".`;
+- Ogni volta che chiami un'azione, includi SEMPRE il campo 'taskName' con il NOME ESATTO del task che stai completando (copiato dalla checklist senza la checkbox). Esempio: taskName: "Attendere 10 secondi".
+- Usa action='check_network' per vedere le risposte delle richieste di rete Appena fatte (fetch, XHR). Così puoi verificare se un'operazione (es. aggiungere immobile) ha avuto successo o errore. Non abusarne, chiamalo solo quando serve.`;
     
     const sequenceRule = nextTargetDomain
         ? `\n- Usa action='goto' solo verso il prossimo dominio target: ${nextTargetDomain}. Non tornare ai domini gia' completati.`
@@ -188,6 +195,16 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
 
     if (decision.action === 'done') {
         return { isFinished: true, lastToolCall: null };
+    }
+
+    if (decision.action === 'check_network') {
+        const log = getNetworkLog();
+        clearNetworkLog();
+        console.log(`-> [Execute] Richieste di rete registrate:\n${log}`);
+        const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], decision.taskName);
+        const updates: any = { isFinished: false, lastToolCall: null, networkLog: log };
+        if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
+        return updates;
     }
 
     if (decision.action === 'goto') {

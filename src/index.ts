@@ -6,6 +6,7 @@ import { getLLM } from "./modelController.js";
 import { AgentStateDef, webActionSchema } from "./types.js";
 import { observeNode, decideNode, executeNode, setPageForNodes } from "./nodes.js";
 import { setPageInstance } from "./locators.js";
+import { startNetworkCapture } from "./networkCapture.js";
 import { logSessionTokenSummary } from "./tokens.js";
 
 dotenv.config();
@@ -15,7 +16,7 @@ dotenv.config();
 
     LANGUAGE: You can use whatever language you like, usually English prompts give better results because LLM are mostly trained in English language
 */
-const OBJECTIVE = "";
+const OBJECTIVE = process.env.OBJECTIVE || "";
 
 /*
     Here I chose the provider I want
@@ -60,6 +61,7 @@ async function run() {
         // Passa l'istanza di pagina ai moduli
         setPageInstance(page);
         setPageForNodes(page);
+        startNetworkCapture(page);
 
         await page.goto("about:blank");
 
@@ -72,7 +74,9 @@ async function run() {
             completedDomains: [],
             domainStatus: {},
             noToolCallStreak: 0,
-            isFinished: false
+            isFinished: false,
+            tasks: "",
+            networkLog: ""
         };
 
         console.log("Avvio del flusso con Native Tool Calling...");

@@ -7,7 +7,7 @@ export type LLM_PROVIDERS = 'openai' | 'anthropic' | 'google' | 'ollama' | 'lmst
 
 // Definition of the tools that the agent can call
 export const webActionSchema = z.object({
-    action: z.enum(["click", "fill", "select", "enter", "goto", "wait", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter, 'goto' to navigate to a URL, and 'wait' to pause for a given number of seconds."),
+    action: z.enum(["click", "fill", "select", "enter", "goto", "wait", "check_network", "done"]).describe("The action to execute in the browser. Use 'enter' to press Enter, 'goto' to navigate to a URL, 'wait' to pause, and 'check_network' to inspect recent network requests/responses."),
     agentId: z.string().optional().describe("The target element ID (e.g. 'agent-el-12'). Not required for 'done' and 'goto'. For 'enter', it is optional if the element is already focused."),
     value: z.string().optional().describe("The value to input (for 'fill') or select (for 'select')."),
     url: z.string().url().optional().describe("Destination URL to use when action='goto'."),
@@ -54,6 +54,7 @@ export const AgentStateDef = Annotation.Root({
     noToolCallStreak: Annotation<number>({ reducer: (x, y) => y ?? x, default: () => 0 }),
     isFinished: Annotation<boolean>({ reducer: (x, y) => y ?? x, default: () => false }),
     tasks: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
+    networkLog: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
 });
 
 export type AgentState = typeof AgentStateDef.State;
