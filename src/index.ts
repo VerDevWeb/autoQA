@@ -9,6 +9,7 @@ import { allTools } from "./tools/tools.js";
 import { setPageInstance } from "./locators.js";
 import { startNetworkCapture } from "./networkCapture.js";
 import { startConsoleCapture } from "./consoleCapture.js";
+import { startUiSignalCapture } from "./uiSignalCapture.js";
 import { logSessionTokenSummary } from "./tokens.js";
 import { decideNode } from "./nodes/decideNode.js";
 import { executeNode } from "./nodes/executeNode.js";
@@ -68,6 +69,7 @@ async function run() {
         setPageForNodes(page);
         startNetworkCapture(page);
         startConsoleCapture(page);
+        await startUiSignalCapture(page);
 
         await page.goto("about:blank");
 
@@ -83,7 +85,8 @@ async function run() {
             isFinished: false,
             tasks: "",
             consoleLogs: "",
-            networkLog: ""
+            networkLog: "",
+            uiSignals: ""
         };
 
         console.log("Agent is starting... ");

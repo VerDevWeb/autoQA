@@ -121,6 +121,32 @@ export const checkNetworkTool = new DynamicStructuredTool({
     func: async () => "ok",
 });
 
+const checkConsoleSchema = z.object({
+    reasoning: reasoningField,
+    taskName: taskNameField,
+    progress: progressField,
+});
+
+const checkUiMessagesSchema = z.object({
+    reasoning: reasoningField,
+    taskName: taskNameField,
+    progress: progressField,
+});
+
+export const checkConsoleTool = new DynamicStructuredTool({
+    name: "check_console",
+    description: "Mostra i messaggi recenti della console browser (log, warning, error). Usalo per diagnosticare problemi frontend/script.",
+    schema: checkConsoleSchema,
+    func: async () => "ok",
+});
+
+export const checkUiMessagesTool = new DynamicStructuredTool({
+    name: "check_ui_messages",
+    description: "Mostra messaggi UI transient (toast, snackbar, alert, status) anche se sono apparsi e spariti velocemente.",
+    schema: checkUiMessagesSchema,
+    func: async () => "ok",
+});
+
 
 export const browserTools = [
     clickTool,
@@ -131,4 +157,6 @@ export const browserTools = [
     gotoTool,
     waitTool,
     checkNetworkTool,
+    checkConsoleTool,
+    checkUiMessagesTool,
 ];

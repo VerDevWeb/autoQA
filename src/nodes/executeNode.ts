@@ -3,6 +3,8 @@ import { parseDomAst } from "../ast.js";
 import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "../domains.js";
 import { resolveLocatorWithFallback } from "../locators.js";
 import { getNetworkLog } from "../networkCapture.js";
+import { getConsoleLog } from "../consoleCapture.js";
+import { getUiSignalsLog } from "../uiSignalCapture.js";
 import { isAllowedEmail, sendEmail } from "../email.js";
 import { autoMarkTask, extractWaitSeconds, stripWaitFromObjective, currentPage, stripGotoFromObjective } from "./nodeUtil.js";
 
@@ -64,6 +66,36 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         console.log(`-> [Execute] Network requests logged:\n${log}`);
         const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "network", "rete"], firstDecision.args?.taskName);
         const updates: any = { isFinished: false, lastToolCall: null, networkLog: log, actionHistory: [...state.actionHistory, "check_network eseguito"] };
+        if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
+        return updates;
+    }
+
+    if (firstDecision.name === 'check_console') {
+        // Anti-loop: if the last action was already check_console, block
+        const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
+        if (lastAction.includes("check_console")) {
+            console.warn(`[GuardRail] check_console already called, skipped (loop avoided).`);
+            return { isFinished: false, lastToolCall: null, consoleLogs: "" };
+        }
+        const log = getConsoleLog();
+        console.log(`-> [Execute] Browser console messages:\n${log}`);
+        const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "console", "error", "warn", "log"], firstDecision.args?.taskName);
+        const updates: any = { isFinished: false, lastToolCall: null, consoleLogs: log, actionHistory: [...state.actionHistory, "check_console eseguito"] };
+        if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
+        return updates;
+    }
+
+    if (firstDecision.name === 'check_ui_messages') {
+        // Anti-loop: if the last action was already check_ui_messages, block
+        const lastAction = state.actionHistory[state.actionHistory.length - 1] || "";
+        if (lastAction.includes("check_ui_messages")) {
+            console.warn(`[GuardRail] check_ui_messages already called, skipped (loop avoided).`);
+            return { isFinished: false, lastToolCall: null, uiSignals: "" };
+        }
+        const log = getUiSignalsLog();
+        console.log(`-> [Execute] Transient UI messages:\n${log}`);
+        const updatedTasks = autoMarkTask(state.tasks, ["check", "verific", "toast", "snackbar", "alert", "messagg", "errore", "error"], firstDecision.args?.taskName);
+        const updates: any = { isFinished: false, lastToolCall: null, uiSignals: log, actionHistory: [...state.actionHistory, "check_ui_messages eseguito"] };
         if (updatedTasks !== state.tasks) updates.tasks = updatedTasks;
         return updates;
     }

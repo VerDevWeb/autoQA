@@ -60,22 +60,6 @@ export function autoMarkTask(tasks: string, keywords: string[], taskName?: strin
     return updated.join('\n');
 }
 
-export function hasCriticalRiskSignals(consoleLogs: string, networkLog: string): boolean {
-    const text = `${consoleLogs || ""}\n${networkLog || ""}`.toLowerCase();
-    const criticalSignals = [
-        "captcha",
-        "account locked",
-        "too many requests",
-        "rate limit",
-        "unauthorized",
-        "forbidden",
-        "500",
-        "fatal",
-        "blocked",
-        "page, context or browser has been closed"
-    ];
-    return criticalSignals.some((s) => text.includes(s));
-}
 
 export function actionKind(entry: string): string {
     const lower = (entry || "").toLowerCase().trim();
@@ -86,6 +70,8 @@ export function actionKind(entry: string): string {
     if (lower.startsWith("enter")) return "enter";
     if (lower.startsWith("goto")) return "goto";
     if (lower.startsWith("check_network")) return "check_network";
+    if (lower.startsWith("check_console")) return "check_console";
+    if (lower.startsWith("check_ui_messages")) return "check_ui_messages";
     if (lower.startsWith("wait")) return "wait";
     return lower.split(" ")[0] || lower;
 }

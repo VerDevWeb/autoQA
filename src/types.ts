@@ -43,6 +43,7 @@ export const AgentStateDef = Annotation.Root({
     tasks: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     networkLog: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     consoleLogs: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
+    uiSignals: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
 });
 
 export type AgentState = typeof AgentStateDef.State;
