@@ -3,7 +3,6 @@ import { HumanMessage } from "@langchain/core/messages";
 import { buildCompactAstForPrompt } from "../ast.js";
 import { extractObjectiveDomains, findNextTargetDomain } from "../domains.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "../tokens.js";
-import { hasRepetitiveLoop } from "./nodeUtil.js";
 
 export async function decideNode(state: AgentState, llmWithTools: any): Promise<Partial<AgentState>> {
     console.log("-> [Decide] LLM is selecting the next tool...");
