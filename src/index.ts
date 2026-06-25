@@ -24,7 +24,7 @@ dotenv.config();
 */
 const OBJECTIVE = process.env.OBJECTIVE || "";
 const RECURSION_LIMIT = Number(process.env.RECURSION_LIMIT) || 100;
-const HEADLESS = Boolean(process.env.HEADLESS) || false;
+const HEADLESS = false;
 
 /*
     Here I chose the provider I want
