@@ -23,6 +23,8 @@ dotenv.config();
     LANGUAGE: You can use whatever language you like, usually English prompts give better results because LLM are mostly trained in English language
 */
 const OBJECTIVE = process.env.OBJECTIVE || "";
+const RECURSION_LIMIT = Number(process.env.RECURSION_LIMIT) || 100;
+const HEADLESS = Boolean(process.env.HEADLESS) || false;
 
 /*
     Here I chose the provider I want
@@ -56,7 +58,8 @@ async function run() {
     let page: Page;
 
     try {
-        browser = await chromium.launch({ headless: false });
+        // Launching the browser instance
+        browser = await chromium.launch({ headless: HEADLESS });
         const context = await browser.newContext();
         page = await context.newPage();
 
@@ -83,11 +86,10 @@ async function run() {
             networkLog: ""
         };
 
-        console.log("Avvio del flusso con Native Tool Calling...");
+        console.log("Agent is starting... ");
         console.log(`[Objective] ${initialState.objective}`);
-        await app.invoke(initialState, { recursionLimit: 100 });
-
-        console.log("Flusso terminato con successo.");
+        // Initialization of the AI Agent setting the recursion limit
+        await app.invoke(initialState, { recursionLimit: RECURSION_LIMIT });
     } finally {
         logSessionTokenSummary();
         // await browser?.close();
