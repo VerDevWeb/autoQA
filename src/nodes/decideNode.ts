@@ -93,6 +93,8 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     - Use 'check_network' to inspect API responses right after a submission. This tells you if the operation succeeded or failed.
     - Use 'check_console' whenever you need browser logs/warnings/errors to diagnose issues or verify script behavior.
     - Use 'check_ui_messages' to inspect transient UI messages (toast/snackbar/alert) that may appear and disappear quickly.
+    - If you are stuck, repeating actions, or not making progress, you MUST call 'check_network' and 'check_console' before trying more blind retries.
+    - If the UI suggests an operation happened but no clear result is visible, call 'check_ui_messages' as well to detect transient errors or warnings.
 
     [CRITICAL RISK STOP]
     - If you detect critical risk signals (captcha, account lock, repeated 4xx/5xx auth failures, rate limits, browser/context closed errors) and recent iterations are repeating the same actions without progress, call 'done' as an emergency stop.
