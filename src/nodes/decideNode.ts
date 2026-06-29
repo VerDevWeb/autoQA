@@ -68,6 +68,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     - For each field, determine its purpose from: type, name, placeholder, aria-label, label, innerText, and container hierarchy in the tree.
     - Fill EVERY visible form field with realistic test data. Invent names, emails, phones, addresses, descriptions as needed.
     - Do NOT skip any field. If you are unsure what a field is for, use common sense from its name/placeholder/aria-label.
+    - If a field is an <input type="file">, use 'upload_file' with a valid path instead of 'fill'.
     - Prefer ONE SHOT form filling:
         - Use 'fill_many' with all fields when possible.
         - Alternatively, return multiple tool calls in the same response (e.g. many 'fill' calls), one per field.

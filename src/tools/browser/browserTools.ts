@@ -20,8 +20,8 @@ export const clickTool = new DynamicStructuredTool({
 });
 
 const fillSchema = z.object({
-    agentId: z.string().describe("ID dell'elemento in cui scrivere (es. 'agent-el-12')."),
-    value: z.string().describe("Il testo da inserire nel campo."),
+    agentId: z.string().describe("ID of the element to type into (e.g. 'agent-el-12')."),
+    value: z.string().describe("Text to type into the field."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -29,16 +29,31 @@ const fillSchema = z.object({
 
 export const fillTool = new DynamicStructuredTool({
     name: "fill",
-    description: "Scrive un valore in un campo di input/textarea identificato dal suo agentId.",
+    description: "Types a value into an input/textarea identified by its agentId.",
     schema: fillSchema,
+    func: async () => "ok",
+});
+
+const uploadFileSchema = z.object({
+    agentId: z.string().describe("ID of the file input where the file should be attached (e.g. 'agent-el-12')."),
+    filePath: z.string().describe("Path of the file to upload. It can be project-root relative or absolute."),
+    reasoning: reasoningField,
+    taskName: taskNameField,
+    progress: progressField,
+});
+
+export const uploadFileTool = new DynamicStructuredTool({
+    name: "upload_file",
+    description: "Attaches a file to an HTML file input (<input type='file'>) identified by its agentId.",
+    schema: uploadFileSchema,
     func: async () => "ok",
 });
 
 const fillManySchema = z.object({
     items: z.array(z.object({
-        agentId: z.string().describe("ID del campo da compilare (es. 'agent-el-12')."),
-        value: z.string().describe("Valore da inserire nel campo specificato."),
-    })).min(1).describe("Lista dei campi da compilare in un solo passaggio."),
+        agentId: z.string().describe("ID of the field to fill (e.g. 'agent-el-12')."),
+        value: z.string().describe("Value to type into the specified field."),
+    })).min(1).describe("List of fields to fill in a single step."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -46,14 +61,14 @@ const fillManySchema = z.object({
 
 export const fillManyTool = new DynamicStructuredTool({
     name: "fill_many",
-    description: "Compila piu campi input/textarea in un unico colpo. Ideale per form con molti campi.",
+    description: "Fills multiple input/textarea fields in one shot. Ideal for large forms.",
     schema: fillManySchema,
     func: async () => "ok",
 });
 
 const selectSchema = z.object({
-    agentId: z.string().describe("ID dell'elemento select (es. 'agent-el-12')."),
-    value: z.string().describe("Il valore/opzione da selezionare."),
+    agentId: z.string().describe("ID of the select element (e.g. 'agent-el-12')."),
+    value: z.string().describe("Option value to select."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -61,7 +76,7 @@ const selectSchema = z.object({
 
 export const selectTool = new DynamicStructuredTool({
     name: "select",
-    description: "Seleziona un'opzione in un elemento <select> identificato dal suo agentId.",
+    description: "Selects an option in a <select> element identified by its agentId.",
     schema: selectSchema,
     func: async () => "ok",
 });
@@ -81,7 +96,7 @@ export const enterTool = new DynamicStructuredTool({
 });
 
 const gotoSchema = z.object({
-    url: z.string().url().describe("URL di destinazione completo (https://...)."),
+    url: z.string().url().describe("Full destination URL (https://...)."),
     reasoning: reasoningField,
     taskName: taskNameField,
     progress: progressField,
@@ -89,7 +104,7 @@ const gotoSchema = z.object({
 
 export const gotoTool = new DynamicStructuredTool({
     name: "goto",
-    description: "Naviga verso un URL completo (https://...). Usalo quando devi cambiare pagina o andare su un dominio specifico.",
+    description: "Navigates to a full URL (https://...). Use it when you need to change page or move to a specific domain.",
     schema: gotoSchema,
     func: async () => "ok",
 });
@@ -116,7 +131,7 @@ const checkNetworkSchema = z.object({
 
 export const checkNetworkTool = new DynamicStructuredTool({
     name: "check_network",
-    description: "Mostra le ultime richieste di rete (fetch, XHR) registrate. Usalo per verificare se un'operazione API ha funzionato o dato errore.",
+    description: "Shows the most recent captured network requests (fetch, XHR). Use it to verify whether an API operation succeeded or failed.",
     schema: checkNetworkSchema,
     func: async () => "ok",
 });
@@ -135,14 +150,14 @@ const checkUiMessagesSchema = z.object({
 
 export const checkConsoleTool = new DynamicStructuredTool({
     name: "check_console",
-    description: "Mostra i messaggi recenti della console browser (log, warning, error). Usalo per diagnosticare problemi frontend/script.",
+    description: "Shows recent browser console messages (log, warning, error). Use it to diagnose frontend/script issues.",
     schema: checkConsoleSchema,
     func: async () => "ok",
 });
 
 export const checkUiMessagesTool = new DynamicStructuredTool({
     name: "check_ui_messages",
-    description: "Mostra messaggi UI transient (toast, snackbar, alert, status) anche se sono apparsi e spariti velocemente.",
+    description: "Shows transient UI messages (toast, snackbar, alert, status), even if they appeared and disappeared quickly.",
     schema: checkUiMessagesSchema,
     func: async () => "ok",
 });
@@ -151,6 +166,7 @@ export const checkUiMessagesTool = new DynamicStructuredTool({
 export const browserTools = [
     clickTool,
     fillTool,
+    uploadFileTool,
     fillManyTool,
     selectTool,
     enterTool,

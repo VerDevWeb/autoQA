@@ -1,4 +1,6 @@
 import type { AgentState } from "../types.js";
+import path from "node:path";
+import { promises as fs } from "node:fs";
 import { parseDomAst } from "../ast.js";
 import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "../domains.js";
 import { resolveLocatorWithFallback } from "../locators.js";
@@ -216,7 +218,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     let updatedDomainStatus = state.domainStatus;
     let updatedCompletedDomains = state.completedDomains;
     const historyEntries: string[] = [];
-    const actionableCalls = decisionCalls.filter((d: any) => ["click", "fill", "fill_many", "select", "enter"].includes(d?.name));
+    const actionableCalls = decisionCalls.filter((d: any) => ["click", "fill", "upload_file", "fill_many", "select", "enter"].includes(d?.name));
 
     for (const call of actionableCalls) {
         const urlBeforeCall = currentPage.url();
@@ -277,6 +279,27 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             ...prev,
                             filled: true
                         }));
+                    }
+                    break;
+                case 'upload_file':
+                    if (!call.args?.agentId) throw new Error("Azione 'upload_file' richiede agentId.");
+                    if (!call.args?.filePath) throw new Error("Azione 'upload_file' richiede filePath.");
+                    {
+                        const rawPath = String(call.args.filePath).trim();
+                        const resolvedPath = path.isAbsolute(rawPath) ? rawPath : path.resolve(process.cwd(), rawPath);
+                        await fs.access(resolvedPath);
+
+                        const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
+                        await locator.waitFor({ state: "attached", timeout: 5000 });
+                        await locator.setInputFiles(resolvedPath);
+
+                        const domain = getDomainFromUrl(currentPage.url());
+                        updatedDomainStatus = upsertDomainStatus(updatedDomainStatus, domain, (prev) => ({
+                            ...prev,
+                            filled: true
+                        }));
+
+                        historyEntries.push(`upload_file su ${call.args?.agentId} con file \"${resolvedPath}\"`);
                     }
                     break;
                 case 'select':
