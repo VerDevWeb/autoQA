@@ -10,6 +10,8 @@ import { getUiSignalsLog } from "../uiSignalCapture.js";
 import { isAllowedEmail, sendEmail } from "../email.js";
 import { autoMarkTask, extractWaitSeconds, stripWaitFromObjective, currentPage, stripGotoFromObjective } from "./nodeUtil.js";
 
+const AUTO_SEND_DONE_REPORT = process.env.AUTO_SEND_DONE_REPORT === "true";
+
 
 export async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
     if (state.isFinished) {
@@ -32,27 +34,27 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
     console.log(`-> [Execute] Actions: ${decisionCalls.map((d: any) => d.name).join(", ")}`);
 
     if (firstDecision.name === 'done') {
-        // Auto-send recap email to every allowed email address found in the objective
-        try {
-            const emailsInObjective = (state.objective.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g) ?? [])
-                .filter((e) => isAllowedEmail(e));
-            if (emailsInObjective.length > 0) {
-                const subject = `autoQA report - ${new Date().toLocaleDateString('it-IT')}`;
-                const historySummary = state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n');
-                const body = `Obiettivo: ${state.objective}\n\nAzioni eseguite:\n${historySummary || "nessuna"}\n\nChecklist:\n${state.tasks || "nessuna"}\n\nReasoning agente: ${firstDecision.args?.reasoning || "n/d"}`;
-                for (const recipient of emailsInObjective) {
-                    try {
-                        const result = await sendEmail(recipient, subject, body);
-                        console.log(`-> [Done] Resoconto inviato a ${recipient}: ${result}`);
-                    } catch (e: any) {
-                        console.error(`-> [Done] Errore invio email a ${recipient}: ${e.message}`);
+        if (AUTO_SEND_DONE_REPORT) {
+            // Optional auto-send recap email to allowed email addresses found in objective.
+            try {
+                const emailsInObjective = (state.objective.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g) ?? [])
+                    .filter((e) => isAllowedEmail(e));
+                if (emailsInObjective.length > 0) {
+                    const subject = `autoQA report - ${new Date().toLocaleDateString('it-IT')}`;
+                    const historySummary = state.actionHistory.map((h, i) => `${i + 1}. ${h}`).join('\n');
+                    const body = `Objective: ${state.objective}\n\nExecuted actions:\n${historySummary || "none"}\n\nChecklist:\n${state.tasks || "none"}\n\nAgent reasoning: ${firstDecision.args?.reasoning || "n/a"}`;
+                    for (const recipient of emailsInObjective) {
+                        try {
+                            const result = await sendEmail(recipient, subject, body);
+                            console.log(`-> [Done] Auto report sent to ${recipient}: ${result}`);
+                        } catch (e: any) {
+                            console.error(`-> [Done] Auto report send error (${recipient}): ${e.message}`);
+                        }
                     }
                 }
-            } else {
-                console.log("-> [Done] Nessuna email valida trovata nell'obiettivo, resoconto non inviato.");
+            } catch (e: any) {
+                console.error(`-> [Done] Unable to auto-send report email: ${e.message}`);
             }
-        } catch (e: any) {
-            console.error(`-> [Done] Impossibile inviare email di resoconto: ${e.message}`);
         }
         return { isFinished: true, lastToolCall: null };
     }
