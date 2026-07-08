@@ -26,16 +26,28 @@ export function domainsMatch(left: string, right: string): boolean {
 // Parses the objective (e.g. "go to wikipedia.org then youtube.com") and extracts domains in order of appearance
 export function extractObjectiveDomains(objective: string): string[] {
     const text = objective.toLowerCase();
-    const regex = /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g;
     const matches: string[] = [];
+
+    // Prefer hosts extracted from explicit URLs (supports localhost and IPs).
+    const urlRegex = /https?:\/\/[^\s"'<>]+/g;
+    let u: RegExpExecArray | null;
+    while ((u = urlRegex.exec(text)) !== null) {
+        const host = getDomainFromUrl(u[0]);
+        if (host) {
+            matches.push(host);
+        }
+    }
+
+    const regex = /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b/g;
     let m: RegExpExecArray | null;
     while ((m = regex.exec(text)) !== null) {
         const candidate = m[0];
         if (!candidate) continue;
 
-        // Skip domains that are part of an email address (e.g. user@example.com).
-        const atPos = m.index - 1;
-        if (atPos >= 0 && text[atPos] === "@") {
+        // Skip segments that are part of an email address (e.g. user@example.com).
+        const charBefore = m.index > 0 ? text[m.index - 1] : "";
+        const charAfter = text[m.index + candidate.length] || "";
+        if (charBefore === "@" || charAfter === "@") {
             continue;
         }
 
