@@ -39,6 +39,25 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
                 if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
                     visualText = (el as HTMLInputElement).value || el.getAttribute("placeholder") || "";
                 }
+                if (el.tagName === "SELECT") {
+                    const selectEl = el as HTMLSelectElement;
+                    const optionPairs: string[] = [];
+                    for (const opt of Array.from(selectEl.options)) {
+                        const optLabel = (opt.textContent || "").replace(/\s+/g, " ").trim();
+                        const optValue = (opt.value || "").replace(/\s+/g, " ").trim();
+                        if (!optLabel && !optValue) continue;
+                        optionPairs.push(`${optValue}=>${optLabel}`);
+                    }
+
+                    if (optionPairs.length > 0) {
+                        attributes.options = optionPairs.slice(0, 20).join(" | ");
+                    }
+
+                    const selected = selectEl.value?.trim();
+                    if (selected) {
+                        attributes.selected = selected;
+                    }
+                }
 
                 if (compactMode) {
                     const clean = visualText.replace(/\s+/g, " ").trim();
@@ -166,7 +185,7 @@ function escapeSExpr(value: string): string {
 }
 
 function serializeKeyAttrs(attr: Record<string, string>): string {
-    const keys = ["type", "name", "placeholder", "aria-label", "role", "value", "href", "src"];
+    const keys = ["type", "name", "placeholder", "aria-label", "role", "value", "selected", "options", "href", "src"];
     const chunks: string[] = [];
 
     for (const key of keys) {
@@ -191,6 +210,42 @@ function compactTagWithIdentity(tagName: string, attr: Record<string, string>): 
     return `${tagName}${id}${clsPart}`;
 }
 
+function normalizePromptText(value: string): string {
+    return (value || "").replace(/\s+/g, " ").trim();
+}
+
+function hasMeaningfulSignal(el: AstElement): boolean {
+    const attrs = el.attributes || {};
+    const text = normalizePromptText(el.text || "");
+    const label = normalizePromptText(el.label || "");
+    const hasKeyAttrs = Boolean(
+        attrs.type
+        || attrs.name
+        || attrs.placeholder
+        || attrs["aria-label"]
+        || attrs.role
+        || attrs.value
+        || attrs.href
+    );
+
+    return text.length > 0 || label.length > 0 || hasKeyAttrs;
+}
+
+function elementPriority(el: AstElement): number {
+    const tag = (el.tagName || "").toLowerCase();
+    const type = (el.attributes?.type || "").toLowerCase();
+    const role = (el.attributes?.role || "").toLowerCase();
+    const text = normalizePromptText(el.text || "").toLowerCase();
+    const label = normalizePromptText(el.label || "").toLowerCase();
+    const sample = `${type} ${role} ${text} ${label}`;
+
+    if (tag === "input" || tag === "select" || tag === "textarea") return 4;
+    if (tag === "button" || role === "button") return 3;
+    if (/(submit|invia|send|search|cerca|continue|confirm)/.test(sample)) return 3;
+    if (tag === "a" || role === "link") return 2;
+    return 1;
+}
+
 export function buildCompactAstForPrompt(domAst: string): string {
     const elements = parseDomAst(domAst);
     if (elements.length === 0) {
@@ -205,8 +260,25 @@ export function buildCompactAstForPrompt(domAst: string): string {
 
     const root: TreeNode = { token: "ROOT", children: new Map(), leaves: [] };
 
-    for (const el of elements) {
+    const cleaned = elements
+        .filter((el) => Boolean(el?.agentId))
+        .filter((el) => hasMeaningfulSignal(el))
+        .sort((a, b) => elementPriority(b) - elementPriority(a));
+
+    const leafSeen = new Set<string>();
+    const leavesPerContainer = new Map<string, number>();
+    const maxLeavesGlobal = 180;
+    const maxLeavesPerContainer = 14;
+    let globalLeaves = 0;
+
+    for (const el of cleaned) {
+        if (globalLeaves >= maxLeavesGlobal) break;
+
         const chain = (el.ancestors || []).filter(Boolean).slice(0, 4);
+        const containerKey = chain.join(" > ") || "ROOT";
+        const currentContainerCount = leavesPerContainer.get(containerKey) || 0;
+        if (currentContainerCount >= maxLeavesPerContainer) continue;
+
         let current = root;
 
         for (const token of chain) {
@@ -220,11 +292,21 @@ export function buildCompactAstForPrompt(domAst: string): string {
 
         const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {});
         const attrs = serializeKeyAttrs(el.attributes || {});
-        const label = el.label ? ` label="${escapeSExpr(el.label).slice(0, 80)}"` : "";
-        const text = el.text ? ` text="${escapeSExpr(el.text).slice(0, 100)}"` : "";
+        const normalizedLabel = normalizePromptText(el.label || "");
+        const normalizedText = normalizePromptText(el.text || "");
+        const label = normalizedLabel ? ` label="${escapeSExpr(normalizedLabel).slice(0, 80)}"` : "";
+        const text = normalizedText ? ` text="${escapeSExpr(normalizedText).slice(0, 100)}"` : "";
         const attrPart = attrs ? ` ${attrs}` : "";
         const leaf = `${tag}${attrPart}${label}${text} [agentId=${el.agentId}]`;
+
+        // Drop near-duplicates with same semantics to keep the prompt focused.
+        const duplicateKey = `${containerKey}|${tag}|${attrs}|${label}|${text}`;
+        if (leafSeen.has(duplicateKey)) continue;
+        leafSeen.add(duplicateKey);
+
         current.leaves.push(leaf);
+        leavesPerContainer.set(containerKey, currentContainerCount + 1);
+        globalLeaves += 1;
     }
 
     const lines: string[] = [];

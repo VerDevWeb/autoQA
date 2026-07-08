@@ -24,6 +24,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
         : "";
 
     const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
+    console.log("[Decide] COMPACT AST sent to LLM:\n" + (compactAstForPrompt || "<empty>"));
 
     // Task checklist
     const tasksBlock = state.tasks
