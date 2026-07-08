@@ -16,7 +16,7 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
             const bodyText = document.body?.innerText || "";
             const bodyWords = bodyText.trim() ? bodyText.trim().split(/\s+/).length : 0;
             const compactMode = bodyWords > 1200;
-            const maxWordsPerElement = 20;
+            const maxWordsPerElement = 35;
 
             interactables.forEach((el: Element) => {
                 const rect = el.getBoundingClientRect();
@@ -50,7 +50,7 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
                     }
 
                     if (optionPairs.length > 0) {
-                        attributes.options = optionPairs.slice(0, 20).join(" | ");
+                        attributes.options = optionPairs.slice(0, 40).join(" | ");
                     }
 
                     const selected = selectEl.value?.trim();
@@ -144,7 +144,7 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
                         if (id) token += `#${id}`;
                         if (cls) token += `.${cls}`;
                         if (role) token += `[role=${role}]`;
-                        if (aria) token += `[aria-label=${aria.slice(0, 30)}]`;
+                        if (aria) token += `[aria-label=${aria.slice(0, 60)}]`;
                         ancestors.unshift(token);
                     }
 
@@ -191,21 +191,49 @@ function serializeKeyAttrs(attr: Record<string, string>): string {
     for (const key of keys) {
         const raw = attr[key];
         if (!raw) continue;
-        const value = escapeSExpr(raw.slice(0, 80));
+        const value = escapeSExpr(raw.slice(0, 140));
         chunks.push(`${key}="${value}"`);
     }
 
     return chunks.join(" ");
 }
 
-function compactTagWithIdentity(tagName: string, attr: Record<string, string>): string {
-    const id = attr.id ? `#${escapeSExpr(attr.id.slice(0, 60))}` : "";
-    const cls = (attr.class || "")
+type ClassAliasState = {
+    byClass: Map<string, string>;
+    nextId: number;
+};
+
+function getClassAlias(className: string, state: ClassAliasState): string {
+    const key = className.trim();
+    if (!key) return "";
+    const existing = state.byClass.get(key);
+    if (existing) return existing;
+    const alias = `class${state.nextId++}`;
+    state.byClass.set(key, alias);
+    return alias;
+}
+
+function aliasClassToken(value: string, state: ClassAliasState, maxClasses = 2): string {
+    return value
         .split(/\s+/)
         .map((x) => x.trim())
         .filter(Boolean)
-        .slice(0, 2)
+        .slice(0, maxClasses)
+        .map((className) => getClassAlias(className, state))
+        .filter(Boolean)
         .join(".");
+}
+
+function aliasClassesInAncestorToken(token: string, state: ClassAliasState): string {
+    return token.replace(/\.([a-zA-Z0-9_-]+)/g, (_m, cls: string) => {
+        const alias = getClassAlias(cls, state);
+        return alias ? `.${alias}` : "";
+    });
+}
+
+function compactTagWithIdentity(tagName: string, attr: Record<string, string>, classAliases: ClassAliasState): string {
+    const id = attr.id ? `#${escapeSExpr(attr.id.slice(0, 60))}` : "";
+    const cls = aliasClassToken(attr.class || "", classAliases, 2);
     const clsPart = cls ? `.${escapeSExpr(cls)}` : "";
     return `${tagName}${id}${clsPart}`;
 }
@@ -259,22 +287,25 @@ export function buildCompactAstForPrompt(domAst: string): string {
     };
 
     const root: TreeNode = { token: "ROOT", children: new Map(), leaves: [] };
+    const classAliases: ClassAliasState = { byClass: new Map(), nextId: 1 };
 
     const cleaned = elements
-        .filter((el) => Boolean(el?.agentId))
         .filter((el) => hasMeaningfulSignal(el))
         .sort((a, b) => elementPriority(b) - elementPriority(a));
 
     const leafSeen = new Set<string>();
     const leavesPerContainer = new Map<string, number>();
-    const maxLeavesGlobal = 180;
-    const maxLeavesPerContainer = 14;
+    const maxLeavesGlobal = 320;
+    const maxLeavesPerContainer = 28;
     let globalLeaves = 0;
 
     for (const el of cleaned) {
         if (globalLeaves >= maxLeavesGlobal) break;
 
-        const chain = (el.ancestors || []).filter(Boolean).slice(0, 4);
+        const chain = (el.ancestors || [])
+            .filter(Boolean)
+            .slice(0, 4)
+            .map((token) => aliasClassesInAncestorToken(token, classAliases));
         const containerKey = chain.join(" > ") || "ROOT";
         const currentContainerCount = leavesPerContainer.get(containerKey) || 0;
         if (currentContainerCount >= maxLeavesPerContainer) continue;
@@ -290,14 +321,14 @@ export function buildCompactAstForPrompt(domAst: string): string {
             current = nextNode;
         }
 
-        const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {});
+        const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {}, classAliases);
         const attrs = serializeKeyAttrs(el.attributes || {});
         const normalizedLabel = normalizePromptText(el.label || "");
         const normalizedText = normalizePromptText(el.text || "");
-        const label = normalizedLabel ? ` label="${escapeSExpr(normalizedLabel).slice(0, 80)}"` : "";
-        const text = normalizedText ? ` text="${escapeSExpr(normalizedText).slice(0, 100)}"` : "";
+        const label = normalizedLabel ? ` label="${escapeSExpr(normalizedLabel).slice(0, 140)}"` : "";
+        const text = normalizedText ? ` text="${escapeSExpr(normalizedText).slice(0, 180)}"` : "";
         const attrPart = attrs ? ` ${attrs}` : "";
-        const leaf = `${tag}${attrPart}${label}${text} [agentId=${el.agentId}]`;
+        const leaf = `${tag}${attrPart}${label}${text}`;
 
         // Drop near-duplicates with same semantics to keep the prompt focused.
         const duplicateKey = `${containerKey}|${tag}|${attrs}|${label}|${text}`;

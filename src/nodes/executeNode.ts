@@ -9,8 +9,55 @@ import { getConsoleLog } from "../consoleCapture.js";
 import { getUiSignalsLog } from "../uiSignalCapture.js";
 import { isAllowedEmail, sendEmail } from "../email.js";
 import { autoMarkTask, extractWaitSeconds, stripWaitFromObjective, currentPage, stripGotoFromObjective } from "./nodeUtil.js";
+import type { AstElement, ElementTarget } from "../types.js";
 
 const AUTO_SEND_DONE_REPORT = process.env.AUTO_SEND_DONE_REPORT === "true";
+
+function normalizeTargetRef(args: any): string | ElementTarget | null {
+    if (typeof args?.agentId === "string" && args.agentId.trim()) {
+        return args.agentId.trim();
+    }
+    if (args?.target && typeof args.target === "object") {
+        return args.target as ElementTarget;
+    }
+    return null;
+}
+
+function targetToHistory(targetRef: string | ElementTarget | null): string {
+    if (!targetRef) return "target sconosciuto";
+    if (typeof targetRef === "string") return targetRef;
+    const parts = [
+        targetRef.css,
+        targetRef.id ? `#${targetRef.id}` : undefined,
+        targetRef.name ? `name=${targetRef.name}` : undefined,
+        targetRef.placeholder ? `placeholder=${targetRef.placeholder}` : undefined,
+        targetRef.ariaLabel ? `aria-label=${targetRef.ariaLabel}` : undefined,
+        targetRef.text ? `text=${targetRef.text}` : undefined,
+        targetRef.tag
+    ].filter(Boolean);
+    return parts.join(" | ") || "target generico";
+}
+
+function findAstElementByTarget(domAst: string, targetRef: string | ElementTarget | null): AstElement | undefined {
+    const elements = parseDomAst(domAst);
+    if (!targetRef) return undefined;
+    if (typeof targetRef === "string") {
+        return elements.find((el) => el.agentId === targetRef);
+    }
+
+    return elements.find((el) => {
+        const attrs = el.attributes || {};
+        if (targetRef.id && attrs.id !== targetRef.id) return false;
+        if (targetRef.name && attrs.name !== targetRef.name) return false;
+        if (targetRef.placeholder && attrs.placeholder !== targetRef.placeholder) return false;
+        if (targetRef.ariaLabel && attrs["aria-label"] !== targetRef.ariaLabel) return false;
+        if (targetRef.role && attrs.role !== targetRef.role) return false;
+        if (targetRef.href && !(attrs.href || "").includes(targetRef.href)) return false;
+        if (targetRef.tag && el.tagName !== targetRef.tag.toLowerCase()) return false;
+        if (targetRef.text && !((el.text || "").toLowerCase().includes(targetRef.text.toLowerCase()))) return false;
+        return true;
+    });
+}
 
 
 export async function executeNode(state: AgentState): Promise<Partial<AgentState>> {
@@ -227,10 +274,11 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
         try {
             switch (call.name) {
                 case 'click':
-                    if (!call.args?.agentId) throw new Error("Azione 'click' richiede agentId.");
                     {
-                        const clickTarget = parseDomAst(state.domAst).find((el) => el.agentId === call.args!.agentId);
-                        const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
+                        const targetRef = normalizeTargetRef(call.args);
+                        if (!targetRef) throw new Error("Azione 'click' richiede target.");
+                        const clickTarget = findAstElementByTarget(state.domAst, targetRef);
+                        const locator = await resolveLocatorWithFallback(state, targetRef);
                         await locator.waitFor({ state: "attached", timeout: 5000 });
                         await locator.click();
 
@@ -247,13 +295,14 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             cookieHandled: prev.cookieHandled || consentClick
                         }));
                         updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
+                        historyEntries.push(`click su ${targetToHistory(targetRef)}`);
                     }
-                    historyEntries.push(`click su ${call.args?.agentId}`);
                     break;
                 case 'fill':
-                    if (!call.args?.agentId) throw new Error("Azione 'fill' richiede agentId.");
                     {
-                        const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
+                        const targetRef = normalizeTargetRef(call.args);
+                        if (!targetRef) throw new Error("Azione 'fill' richiede target.");
+                        const locator = await resolveLocatorWithFallback(state, targetRef);
                         await locator.waitFor({ state: "attached", timeout: 5000 });
                         await locator.fill(call.args?.value || "");
 
@@ -262,18 +311,19 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             ...prev,
                             filled: true
                         }));
+                        historyEntries.push(`fill su ${targetToHistory(targetRef)} con valore "${call.args?.value || ""}"`);
                     }
-                    historyEntries.push(`fill su ${call.args?.agentId} con valore "${call.args?.value || ""}"`);
                     break;
                 case 'fill_many':
                     {
                         const items = Array.isArray(call.args?.items) ? call.args.items : [];
                         for (const item of items) {
-                            if (!item?.agentId) continue;
-                            const locator = await resolveLocatorWithFallback(state, item.agentId);
+                            const targetRef = normalizeTargetRef(item);
+                            if (!targetRef) continue;
+                            const locator = await resolveLocatorWithFallback(state, targetRef);
                             await locator.waitFor({ state: "attached", timeout: 5000 });
                             await locator.fill(item.value || "");
-                            historyEntries.push(`fill su ${item.agentId} con valore "${item.value || ""}"`);
+                            historyEntries.push(`fill su ${targetToHistory(targetRef)} con valore "${item.value || ""}"`);
                         }
 
                         const domain = getDomainFromUrl(currentPage.url());
@@ -284,14 +334,15 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                     }
                     break;
                 case 'upload_file':
-                    if (!call.args?.agentId) throw new Error("Azione 'upload_file' richiede agentId.");
                     if (!call.args?.filePath) throw new Error("Azione 'upload_file' richiede filePath.");
                     {
+                        const targetRef = normalizeTargetRef(call.args);
+                        if (!targetRef) throw new Error("Azione 'upload_file' richiede target.");
                         const rawPath = String(call.args.filePath).trim();
                         const resolvedPath = path.isAbsolute(rawPath) ? rawPath : path.resolve(process.cwd(), rawPath);
                         await fs.access(resolvedPath);
 
-                        const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
+                        const locator = await resolveLocatorWithFallback(state, targetRef);
                         await locator.waitFor({ state: "attached", timeout: 5000 });
                         await locator.setInputFiles(resolvedPath);
 
@@ -301,23 +352,27 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             filled: true
                         }));
 
-                        historyEntries.push(`upload_file su ${call.args?.agentId} con file \"${resolvedPath}\"`);
+                        historyEntries.push(`upload_file su ${targetToHistory(targetRef)} con file \"${resolvedPath}\"`);
                     }
                     break;
                 case 'select':
-                    if (!call.args?.agentId) throw new Error("Azione 'select' richiede agentId.");
                     {
-                        const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
+                        const targetRef = normalizeTargetRef(call.args);
+                        if (!targetRef) throw new Error("Azione 'select' richiede target.");
+                        const locator = await resolveLocatorWithFallback(state, targetRef);
                         await locator.waitFor({ state: "attached", timeout: 5000 });
                         await locator.selectOption(call.args?.value || "");
+                        historyEntries.push(`select su ${targetToHistory(targetRef)} con valore "${call.args?.value || ""}"`);
                     }
-                    historyEntries.push(`select su ${call.args?.agentId} con valore "${call.args?.value || ""}"`);
                     break;
                 case 'enter':
-                    if (call.args?.agentId) {
+                    {
+                        const targetRef = normalizeTargetRef(call.args);
                         try {
-                            const locator = await resolveLocatorWithFallback(state, call.args!.agentId);
-                            await locator.focus({ timeout: 2000 });
+                            if (targetRef) {
+                                const locator = await resolveLocatorWithFallback(state, targetRef);
+                                await locator.focus({ timeout: 2000 });
+                            }
                         } catch {
                             // element no longer findable, focus is already on the right field
                         }
@@ -332,7 +387,10 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                         }));
                         updatedCompletedDomains = tryMarkCompletedDomain(state.objective, domain, updatedDomainStatus, updatedCompletedDomains);
                     }
-                    historyEntries.push(`enter${call.args?.agentId ? ` su ${call.args?.agentId}` : ""}`);
+                    {
+                        const targetRef = normalizeTargetRef(call.args);
+                        historyEntries.push(`enter${targetRef ? ` su ${targetToHistory(targetRef)}` : ""}`);
+                    }
                     break;
                 default:
                     console.log("Unknown or unhandled action name.");

@@ -1,5 +1,5 @@
 import type { Page, Locator } from "playwright";
-import type { AgentState } from "./types.js";
+import type { AgentState, ElementTarget } from "./types.js";
 import { parseDomAst, escapeRegex } from "./ast.js";
 
 let currentPage: Page;
@@ -24,13 +24,105 @@ async function pickFirstVisible(locator: Locator, maxCandidates = 6): Promise<Lo
     return null;
 }
 
+function qAttr(value: string): string {
+    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
+function sanitizeTarget(target: ElementTarget): ElementTarget {
+    const cleaned: ElementTarget = {};
+    const keys: (keyof ElementTarget)[] = ["css", "tag", "id", "name", "type", "placeholder", "ariaLabel", "role", "href", "text", "label"];
+    for (const key of keys) {
+        const raw = target[key];
+        if (typeof raw !== "string") continue;
+        const v = raw.trim();
+        if (v) cleaned[key] = v;
+    }
+    return cleaned;
+}
+
+async function tryVisible(locator: Locator): Promise<Locator | null> {
+    if (await locator.count() === 0) return null;
+    return await pickFirstVisible(locator);
+}
+
+async function resolveByTarget(target: ElementTarget): Promise<Locator | null> {
+    const hints = sanitizeTarget(target);
+
+    if (hints.css) {
+        const byCss = await tryVisible(currentPage.locator(hints.css));
+        if (byCss) return byCss;
+    }
+
+    if (hints.id) {
+        const byId = await tryVisible(currentPage.locator(`[id="${qAttr(hints.id)}"]`));
+        if (byId) return byId;
+    }
+
+    if (hints.placeholder) {
+        const byPlaceholder = await tryVisible(currentPage.getByPlaceholder(hints.placeholder, { exact: false }));
+        if (byPlaceholder) return byPlaceholder;
+    }
+
+    if (hints.ariaLabel) {
+        const byLabel = await tryVisible(currentPage.getByLabel(hints.ariaLabel, { exact: false }));
+        if (byLabel) return byLabel;
+    }
+
+    if (hints.role) {
+        const byRole = await tryVisible(currentPage.getByRole(hints.role as any, hints.text ? { name: new RegExp(escapeRegex(hints.text), "i") } : undefined));
+        if (byRole) return byRole;
+    }
+
+    if (hints.name) {
+        const tag = hints.tag || "*";
+        const byName = await tryVisible(currentPage.locator(`${tag}[name="${qAttr(hints.name)}"]`));
+        if (byName) return byName;
+    }
+
+    if (hints.href) {
+        const byHref = await tryVisible(currentPage.locator(`a[href*="${qAttr(hints.href)}"]`));
+        if (byHref) return byHref;
+    }
+
+    if (hints.text) {
+        const textRegex = new RegExp(escapeRegex(hints.text), "i");
+        const tag = hints.tag || "*";
+        const byText = await tryVisible(currentPage.locator(tag).filter({ hasText: textRegex }));
+        if (byText) return byText;
+    }
+
+    if (hints.label) {
+        const byLabelText = await tryVisible(currentPage.getByLabel(hints.label, { exact: false }));
+        if (byLabelText) return byLabelText;
+    }
+
+    if (hints.tag) {
+        const byTag = await tryVisible(currentPage.locator(hints.tag));
+        if (byTag) return byTag;
+    }
+
+    return null;
+}
+
 /*
     This function resolves an agent element id
 
     Pipeline:
     executeNode calls the resolveLocatorWithFallback giving to it the current agent state and the agent element id in order to convert this into real html attributes that are related to the element 
 */
-export async function resolveLocatorWithFallback(state: AgentState, agentId: string): Promise<Locator> {
+export async function resolveLocatorWithFallback(state: AgentState, targetRef: string | ElementTarget): Promise<Locator> {
+    if (typeof targetRef !== "string") {
+        const byTarget = await resolveByTarget(targetRef);
+        if (byTarget) {
+            return byTarget;
+        }
+    }
+
+    const agentId = typeof targetRef === "string" ? targetRef : "";
+    if (!agentId) {
+        throw new Error("Unable to resolve locator: missing target hints and missing legacy agentId.");
+    }
+
     const primary = currentPage.locator(`[data-agent-id="${agentId}"]`);
     if (await primary.count() > 0) {
         const visiblePrimary = await pickFirstVisible(primary);

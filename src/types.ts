@@ -20,12 +20,26 @@ export type DomainStatus = {
 };
 
 export type AstElement = {
-    agentId: string;
+    agentId?: string;
     tagName: string;
     text: string;
     attributes: Record<string, string>;
     label?: string;
     ancestors?: string[];
+};
+
+export type ElementTarget = {
+    css?: string;
+    tag?: string;
+    id?: string;
+    name?: string;
+    type?: string;
+    placeholder?: string;
+    ariaLabel?: string;
+    role?: string;
+    href?: string;
+    text?: string;
+    label?: string;
 };
 
 

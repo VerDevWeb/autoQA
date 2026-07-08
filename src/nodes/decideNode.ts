@@ -42,7 +42,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     ${sequenceBlock}
     ${tasksBlock}
     ${diagnosticsBlock}
-    Here is the COMPACT AST of the page (indented tree with significant containers + interactive elements, including key HTML attributes, labels, innerText and agentId):
+    Here is the COMPACT AST of the page (indented tree with significant containers + interactive elements, including key HTML attributes, labels and innerText):
     ${compactAstForPrompt}
 
     Analyze the AST and invoke the NEXT available tool to progress toward the objective.`;
@@ -66,6 +66,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
 
     [FORM FILLING]
     - When you encounter a form, identify ALL input/select/textarea fields in the AST.
+    - For click/fill/select/upload_file/enter tools, ALWAYS pass a precise 'target' object using real HTML attributes from the AST (id, name, placeholder, aria-label, role, text, href, tag, css when needed).
     - For each field, determine its purpose from: type, name, placeholder, aria-label, label, innerText, and container hierarchy in the tree.
     - Fill EVERY visible form field with realistic test data. Invent names, emails, phones, addresses, descriptions as needed.
     - Do NOT skip any field. If you are unsure what a field is for, use common sense from its name/placeholder/aria-label.
@@ -80,6 +81,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     [VERIFICATION & SELF-CORRECTION]
     - After every action, in the NEXT iteration, examine the current DOM and URL carefully.
     - Ask yourself: "Did my last action produce the expected result?" 
+    - After operational actions (fill, fill_many, select, click, enter, submit-like actions), you SHOULD run 'check_console' before declaring completion.
     - If the page, URL, or DOM did NOT change as expected, do NOT declare completion. Instead:
     - If you tried to navigate but are still on the same page, retry 'goto' or look for obstacles (popups, cookie banners).
     - If you tried to fill a field but the value is still empty, retry 'fill'.
@@ -92,7 +94,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
 
     [NETWORK & CONSOLE]
     - Use 'check_network' to inspect API responses right after a submission. This tells you if the operation succeeded or failed.
-    - Use 'check_console' whenever you need browser logs/warnings/errors to diagnose issues or verify script behavior.
+    - Use 'check_console' after operational actions and especially after submissions to catch frontend errors/warnings before finalizing.
     - Use 'check_ui_messages' to inspect transient UI messages (toast/snackbar/alert) that may appear and disappear quickly.
     - If you are stuck, repeating actions, or not making progress, you MUST call 'check_network' and 'check_console' before trying more blind retries.
     - If the UI suggests an operation happened but no clear result is visible, call 'check_ui_messages' as well to detect transient errors or warnings.
