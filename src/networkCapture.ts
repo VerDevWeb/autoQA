@@ -82,6 +82,25 @@ export function getNetworkLog(): string {
     return lines.join('\n');
 }
 
+export function getRecentNetworkIssues(lookbackMs = 15000, maxItems = 8): string {
+    const now = Date.now();
+    const issues = entries
+        .filter((e) => now - e.timestamp <= lookbackMs)
+        .filter((e) => Boolean(e.error) || Boolean(e.status && e.status >= 400))
+        .slice(-maxItems);
+
+    if (issues.length === 0) {
+        return "";
+    }
+
+    return issues.map((e) => {
+        const time = new Date(e.timestamp).toLocaleTimeString('it-IT');
+        const status = e.status ? `${e.status} ${e.statusText}` : 'ERRORE';
+        const errorMsg = e.error ? ` - ${e.error}` : '';
+        return `[${time}] ${e.method} ${status} ${e.url}${errorMsg}`;
+    }).join('\n');
+}
+
 export function clearNetworkLog(): void {
     entries = [];
 }

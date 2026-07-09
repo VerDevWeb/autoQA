@@ -58,6 +58,8 @@ export const AgentStateDef = Annotation.Root({
     networkLog: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     consoleLogs: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
     uiSignals: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
+    realtimeNetworkAlerts: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
+    realtimeConsoleAlerts: Annotation<string>({ reducer: (x, y) => y ?? x, default: () => "" }),
 });
 
 export type AgentState = typeof AgentStateDef.State;

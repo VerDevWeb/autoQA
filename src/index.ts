@@ -22,6 +22,13 @@ dotenv.config();
     Here is set the agent objective that will be divided in tasks in order to execute them one at a time
 
     LANGUAGE: You can use whatever language you like, usually English prompts give better results because LLM are mostly trained in English language
+
+
+    # Buonasera, vai su YouTube e poi cerca video a tuo piacimento e clicca sul primo risultato, poi avvisami a verdev.web@gmail.com quando hai finito
+
+    # Buonasera, vai su MY_URL e compila il form, fammi sapere come va inviandomi un'email a verdev.web@gmail.com 
+
+
 */
 const OBJECTIVE = process.env.OBJECTIVE || "";
 const RECURSION_LIMIT = Number(process.env.RECURSION_LIMIT) || 100;
@@ -86,7 +93,9 @@ async function run() {
             tasks: "",
             consoleLogs: "",
             networkLog: "",
-            uiSignals: ""
+            uiSignals: "",
+            realtimeNetworkAlerts: "",
+            realtimeConsoleAlerts: ""
         };
 
         console.log("Agent is starting... ");

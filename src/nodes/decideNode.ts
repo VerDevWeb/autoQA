@@ -35,6 +35,10 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
         ? `\nDiagnostic tool outputs from previous step (requested by you):\n${state.networkLog ? `\n[check_network]\n${state.networkLog}\n` : ""}${state.consoleLogs ? `\n[check_console]\n${state.consoleLogs}\n` : ""}${state.uiSignals ? `\n[check_ui_messages]\n${state.uiSignals}\n` : ""}`
         : "";
 
+    const realtimeAlertsBlock = (state.realtimeNetworkAlerts || state.realtimeConsoleAlerts)
+        ? `\nReal-time runtime alerts (auto-captured, not requested by tool):\n${state.realtimeNetworkAlerts ? `\n[realtime_network_issues]\n${state.realtimeNetworkAlerts}\n` : ""}${state.realtimeConsoleAlerts ? `\n[realtime_console_issues]\n${state.realtimeConsoleAlerts}\n` : ""}`
+        : "";
+
     const prompt = `You are an autonomous web automation agent.
     Your final objective is: ${state.objective}
     You are currently at URL: ${state.currentUrl}
@@ -42,6 +46,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     ${sequenceBlock}
     ${tasksBlock}
     ${diagnosticsBlock}
+    ${realtimeAlertsBlock}
     Here is the COMPACT AST of the page (indented tree with significant containers + interactive elements, including key HTML attributes, labels and innerText):
     ${compactAstForPrompt}
 
@@ -78,6 +83,8 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     - After you click the submit button or such it's suggested to check console logs to see if there are any errors that you should report
     - If you notice any errors that are holding you back, please send them to me in the summary email
 
+    AFTER IMPORTANT ACTIONS IT'S REALLY IMPORTANT THAT YOU CHECH THE CONSOLE AND NETWORK ACTIVITY TO CHECK IF THE ACTION WAS PERFORMED SUCCESSFULLY
+
     [VERIFICATION & SELF-CORRECTION]
     - After every action, in the NEXT iteration, examine the current DOM and URL carefully.
     - Ask yourself: "Did my last action produce the expected result?" 
@@ -95,6 +102,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     [NETWORK & CONSOLE]
     - Use 'check_network' to inspect API responses right after a submission. This tells you if the operation succeeded or failed.
     - Use 'check_console' after operational actions and especially after submissions to catch frontend errors/warnings before finalizing.
+    - If real-time alerts show errors/warnings, treat them as high-priority signals and adapt your plan immediately.
     - Use 'check_ui_messages' to inspect transient UI messages (toast/snackbar/alert) that may appear and disappear quickly.
     - If you are stuck, repeating actions, or not making progress, you MUST call 'check_network' and 'check_console' before trying more blind retries.
     - If the UI suggests an operation happened but no clear result is visible, call 'check_ui_messages' as well to detect transient errors or warnings.

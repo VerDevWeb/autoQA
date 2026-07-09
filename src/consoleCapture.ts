@@ -47,13 +47,30 @@ export function getConsoleLog(): string {
     const lines = recent.map((e) => {
         const time = new Date(e.timestamp).toLocaleTimeString("it-IT");
         const icon =
-            e.type === "error" ? "❌" :
-            e.type === "warn" ? "⚠️" :
-            e.type === "warning" ? "⚠️" : "💬";
+            e.type === "error" ? "ERROR: " :
+            e.type === "warn" ? "WARNING: " :
+            e.type === "warning" ? "WARNING: " : "LOG: ";
         return `${icon} [${time}] [${e.type.toUpperCase()}] ${e.text}`;
     });
 
     return lines.join("\n");
+}
+
+export function getRecentConsoleIssues(lookbackMs = 15000, maxItems = 10): string {
+    const now = Date.now();
+    const issues = entries
+        .filter((e) => now - e.timestamp <= lookbackMs)
+        .filter((e) => e.type === "error" || e.type === "warn" || e.type === "warning")
+        .slice(-maxItems);
+
+    if (issues.length === 0) {
+        return "";
+    }
+
+    return issues.map((e) => {
+        const time = new Date(e.timestamp).toLocaleTimeString("it-IT");
+        return `[${time}] [${e.type.toUpperCase()}] ${e.text}`;
+    }).join("\n");
 }
 
 export function clearConsoleLog(): void {
