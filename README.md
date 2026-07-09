@@ -10,7 +10,7 @@ Most browser agents fail in the same places: they miss transient state, lose tra
 
 It captures the signals that matter to a test run:
 
-- page structure as a DOM/AST representation with stable `agentId` anchors
+- page structure as a compact DOM tree optimized for LLM reasoning (interactive nodes, labels, key attributes, significant ancestors)
 - console messages and page errors
 - relevant network activity such as fetch, XHR, document, and websocket traffic
 - transient UI messages such as toasts, banners, alerts, and status updates
@@ -38,11 +38,26 @@ The runtime is a LangGraph state machine defined in `src/index.ts`:
 
 The agent keeps looping until the objective is completed or the recursion limit is reached.
 
+### DOM Tree model
+
+`observeNode` generates a simplified AST from the live page and `decideNode` converts it into a compact tree sent to the model.
+
+The compact tree is intentionally structured and denoised:
+
+- interactive and actionable elements first
+- key attributes only (`type`, `name`, `placeholder`, `aria-label`, `role`, `value`, `selected`, `options`, `href`, `src`)
+- derived label/context from nearby semantic hints
+- significant container ancestors to preserve local context
+- deduplication and bounded size to avoid prompt bloat
+- normalized CSS class aliases (`class1`, `class2`, ...) to reduce noisy dynamic class names
+
+For `<select>` controls, options are serialized as `value=>label` pairs to help the LLM choose the correct value.
+
 ## What it can do
 
 The toolset is intentionally concrete:
 
-- click elements by `agentId`
+- click elements using real HTML target attributes (`id`, `name`, `placeholder`, `aria-label`, `role`, `text`, `href`, `tag`, optional CSS)
 - fill single fields or multiple fields in one shot
 - upload files
 - select dropdown options
@@ -53,6 +68,8 @@ The toolset is intentionally concrete:
 - inspect captured transient UI messages
 - send a summary email
 - mark the run as done when the objective is complete
+
+`agentId` remains available only as a legacy fallback path for compatibility.
 
 That is the real surface area of the agent. If a new capability is not in the code, it is not claimed here.
 
@@ -75,7 +92,9 @@ If the selected model does not support native tool calling, startup fails early.
 - `src/tools/browser/` defines browser actions and inspection tools.
 - `src/tools/miscellaneus/` contains general actions such as email and completion.
 - `src/networkCapture.ts`, `src/consoleCapture.ts`, and `src/uiSignalCapture.ts` collect the runtime signals the agent reasons over.
-- `src/ast.ts`, `src/locators.ts`, `src/domains.ts`, and related modules shape the page model.
+- `src/ast.ts` builds and compacts the DOM tree for the LLM.
+- `src/locators.ts` resolves Playwright locators from real HTML target attributes (with legacy fallback).
+- `src/domains.ts` handles navigation-domain sequencing and completion tracking.
 
 ## Requirements
 
