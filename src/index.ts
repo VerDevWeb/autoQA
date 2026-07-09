@@ -30,7 +30,7 @@ dotenv.config();
 
 
 */
-const OBJECTIVE = process.env.OBJECTIVE || "";
+const OBJECTIVE = process.env.OBJECTIVE || "Buongiorno, vai su YouTube e poi cerca video a tuo piacimento e clicca sul primo risultato, poi avvisami a verdev.web@gmail.com quando hai finito";
 const RECURSION_LIMIT = Number(process.env.RECURSION_LIMIT) || 100;
 const HEADLESS = false;
 

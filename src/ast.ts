@@ -18,11 +18,59 @@ export async function extractSimplifiedDOM(page: Page): Promise<string> {
             const compactMode = bodyWords > 1200;
             const maxWordsPerElement = 35;
 
+            const toZIndex = (el: Element): number => {
+                const raw = window.getComputedStyle(el).zIndex;
+                const n = Number.parseInt(raw || "0", 10);
+                return Number.isFinite(n) ? n : 0;
+            };
+
+            const modalCandidates = Array.from(document.querySelectorAll(
+                'dialog[open], [role="dialog"][aria-modal="true"], [aria-modal="true"], [role="alertdialog"], [class*="modal"], [id*="modal"], [class*="cookie"], [id*="cookie"], [class*="consent"], [id*="consent"]'
+            )).filter((node) => {
+                const rect = (node as HTMLElement).getBoundingClientRect();
+                if (rect.width < 80 || rect.height < 50) return false;
+                const style = window.getComputedStyle(node as HTMLElement);
+                return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+            });
+
+            const activeModalRoot = modalCandidates.length > 0
+                ? modalCandidates.sort((a, b) => toZIndex(b) - toZIndex(a))[0]
+                : null;
+
+            const isTopLayerReachable = (el: Element, rect: DOMRect): boolean => {
+                const points: Array<[number, number]> = [
+                    [rect.left + rect.width * 0.5, rect.top + rect.height * 0.5],
+                    [rect.left + rect.width * 0.25, rect.top + rect.height * 0.25],
+                    [rect.left + rect.width * 0.75, rect.top + rect.height * 0.75],
+                ];
+
+                const clamp = (value: number, min: number, max: number): number => Math.max(min, Math.min(max, value));
+
+                for (const [px, py] of points) {
+                    const x = clamp(px, 0, Math.max(window.innerWidth - 1, 0));
+                    const y = clamp(py, 0, Math.max(window.innerHeight - 1, 0));
+                    const topNode = document.elementFromPoint(x, y);
+                    if (!topNode) continue;
+                    if (topNode === el || el.contains(topNode) || (topNode instanceof Element && topNode.contains(el))) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
             interactables.forEach((el: Element) => {
                 const rect = el.getBoundingClientRect();
                 if (rect.width === 0 || rect.height === 0) return;
                 const style = window.getComputedStyle(el);
                 if (style.display === "none" || style.visibility === "hidden" || style.opacity === "0") return;
+                if (style.pointerEvents === "none") return;
+
+                // If a modal/popup is active, ignore actionable elements outside that top layer.
+                if (activeModalRoot && !activeModalRoot.contains(el)) return;
+
+                // Ignore elements hidden behind overlays or blocked by top-layer siblings.
+                if (!isTopLayerReachable(el, rect)) return;
 
                 const id = "agent-el-" + (counter++);
                 el.setAttribute("data-agent-id", id);
@@ -185,7 +233,7 @@ function escapeSExpr(value: string): string {
 }
 
 function serializeKeyAttrs(attr: Record<string, string>): string {
-    const keys = ["type", "name", "placeholder", "aria-label", "role", "value", "selected", "options", "href", "src"];
+    const keys = ["id", "type", "name", "placeholder", "aria-label", "role", "value", "selected", "options", "href", "src"];
     const chunks: string[] = [];
 
     for (const key of keys) {
@@ -200,6 +248,11 @@ function serializeKeyAttrs(attr: Record<string, string>): string {
 
 type ClassAliasState = {
     byClass: Map<string, string>;
+    nextId: number;
+};
+
+type IdAliasState = {
+    byId: Map<string, string>;
     nextId: number;
 };
 
@@ -224,6 +277,16 @@ function aliasClassToken(value: string, state: ClassAliasState, maxClasses = 2):
         .join(".");
 }
 
+function getIdAlias(idValue: string, state: IdAliasState): string {
+    const key = idValue.trim();
+    if (!key) return "";
+    const existing = state.byId.get(key);
+    if (existing) return existing;
+    const alias = `id${state.nextId++}`;
+    state.byId.set(key, alias);
+    return alias;
+}
+
 function aliasClassesInAncestorToken(token: string, state: ClassAliasState): string {
     return token.replace(/\.([a-zA-Z0-9_-]+)/g, (_m, cls: string) => {
         const alias = getClassAlias(cls, state);
@@ -231,8 +294,20 @@ function aliasClassesInAncestorToken(token: string, state: ClassAliasState): str
     });
 }
 
-function compactTagWithIdentity(tagName: string, attr: Record<string, string>, classAliases: ClassAliasState): string {
-    const id = attr.id ? `#${escapeSExpr(attr.id.slice(0, 60))}` : "";
+function aliasIdsInAncestorToken(token: string, state: IdAliasState): string {
+    return token.replace(/#([a-zA-Z0-9_-]+)/g, (_m, idValue: string) => {
+        const alias = getIdAlias(idValue, state);
+        return alias ? `#${alias}` : "";
+    });
+}
+
+function compactTagWithIdentity(
+    tagName: string,
+    attr: Record<string, string>,
+    classAliases: ClassAliasState,
+    idAliases: IdAliasState
+): string {
+    const id = attr.id ? `#${escapeSExpr(getIdAlias(attr.id.slice(0, 60), idAliases))}` : "";
     const cls = aliasClassToken(attr.class || "", classAliases, 2);
     const clsPart = cls ? `.${escapeSExpr(cls)}` : "";
     return `${tagName}${id}${clsPart}`;
@@ -288,6 +363,7 @@ export function buildCompactAstForPrompt(domAst: string): string {
 
     const root: TreeNode = { token: "ROOT", children: new Map(), leaves: [] };
     const classAliases: ClassAliasState = { byClass: new Map(), nextId: 1 };
+    const idAliases: IdAliasState = { byId: new Map(), nextId: 1 };
 
     const cleaned = elements
         .filter((el) => hasMeaningfulSignal(el))
@@ -305,7 +381,7 @@ export function buildCompactAstForPrompt(domAst: string): string {
         const chain = (el.ancestors || [])
             .filter(Boolean)
             .slice(0, 4)
-            .map((token) => aliasClassesInAncestorToken(token, classAliases));
+            .map((token) => aliasIdsInAncestorToken(aliasClassesInAncestorToken(token, classAliases), idAliases));
         const containerKey = chain.join(" > ") || "ROOT";
         const currentContainerCount = leavesPerContainer.get(containerKey) || 0;
         if (currentContainerCount >= maxLeavesPerContainer) continue;
@@ -321,7 +397,7 @@ export function buildCompactAstForPrompt(domAst: string): string {
             current = nextNode;
         }
 
-        const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {}, classAliases);
+        const tag = compactTagWithIdentity(el.tagName || "div", el.attributes || {}, classAliases, idAliases);
         const attrs = serializeKeyAttrs(el.attributes || {});
         const normalizedLabel = normalizePromptText(el.label || "");
         const normalizedText = normalizePromptText(el.text || "");
