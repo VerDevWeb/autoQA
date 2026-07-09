@@ -64,6 +64,8 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     - On EVERY tool call, include 'taskName' (exact line from checklist without checkbox) and the updated 'progress'.
     - Mark tasks as [x] via 'progress' ONLY when you have verified they are actually done.
 
+    If a visible cookie/consent banner or modal is blocking interaction, prioritize clicking an accept/continue action (e.g., "Accetta Tutto", "Accetta Cookie", "Accetta", "Accept all", "I agree") before proceeding. Do not click unrelated "Accetta" buttons outside consent UI.
+
     [NAVIGATION]
     - If the current URL is empty or irrelevant, use 'goto' immediately with a full URL (https://...).
     - Do NOT call 'goto' if you are already on the correct domain or if you already navigated to the same URL.
@@ -83,7 +85,7 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
     - After you click the submit button or such it's suggested to check console logs to see if there are any errors that you should report
     - If you notice any errors that are holding you back, please send them to me in the summary email
 
-    AFTER IMPORTANT ACTIONS IT'S REALLY IMPORTANT THAT YOU CHECH THE CONSOLE AND NETWORK ACTIVITY TO CHECK IF THE ACTION WAS PERFORMED SUCCESSFULLY
+    AFTER IMPORTANT ACTIONS IT'S REALLY IMPORTANT THAT YOU CHECK THE CONSOLE AND NETWORK ACTIVITY TO CHECK IF THE ACTION WAS PERFORMED SUCCESSFULLY
 
     [VERIFICATION & SELF-CORRECTION]
     - After every action, in the NEXT iteration, examine the current DOM and URL carefully.
