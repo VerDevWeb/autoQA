@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>DOM Agent Benchmark</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    background: #f5f5f5;
+}
+
+.card {
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+label {
+    display:block;
+    margin-top:12px;
+}
+
+input, textarea, select {
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+}
+
+button {
+    margin-top:20px;
+    padding:12px 20px;
+    cursor:pointer;
+}
+
+button:disabled {
+    opacity:.5;
+}
+
+#loader {
+    display:none;
+    margin-top:15px;
+}
+
+#error {
+    color:red;
+    margin-top:10px;
+}
+
+#success {
+    display:none;
+    background:#d4edda;
+    padding:10px;
+    margin-top:10px;
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+td,th {
+    border:1px solid #ccc;
+    padding:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+
+<div class="card">
+
+<h2>Nuova richiesta assistenza</h2>
+
+<form id="ticketForm">
+
+<label>
+Nome cliente
+</label>
+<input id="customer">
+
+
+<label>
+Email
+</label>
+<input id="email" type="email">
+
+
+<label>
+Priorità
+</label>
+
+<select id="priority">
+<option>Bassa</option>
+<option>Media</option>
+<option>Alta</option>
+</select>
+
+
+<label>
+Descrizione problema
+</label>
+
+<textarea id="description"></textarea>
+
+
+<button id="saveButton">
+Crea richiesta
+</button>
+
+
+<div id="loader">
+⏳ Invio richiesta...
+</div>
+
+
+<div id="error"></div>
+
+<div id="success">
+Richiesta creata correttamente
+</div>
+
+
+</form>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Richieste aperte</h2>
+
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Cliente</th>
+<th>Priorità</th>
+<th>Stato</th>
+</tr>
+</thead>
+
+
+<tbody id="tickets">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+<script>
+
+
+let database = [];
+
+
+
+function fakeApi(data){
+
+    return new Promise((resolve,reject)=>{
+
+
+        setTimeout(()=>{
+
+
+            // BUG 1
+            // errore casuale server
+            if(Math.random() < 0.3){
+
+                reject({
+                    status:500,
+                    message:"Database offline"
+                });
+
+                return;
+            }
+
+
+            database.push({
+                id: Date.now(),
+                customer:data.customer,
+                priority:data.priority,
+                status:"APERTO"
+            });
+
+
+            resolve({
+
+                status:201,
+
+                json(){
+
+                    return Promise.resolve({
+                        success:true
+                    });
+
+                }
+
+            });
+
+
+        },1500);
+
+
+    });
+
+}
+
+
+
+const form=document.getElementById("ticketForm");
+
+
+form.addEventListener("submit", async e=>{
+
+
+e.preventDefault();
+
+
+
+const customer =
+document.getElementById("customer").value;
+
+
+const email =
+document.getElementById("email").value;
+
+
+const description =
+document.getElementById("description").value;
+
+
+
+error.innerHTML="";
+
+success.style.display="none";
+
+
+saveButton.disabled=true;
+
+
+loader.style.display="block";
+
+
+
+if(description.length < 5){
+
+
+    error.innerHTML =
+    "Descrizione troppo corta";
+
+
+    loader.style.display="none";
+
+
+    // BUG 2
+    // bottone rimane bloccato
+
+    return;
+
+}
+
+
+
+try{
+
+
+    let response =
+    await fakeApi({
+
+        customer,
+
+        email,
+
+        priority:
+        priority.value,
+
+        description
+
+    });
+
+
+
+    let result =
+    await response.json();
+
+
+
+    success.style.display="block";
+
+
+
+    // BUG 3
+    // dati non ricaricati
+
+
+}
+catch(err){
+
+
+    console.error(
+        "Errore API:",
+        err
+    );
+
+
+    error.innerHTML =
+    "Errore durante il salvataggio";
+
+
+}
+
+
+
+loader.style.display="none";
+
+
+
+// BUG 4
+// riferimento sbagliato
+submitButton.disabled=false;
+
+
+
+});
+
+
+
+
+
+function loadTickets(){
+
+
+const tbody =
+document.getElementById("tickets");
+
+
+tbody.innerHTML="";
+
+
+database.forEach(t=>{
+
+
+let row =
+document.createElement("tr");
+
+
+row.innerHTML=`
+
+<td>${t.id}</td>
+
+<td>${t.customer}</td>
+
+<td>${t.priority}</td>
+
+<td>${t.status}</td>
+
+`;
+
+
+tbody.appendChild(row);
+
+
+
+});
+
+}
+
+
+// BUG 5
+// funzione mai chiamata dopo il salvataggio
+
+
+
+
+setTimeout(()=>{
+
+
+// BUG 6
+console.log(
+    undefinedVariable
+);
+
+
+},5000);
+
+
+
+
+// BUG 7
+// campo nascosto richiesto dal backend
+
+document
+.querySelector("form")
+.dataset.requiredToken="missing";
+
+
+
+// BUG 8
+// modifica DOM dopo un ritardo
+
+
+setTimeout(()=>{
+
+
+let notice =
+document.createElement("div");
+
+
+notice.innerHTML=
+"Sessione quasi scaduta";
+
+
+notice.style.background=
+"#fff3cd";
+
+
+document.body.appendChild(notice);
+
+
+},8000);
+
+
+
+</script>
+
+
+</body>
+</html>
