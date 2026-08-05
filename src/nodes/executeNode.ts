@@ -340,8 +340,15 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                             if (!targetRef) continue;
                             const locator = await resolveLocatorWithFallback(state, targetRef);
                             await locator.waitFor({ state: "attached", timeout: 5000 });
-                            await locator.fill(item.value || "");
-                            historyEntries.push(`fill su ${targetToHistory(targetRef)} con valore "${item.value || ""}"`);
+
+                            const tagName = await locator.evaluate((el) => el.tagName.toLowerCase());
+                            if (tagName === "select") {
+                                await locator.selectOption(item.value || "");
+                                historyEntries.push(`select su ${targetToHistory(targetRef)} con valore "${item.value || ""}"`);
+                            } else {
+                                await locator.fill(item.value || "");
+                                historyEntries.push(`fill su ${targetToHistory(targetRef)} con valore "${item.value || ""}"`);
+                            }
                         }
 
                         const domain = getDomainFromUrl(currentPage.url());
@@ -423,6 +430,7 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
             }
         } catch (e: any) {
             console.error(`Browser interaction error (${call.name}): ${e.message}`);
+            historyEntries.push(`errore ${call.name}: ${String(e?.message || e).slice(0, 300)}`);
         }
     }
 
