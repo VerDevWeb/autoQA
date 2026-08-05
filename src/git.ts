@@ -272,6 +272,16 @@ export function startGitWebhookServer(port = WEBHOOK_PORT) {
         }
     });
 
+    server.on("error", (error: NodeJS.ErrnoException) => {
+        if (error.code === "EADDRINUSE") {
+            console.error(`[webhook] Port ${port} is already in use. Server startup skipped.`);
+            console.error("[webhook] Stop the process using this port or set WEBHOOK_PORT to a free port.");
+            return;
+        }
+
+        console.error("[webhook] Server error:", error);
+    });
+
     server.listen(port, () => {
         console.log(`[webhook] Listening on port ${port}`);
         console.log("[webhook] Endpoints: /webhooks/github, /webhooks/gitlab, /webhooks/gitlab/onprem");
