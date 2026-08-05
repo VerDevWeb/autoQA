@@ -194,6 +194,10 @@ Environment variables:
 
 This codebase is aimed at people who want a transparent, inspectable agent rather than a platform abstraction. The implementation favors explicit browser actions, observable state, and a small number of well-defined tools.
 
+## Say thanks
+
+If you find this project useful, please consider starring it on GitHub or sharing it with your colleagues. Your support helps me continue to improve and maintain AutoQA.
+
 ## License
 
 Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
