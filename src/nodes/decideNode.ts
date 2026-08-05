@@ -4,6 +4,8 @@ import { buildCompactAstForPrompt } from "../ast.js";
 import { extractObjectiveDomains, findNextTargetDomain } from "../domains.js";
 import { incrementIterationCounter, estimateInputTokens, getReportedInputTokens, recordIterationTokens, llmIterationCounter } from "../tokens.js";
 
+const VERBOSE = process.env.VERBOSE === "true";
+
 export async function decideNode(state: AgentState, llmWithTools: any): Promise<Partial<AgentState>> {
     console.log("-> [Decide] LLM is selecting the next tool...");
 
@@ -24,7 +26,10 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
         : "";
 
     const compactAstForPrompt = buildCompactAstForPrompt(state.domAst);
-    console.log("[Decide] COMPACT AST sent to LLM:\n" + (compactAstForPrompt || "<empty>"));
+    console.log("[Decide] COMPACT DOM TREE sent to LLM (set VERBOSE=\"true\" in .env.local to dump it in console)");
+    if (VERBOSE) {
+        console.log("[Decide] COMPACT DOM TREE sent to LLM:\n" + (compactAstForPrompt || "<empty>"));
+    }
 
     // Task checklist
     const tasksBlock = state.tasks
@@ -82,6 +87,8 @@ export async function decideNode(state: AgentState, llmWithTools: any): Promise<
         - Use 'fill_many' with all fields when possible.
         - Alternatively, return multiple tool calls in the same response (e.g. many 'fill' calls), one per field.
     - Submit the form only after ALL required fields are filled.
+    - For login forms: first try submitting via 'enter' while focus is on the password field or login form.
+    - If Enter does not submit (same URL and no state change in next iteration), click the explicit submit action ('Accedi', 'Login', 'Sign in', 'Entra').
     - After you click the submit button or such it's suggested to check console logs to see if there are any errors that you should report
     - If you notice any errors that are holding you back, please send them to me in the summary email
 

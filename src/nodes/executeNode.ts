@@ -3,7 +3,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import { parseDomAst } from "../ast.js";
 import { extractObjectiveDomains, findNextTargetDomain, getDomainFromUrl, domainsMatch, upsertDomainStatus, tryMarkCompletedDomain, isConsentLikeElement, isYoutubeResultLikeElement } from "../domains.js";
-import { resolveLocatorWithFallback } from "../locators.js";
+import { resolveLocatorWithFallback, resolveLocatorWithTrace } from "../locators.js";
 import { getNetworkLog } from "../networkCapture.js";
 import { getConsoleLog } from "../consoleCapture.js";
 import { getUiSignalsLog } from "../uiSignalCapture.js";
@@ -12,6 +12,7 @@ import { autoMarkTask, extractWaitSeconds, stripWaitFromObjective, currentPage, 
 import type { AstElement, ElementTarget } from "../types.js";
 
 const AUTO_SEND_DONE_REPORT = process.env.AUTO_SEND_DONE_REPORT === "true";
+const DEBUG_LOCATORS = process.env.DEBUG_LOCATORS === "true";
 
 function normalizeTargetRef(args: any): string | ElementTarget | null {
     if (typeof args?.agentId === "string" && args.agentId.trim()) {
@@ -278,8 +279,25 @@ export async function executeNode(state: AgentState): Promise<Partial<AgentState
                         const targetRef = normalizeTargetRef(call.args);
                         if (!targetRef) throw new Error("Azione 'click' richiede target.");
                         const clickTarget = findAstElementByTarget(state.domAst, targetRef);
-                        const locator = await resolveLocatorWithFallback(state, targetRef);
+                        const resolution = await resolveLocatorWithTrace(state, targetRef);
+                        const locator = resolution.locator;
                         await locator.waitFor({ state: "attached", timeout: 5000 });
+
+                        const matchedElement = await locator.evaluate((el) => ({
+                            tag: el.tagName.toLowerCase(),
+                            id: el.getAttribute("id") || "",
+                            name: el.getAttribute("name") || "",
+                            type: el.getAttribute("type") || "",
+                            role: el.getAttribute("role") || "",
+                            ariaLabel: el.getAttribute("aria-label") || "",
+                            text: (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 120)
+                        }));
+
+                        console.log(`[LocatorTrace][click] target=${targetToHistory(targetRef)} strategy=${resolution.strategy} detail=${resolution.detail}`);
+                        if (DEBUG_LOCATORS) {
+                            console.log(`[LocatorTrace][click] matched=${JSON.stringify(matchedElement)}`);
+                        }
+
                         await locator.click();
 
                         const domain = getDomainFromUrl(currentPage.url());

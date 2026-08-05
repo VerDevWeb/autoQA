@@ -2,6 +2,12 @@ import type { Page, Locator } from "playwright";
 import type { AgentState, ElementTarget } from "./types.js";
 import { parseDomAst, escapeRegex } from "./ast.js";
 
+export type LocatorResolution = {
+    locator: Locator;
+    strategy: string;
+    detail: string;
+};
+
 let currentPage: Page;
 
 export function setPageInstance(page: Page): void {
@@ -45,60 +51,60 @@ async function tryVisible(locator: Locator): Promise<Locator | null> {
     return await pickFirstVisible(locator);
 }
 
-async function resolveByTarget(target: ElementTarget): Promise<Locator | null> {
+async function resolveByTarget(target: ElementTarget): Promise<LocatorResolution | null> {
     const hints = sanitizeTarget(target);
 
     if (hints.css) {
         const byCss = await tryVisible(currentPage.locator(hints.css));
-        if (byCss) return byCss;
+        if (byCss) return { locator: byCss, strategy: "target.css", detail: hints.css };
     }
 
     if (hints.id) {
         const byId = await tryVisible(currentPage.locator(`[id="${qAttr(hints.id)}"]`));
-        if (byId) return byId;
+        if (byId) return { locator: byId, strategy: "target.id", detail: hints.id };
     }
 
     if (hints.placeholder) {
         const byPlaceholder = await tryVisible(currentPage.getByPlaceholder(hints.placeholder, { exact: false }));
-        if (byPlaceholder) return byPlaceholder;
+        if (byPlaceholder) return { locator: byPlaceholder, strategy: "target.placeholder", detail: hints.placeholder };
     }
 
     if (hints.ariaLabel) {
         const byLabel = await tryVisible(currentPage.getByLabel(hints.ariaLabel, { exact: false }));
-        if (byLabel) return byLabel;
+        if (byLabel) return { locator: byLabel, strategy: "target.ariaLabel", detail: hints.ariaLabel };
     }
 
     if (hints.role) {
         const byRole = await tryVisible(currentPage.getByRole(hints.role as any, hints.text ? { name: new RegExp(escapeRegex(hints.text), "i") } : undefined));
-        if (byRole) return byRole;
+        if (byRole) return { locator: byRole, strategy: "target.role", detail: hints.text ? `${hints.role}:${hints.text}` : hints.role };
     }
 
     if (hints.name) {
         const tag = hints.tag || "*";
         const byName = await tryVisible(currentPage.locator(`${tag}[name="${qAttr(hints.name)}"]`));
-        if (byName) return byName;
+        if (byName) return { locator: byName, strategy: "target.name", detail: `${tag}[name=${hints.name}]` };
     }
 
     if (hints.href) {
         const byHref = await tryVisible(currentPage.locator(`a[href*="${qAttr(hints.href)}"]`));
-        if (byHref) return byHref;
+        if (byHref) return { locator: byHref, strategy: "target.href", detail: hints.href };
     }
 
     if (hints.text) {
         const textRegex = new RegExp(escapeRegex(hints.text), "i");
         const tag = hints.tag || "*";
         const byText = await tryVisible(currentPage.locator(tag).filter({ hasText: textRegex }));
-        if (byText) return byText;
+        if (byText) return { locator: byText, strategy: "target.text", detail: `${tag} hasText=${hints.text}` };
     }
 
     if (hints.label) {
         const byLabelText = await tryVisible(currentPage.getByLabel(hints.label, { exact: false }));
-        if (byLabelText) return byLabelText;
+        if (byLabelText) return { locator: byLabelText, strategy: "target.label", detail: hints.label };
     }
 
     if (hints.tag) {
         const byTag = await tryVisible(currentPage.locator(hints.tag));
-        if (byTag) return byTag;
+        if (byTag) return { locator: byTag, strategy: "target.tag", detail: hints.tag };
     }
 
     return null;
@@ -111,6 +117,11 @@ async function resolveByTarget(target: ElementTarget): Promise<Locator | null> {
     executeNode calls the resolveLocatorWithFallback giving to it the current agent state and the agent element id in order to convert this into real html attributes that are related to the element 
 */
 export async function resolveLocatorWithFallback(state: AgentState, targetRef: string | ElementTarget): Promise<Locator> {
+    const resolution = await resolveLocatorWithTrace(state, targetRef);
+    return resolution.locator;
+}
+
+export async function resolveLocatorWithTrace(state: AgentState, targetRef: string | ElementTarget): Promise<LocatorResolution> {
     if (typeof targetRef !== "string") {
         const byTarget = await resolveByTarget(targetRef);
         if (byTarget) {
@@ -127,7 +138,7 @@ export async function resolveLocatorWithFallback(state: AgentState, targetRef: s
     if (await primary.count() > 0) {
         const visiblePrimary = await pickFirstVisible(primary);
         if (visiblePrimary) {
-            return visiblePrimary;
+            return { locator: visiblePrimary, strategy: "legacy.data-agent-id", detail: agentId };
         }
     }
 
@@ -144,7 +155,7 @@ export async function resolveLocatorWithFallback(state: AgentState, targetRef: s
         if (await byContains.count() > 0) {
             const visibleByContains = await pickFirstVisible(byContains);
             if (visibleByContains) {
-                return visibleByContains;
+                return { locator: visibleByContains, strategy: "legacy.text", detail: `${target.tagName} hasText=${normalizedText}` };
             }
         }
     }
@@ -155,7 +166,7 @@ export async function resolveLocatorWithFallback(state: AgentState, targetRef: s
         if (await byPlaceholder.count() > 0) {
             const visibleByPlaceholder = await pickFirstVisible(byPlaceholder);
             if (visibleByPlaceholder) {
-                return visibleByPlaceholder;
+                return { locator: visibleByPlaceholder, strategy: "legacy.placeholder", detail: placeholder };
             }
         }
     }
@@ -166,7 +177,7 @@ export async function resolveLocatorWithFallback(state: AgentState, targetRef: s
         if (await byLabel.count() > 0) {
             const visibleByLabel = await pickFirstVisible(byLabel);
             if (visibleByLabel) {
-                return visibleByLabel;
+                return { locator: visibleByLabel, strategy: "legacy.aria-label", detail: ariaLabel };
             }
         }
     }
