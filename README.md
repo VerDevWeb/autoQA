@@ -104,36 +104,6 @@ If the selected model does not support native tool calling, startup fails early.
 - npm
 - A Playwright-compatible browser environment
 
-## Run locally
-
-Install npm dependencies:
-```bash
-npm install
-```
-
-Install Playwright browsers:
-```bash
-npx playwright install
-```
-
-Development:
-
-```bash
-npm run dev
-```
-
-Build:
-
-```bash
-npm run build
-```
-
-Start the compiled output:
-
-```bash
-npm start
-```
-
 ## Configuration
 
 The agent reads its runtime configuration from environment variables and the provider setup in `src/index.ts`.
@@ -144,7 +114,7 @@ The agent reads its runtime configuration from environment variables and the pro
 
 Provider-specific credentials should be set in `.env` when needed by the selected backend.
 
-## Webhook automation (GitHub/GitLab)
+## Quality Assurance automation via Webhook trigger (GitHub/GitLab also on premise)
 
 The project includes a webhook server in [src/git.ts](src/git.ts) that listens for push events and starts the agent when commit messages contain an `autoQA:` instruction.
 
@@ -184,6 +154,37 @@ Environment variables:
 - `GITLAB_ONPREM_BASE_URL` optional allowlist prefix for on-prem project URL (`project.web_url`)
 - `HEADLESS` recommended `true` in server/cloud environments
 - `RECURSION_LIMIT` optional agent loop cap
+
+## Run it locally for designed task (RPA or QA)
+
+Install npm dependencies:
+```bash
+npm install
+```
+
+Install Playwright browsers:
+```bash
+npx playwright install
+```
+
+Development:
+
+```bash
+npm run dev
+```
+
+Build:
+
+```bash
+npm run build
+```
+
+Start the compiled output:
+
+```bash
+npm start
+```
+
 
 ## Notes:
 - Only push events are processed.
