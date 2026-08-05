@@ -136,6 +136,51 @@ The agent reads its runtime configuration from environment variables and the pro
 
 Provider-specific credentials should be set in `.env` when needed by the selected backend.
 
+## Webhook automation (GitHub/GitLab)
+
+The project includes a webhook server in [src/git.ts](src/git.ts) that listens for push events and starts the agent when commit messages contain an `autoQA:` instruction.
+
+Example commit message:
+
+```text
+autoQA: go on https://my-app.example.com and register with random credentials, then verify you can add a new "Immobile"
+```
+
+Available webhook endpoints:
+
+- `POST /webhooks/github`
+- `POST /webhooks/gitlab`
+- `POST /webhooks/gitlab/onprem`
+
+Run it locally:
+
+```bash
+npm run dev:webhook
+```
+
+Build and run production output:
+
+```bash
+npm run build
+npm run start:webhook
+```
+
+Environment variables:
+
+- `WEBHOOK_PORT` default `8787`
+- `GITHUB_WEBHOOK_SECRET` required for GitHub signature validation (`X-Hub-Signature-256`)
+- `GITLAB_WEBHOOK_TOKEN` required for GitLab token validation (`X-Gitlab-Token`)
+- `GITLAB_ONPREM_WEBHOOK_TOKEN` optional dedicated token for on-prem endpoint
+- `GITLAB_ONPREM_BASE_URL` optional allowlist prefix for on-prem project URL (`project.web_url`)
+- `HEADLESS` recommended `true` in server/cloud environments
+- `RECURSION_LIMIT` optional agent loop cap
+
+Notes:
+
+- The webhook runner executes objectives sequentially (queue) to avoid multiple Playwright sessions colliding.
+- Only push events are processed.
+- If no `autoQA:` instruction is found in pushed commits, the event is accepted but no run is queued.
+
 ## Project status
 
 This codebase is aimed at people who want a transparent, inspectable agent rather than a platform abstraction. The implementation favors explicit browser actions, observable state, and a small number of well-defined tools.

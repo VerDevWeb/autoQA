@@ -1,6 +1,7 @@
 import { StateGraph, START, END } from "@langchain/langgraph";
 import { chromium } from "playwright";
 import type { Browser, Page } from "playwright";
+import { pathToFileURL } from "node:url";
 import * as dotenv from "dotenv";
 
 import { getLLM } from "./modelController.js";
@@ -32,7 +33,7 @@ dotenv.config();
 */
 const OBJECTIVE = process.env.OBJECTIVE || "Buongiorno, vai su YouTube e poi cerca video a tuo piacimento e clicca sul primo risultato, poi avvisami a verdev.web@gmail.com quando hai finito";
 const RECURSION_LIMIT = Number(process.env.RECURSION_LIMIT) || 100;
-const HEADLESS = false;
+const HEADLESS = (process.env.HEADLESS || "false").toLowerCase() === "true";
 
 /*
     Here I chose the provider I want
@@ -61,7 +62,7 @@ const workflow = new StateGraph(AgentStateDef)
 const app = workflow.compile();
 
 // --- ENTRY POINT ---
-async function run() {
+export async function runAgent(objective: string = OBJECTIVE) {
     let browser: Browser;
     let page: Page;
 
@@ -81,7 +82,7 @@ async function run() {
         await page.goto("about:blank");
 
         const initialState = {
-            objective: OBJECTIVE,
+            objective,
             currentUrl: "",
             domAst: "",
             lastToolCall: null,
@@ -108,4 +109,12 @@ async function run() {
     }
 }
 
-run().catch(console.error);
+function isDirectRun(): boolean {
+    const entryPath = process.argv[1];
+    if (!entryPath) return false;
+    return import.meta.url === pathToFileURL(entryPath).href;
+}
+
+if (isDirectRun()) {
+    runAgent().catch(console.error);
+}
