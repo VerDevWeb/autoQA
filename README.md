@@ -87,17 +87,6 @@ The entry point currently defaults to `ollama`, but the project is wired for the
 
 If the selected model does not support native tool calling, startup fails early.
 
-## Repository layout
-
-- `src/index.ts` wires the graph, browser lifecycle, and capture modules.
-- `src/nodes/` contains the observe/decide/execute loop.
-- `src/tools/browser/` defines browser actions and inspection tools.
-- `src/tools/miscellaneus/` contains general actions such as email and completion.
-- `src/networkCapture.ts`, `src/consoleCapture.ts`, and `src/uiSignalCapture.ts` collect the runtime signals the agent reasons over.
-- `src/ast.ts` builds and compacts the DOM tree for the LLM.
-- `src/locators.ts` resolves Playwright locators from real HTML target attributes (with legacy fallback).
-- `src/domains.ts` handles navigation-domain sequencing and completion tracking.
-
 ## Requirements to run
 
 - Node.js 20 or newer
