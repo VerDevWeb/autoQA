@@ -7,7 +7,7 @@ Nowadays software is shipped faster than ever, but the QA process is often still
 
 
 ## Why AutoQA
-- **It's Open source:** (released under Apache 2.0) and self-hostable.
+- **It's Open source:** (released under **Apache 2.0**) and self-hostable.
 
 - **LLM Agnostic:** You can use any LLM provider that supports tool calling, including OpenAI, Anthropic, Google, Ollama, and LM Studio.  
 
