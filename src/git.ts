@@ -1,11 +1,9 @@
 import http, { type IncomingMessage, type ServerResponse } from "node:http";
 import crypto from "node:crypto";
 import { pathToFileURL } from "node:url";
-import * as dotenv from "dotenv";
+import "./env.js";
 
 import { runAgent } from "./index.js";
-
-dotenv.config();
 
 type Provider = "github" | "gitlab" | "gitlab-onprem";
 

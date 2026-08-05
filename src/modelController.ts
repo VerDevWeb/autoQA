@@ -5,6 +5,14 @@ import { ChatOllama } from "@langchain/ollama";
 import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import type { LLM_PROVIDERS } from "./types.js";
 
+type LLMOptions = {
+    model?: string;
+    temperature?: number;
+    ollamaBaseUrl?: string;
+    ollamaApiKey?: string;
+    lmstudioBaseUrl?: string;
+};
+
 
 /*
     THIS FILE HANDLES THE LLM PROVIDER TO CHOSE FOR RUNNING THE AGENT
@@ -14,28 +22,33 @@ import type { LLM_PROVIDERS } from "./types.js";
     - select the LLM (LLM's APIs codename) that the agent's brain will use
 */
 
-export function getLLM(provider: LLM_PROVIDERS): BaseChatModel {
+export function getLLM(provider: LLM_PROVIDERS, options: LLMOptions = {}): BaseChatModel {
+    const temperature = options.temperature ?? 0;
+
     switch (provider) {
         case 'openai':
             return new ChatOpenAI({
-                model: "gpt-4o",
-                temperature: 0
+                model: options.model || "gpt-4o",
+                temperature
             });
         case 'anthropic':
             return new ChatAnthropic({
-                model: "claude-3-5-sonnet-20240620",
-                temperature: 0
+                model: options.model || "claude-3-5-sonnet-20240620",
+                temperature
             });
         case 'google':
             return new ChatGoogleGenerativeAI({
-                model: "gemma-4-31b-it",
-                temperature: 0
+                model: options.model || "gemma-4-31b-it",
+                temperature
             });
         case 'ollama':
             return new ChatOllama({
-                baseUrl: "http://localhost:11434",
-                model: "gemma4:31b-cloud",
-                temperature: 0 
+                baseUrl: options.ollamaBaseUrl || "http://localhost:11434",
+                model: options.model || "gemma4:31b-cloud",
+                temperature,
+                ...(options.ollamaApiKey
+                    ? { headers: { Authorization: `Bearer ${options.ollamaApiKey}` } }
+                    : {})
             });
             // TESTED OLLAMA MODELS:
             // gemma4:31b-cloud
@@ -43,9 +56,9 @@ export function getLLM(provider: LLM_PROVIDERS): BaseChatModel {
             // qwen3:1.7b
         case 'lmstudio':
             return new ChatOpenAI({
-                model: "local-model",
-                temperature: 0,
-                configuration: { baseURL: "http://localhost:1234/v1" }
+                model: options.model || "local-model",
+                temperature,
+                configuration: { baseURL: options.lmstudioBaseUrl || "http://localhost:1234/v1" }
             });
         default:
             throw new Error(`Provider non supportato: ${provider}`);
