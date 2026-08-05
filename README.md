@@ -106,6 +106,16 @@ If the selected model does not support native tool calling, startup fails early.
 
 ## Configuration
 
+Install npm dependencies:
+```bash
+npm install
+```
+
+Install Playwright browsers:
+```bash
+npx playwright install
+```
+
 The agent reads its runtime configuration from environment variables and the provider setup in `src/index.ts`.
 
 - `OBJECTIVE` sets the task the agent should complete.
@@ -156,16 +166,6 @@ Environment variables:
 - `RECURSION_LIMIT` optional agent loop cap
 
 ## Run it locally for designed task (RPA or QA)
-
-Install npm dependencies:
-```bash
-npm install
-```
-
-Install Playwright browsers:
-```bash
-npx playwright install
-```
 
 Development:
 
