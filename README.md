@@ -1,23 +1,29 @@
-# autoQA
+# AutoQA
 
-An opinionated browser QA agent for real workflows, not a demo wrapper around an LLM. It launches Playwright, reads the page as structured signal, and loops through observe, decide, and execute until the objective is done.
+> Spot bugs before yours users do.
 
-The focus is narrow and practical: catch what the page is actually doing, decide the next move with an LLM, and keep the run grounded in the browser state, console output, network activity, and transient UI feedback.
+## Why it exists
+Nowadays software is shipped faster than ever, but the QA process is often still manual and slow. autoQA is designed to help teams catch regressions early by running automated tests in a real browser environment, guided by an LLM.
 
-## Why this exists
 
-Most browser agents fail in the same places: they miss transient state, lose track of what happened, or treat the DOM like a flat blob of text. autoQA is built to stay closer to the execution surface.
+## Why AutoQA
+- **It's Open source:** (released under Apache 2.0) and self-hostable.
 
-It captures the signals that matter to a test run:
+- **LLM Agnostic:** You can use any LLM provider that supports tool calling, including OpenAI, Anthropic, Google, Ollama, and LM Studio.  
 
-- page structure as a compact DOM tree optimized for LLM reasoning (interactive nodes, labels, key attributes, significant ancestors)
-- console messages and page errors
-- relevant network activity such as fetch, XHR, document, and websocket traffic
-- transient UI messages such as toasts, banners, alerts, and status updates
+- **Privacy oriented:** Thanks to Ollama and LM Studio, you can run the agent fully offline without sending your data to a third-party cloud provider without big performance trade-offs.
 
-That is enough to make the agent useful on real frontends without pretending it has superpowers it does not have.
+- **It can be run on every OS**, including Windows, macOS, and Linux (Powered by NodeJS).
 
-## How it works
+- **It can be run on servers without a GUI** (headless) or with a visible browser window directly on your PC.
+
+- **DOM TREE driven:** The agent operates based on a structured and polished representation of the page's DOM, ensuring accurate interaction with UI elements contextualized within their surrounding context and to-do tasks and you don't rely on vision models.
+
+- **(CaTB) Commits as Tests Books:** your commits become test books, centralized in your GIT repository, where AutoQA and other humans can read them to test apps. 
+
+- **Vertical on Quality Assurance, but suitable for RPA:** AutoQA is designed to be a QA tool, but it can also be used for Robotic Process Automation (RPA) tasks, such as filling forms, navigating websites, and performing repetitive actions.
+
+## How it works under the hood:
 
 ```mermaid
 flowchart LR
@@ -69,10 +75,6 @@ The toolset is intentionally concrete:
 - send a summary email
 - mark the run as done when the objective is complete
 
-`agentId` remains available only as a legacy fallback path for compatibility.
-
-That is the real surface area of the agent. If a new capability is not in the code, it is not claimed here.
-
 ## Supported models
 
 The entry point currently defaults to `ollama`, but the project is wired for these providers through `modelController`:
@@ -96,7 +98,7 @@ If the selected model does not support native tool calling, startup fails early.
 - `src/locators.ts` resolves Playwright locators from real HTML target attributes (with legacy fallback).
 - `src/domains.ts` handles navigation-domain sequencing and completion tracking.
 
-## Requirements
+## Requirements to run
 
 - Node.js 20 or newer
 - npm
@@ -104,8 +106,14 @@ If the selected model does not support native tool calling, startup fails early.
 
 ## Run locally
 
+Install npm dependencies:
 ```bash
 npm install
+```
+
+Install Playwright browsers:
+```bash
+npx playwright install
 ```
 
 Development:
@@ -143,7 +151,9 @@ The project includes a webhook server in [src/git.ts](src/git.ts) that listens f
 Example commit message:
 
 ```text
-autoQA: go on https://my-app.example.com and register with random credentials, then verify you can add a new "Immobile"
+your commit message here...
+
+... autoQA: go on https://my-app.example.com and register with random credentials, then verify you can add a new "Immobile"
 ```
 
 Available webhook endpoints:
@@ -175,10 +185,9 @@ Environment variables:
 - `HEADLESS` recommended `true` in server/cloud environments
 - `RECURSION_LIMIT` optional agent loop cap
 
-Notes:
-
-- The webhook runner executes objectives sequentially (queue) to avoid multiple Playwright sessions colliding.
+## Notes:
 - Only push events are processed.
+- The webhook runner executes objectives sequentially (queue) to avoid multiple Playwright sessions colliding.
 - If no `autoQA:` instruction is found in pushed commits, the event is accepted but no run is queued.
 
 ## Project status
