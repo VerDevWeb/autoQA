@@ -104,6 +104,84 @@ If the selected model does not support native tool calling, startup fails early.
 - npm
 - A Playwright-compatible browser environment
 
+## Setup API keys and provider
+
+### Step 1: Choose your LLM Provider
+
+Set the `LLM` environment variable to one of the supported providers:
+
+```bash
+# Supported values: ollama | openai | anthropic | google | lmstudio
+LLM="ollama"
+```
+
+### Step 2: Configure the selected provider
+
+#### If using **Ollama** (Recommended for privacy)
+
+1. **Start the Ollama server locally** (REQUIRED - or you'll get fetch errors):
+   ```bash
+   ollama serve
+   ```
+
+2. **Optional:** Use a remote Ollama server or cloud API:
+   ```bash
+   OLLAMA_BASE_URL="http://localhost:11434"
+   or
+   OLLAMA_BASE_URL="https://api.ollama.com"  # If using cloud-hosted Ollama
+   OLLAMA_API_KEY="your-api-key"  # If using cloud-hosted Ollama
+   ```
+
+3. Set the model (optional):
+   ```bash
+   LLM_MODEL="gemma4:31b-cloud"
+   ```
+
+#### If using **OpenAI**
+
+1. **Required:** Set your API key in `.env`:
+   ```bash
+   OPENAI_API_KEY="sk-your-key-here"
+   ```
+
+2. Set the model (optional):
+   ```bash
+   LLM_MODEL="gpt-4o"
+   ```
+
+#### If using **Anthropic**
+
+1. **Required:** Set your API key in `.env`:
+   ```bash
+   ANTHROPIC_API_KEY="sk-ant-your-key-here"
+   ```
+
+2. Set the model (optional):
+   ```bash
+   LLM_MODEL="claude-3-5-sonnet-20240620"
+   ```
+
+#### If using **Google**
+
+1. **Required:** Set your API key in `.env`:
+   ```bash
+   GOOGLE_API_KEY="your-google-api-key"
+   ```
+
+2. Set the model (optional):
+   ```bash
+   LLM_MODEL="gemma-4-31b-it"
+   ```
+
+#### If using **LM Studio**
+
+1. **Required:** Start the LM Studio server locally
+
+2. Set the model (optional):
+   ```bash
+   LLM_MODEL="your-local-model-name"
+   ```
+
 ## Configuration
 
 Install npm dependencies:
